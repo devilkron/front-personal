@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import adminAuth from "../hooks/adminAuth";
 
 export default function studentReg() {
-
   // console.log(fileinput.current.files[0])
   const [input, setInput] = useState({
     std_identity: "",
@@ -76,8 +75,8 @@ export default function studentReg() {
       const file = fileinput.current?.files[0];
       const formData = new FormData();
       console.log(file);
-      if(!file ){
-        return alert("กรุณาแนบรูปภาพ")
+      if (!file) {
+        return alert("กรุณาแนบรูปภาพ");
       }
       Object.entries(input).forEach(([key, value]) => {
         formData.append(key, value);
@@ -105,9 +104,25 @@ export default function studentReg() {
     }
   };
   // console.log(input.major_type)
-  const HdlReset = () => {
-    setInput({});
+  const HdlReset = (e) => {
+    setInput({
+      std_identity: "",
+      std_name: "",
+      std_lastname: "",
+      std_bd: "",
+      std_address: "",
+      std_phone: "",
+      std_email: "",
+      status: "W8",
+      img_profile: "",
+      majorId: "",
+      classId: "",
+    });
+    if (fileinput.current) {
+      fileinput.current.value = "";
+    }
   };
+  
 
   return (
     <div>
@@ -116,8 +131,8 @@ export default function studentReg() {
         onSubmit={hdlSubmit}
       >
         <div className="flex justify-center text-2xl">กรอกแบบฟอร์มสมัครสอบ</div>
-        <div className=" mx-auto w-1/2">
-          <div className="flex gap-2 mt-3">
+        <div className=" mx-auto  w-full">
+          <div className="flex gap-2 mt-3 w-3/4 mx-auto">
             <p className="mt-3 text-xl">Major:</p>
             <select
               name="majorId"
@@ -126,11 +141,21 @@ export default function studentReg() {
               value={input.majorId}
             >
               <option hidden>วิชาเอก</option>
-              {major.map((el) => (
-                <option key={el.major_id} value={el.major_id}>
-                  {el.major_type}
-                </option>
-              ))}
+              {major.map((el) => {
+                const majorMapping = {
+                  MATHSCI: "วิทย์คณิต",
+                  ARTMATH: "ศิลป์คำนวณ",
+                  ARTENG: "ศิลป์อังกฤษ",
+                  ARTSOC: "ศิลป์สังคม",
+                  ARTFREE: "ศิลป์ทั่วไป",
+                };
+
+                return (
+                  <option key={el.major_id} value={el.major_id}>
+                    {majorMapping[el.major_type] || el.major_type}
+                  </option>
+                );
+              })}
             </select>
 
             <p className="mt-3 text-xl">Class:</p>
@@ -143,84 +168,89 @@ export default function studentReg() {
               <option hidden>ระดับชั้น</option>
               {Class.map((el) => (
                 <option key={el.class_id} value={el.class_id}>
-                  {el.class_type}
+                  {el.class_type === "SECONDARY1"
+                    ? "มัธยมต้น"
+                    : el.class_type === "SECONDARY2"
+                    ? "มัธยมปลาย"
+                    : el.class_type}
                 </option>
               ))}
             </select>
           </div>
-          <p className="mt-3">รหัสบัตรประชาชน</p>
-          <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
-            name="std_identity"
-            value={input.std_identity}
-            onChange={hdlChange}
-            placeholder="Enter your ID Card"
-          />
-          <p className="mt-3">Name</p>
-          <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
-            name="std_name"
-            value={input.std_name}
-            onChange={hdlChange}
-            placeholder="Enter Your Name"
-          />
-          <p className="mt-3">Lastname</p>
-          <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
-            name="std_lastname"
-            value={input.std_lastname}
-            onChange={hdlChange}
-            placeholder="Enter Your Lastname"
-          />
-          <p className="mt-3">Birthday</p>
-          <input
-            className=" rounded-md border-white border bg-white  w-full mt-3 px-3"
-            type="Date"
-            name="std_bd"
-            value={input.std_bd}
-            onChange={hdlChange}
-          />
+          <div className="w-1/2 mx-auto">
+            <p className="mt-3">รหัสบัตรประชาชน</p>
+            <input
+              className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+              type="text"
+              name="std_identity"
+              value={input.std_identity}
+              onChange={hdlChange}
+              placeholder="Enter your ID Card"
+            />
+            <p className="mt-3">Name</p>
+            <input
+              className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+              type="text"
+              name="std_name"
+              value={input.std_name}
+              onChange={hdlChange}
+              placeholder="Enter Your Name"
+            />
+            <p className="mt-3">Lastname</p>
+            <input
+              className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+              type="text"
+              name="std_lastname"
+              value={input.std_lastname}
+              onChange={hdlChange}
+              placeholder="Enter Your Lastname"
+            />
+            <p className="mt-3">Birthday</p>
+            <input
+              className=" rounded-md border-white border bg-white  w-full mt-3 px-3"
+              type="Date"
+              name="std_bd"
+              value={input.std_bd}
+              onChange={hdlChange}
+            />
 
-          <p className="mt-3">Address</p>
-          <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
-            name="std_address"
-            value={input.std_address}
-            onChange={hdlChange}
-            placeholder="Enter Your Address"
-          />
-          <p className="mt-3">Phone</p>
-          <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
-            name="std_phone"
-            value={input.std_phone}
-            onChange={hdlChange}
-            placeholder="Enter Your Phone"
-          />
-          <p className="mt-3">Email</p>
-          <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
-            name="std_email"
-            value={input.std_email}
-            onChange={hdlChange}
-            placeholder="Enter Your Email"
-          />
-         
+            <p className="mt-3">Address</p>
+            <input
+              className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+              type="text"
+              name="std_address"
+              value={input.std_address}
+              onChange={hdlChange}
+              placeholder="Enter Your Address"
+            />
+            <p className="mt-3">Phone</p>
+            <input
+              className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+              type="text"
+              name="std_phone"
+              value={input.std_phone}
+              onChange={hdlChange}
+              placeholder="Enter Your Phone"
+            />
+            <p className="mt-3">Email</p>
+            <input
+              className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+              type="text"
+              name="std_email"
+              value={input.std_email}
+              onChange={hdlChange}
+              placeholder="Enter Your Email"
+            />
 
-          <p className="mt-3">รูปภาพ</p>
-          <input
-            className=" rounded-md border-white border bg-white  w-full mt-3"
-            type="file"
-            accept="image/*"
-            ref={fileinput}
-            name="img_profile"
-          />
+            <p className="mt-3">รูปภาพ</p>
+            <input
+              className=" rounded-md border-white border bg-white  w-full mt-3 px-2"
+              type="file"
+              accept="image/*"
+              ref={fileinput}
+              name="img_profile"
+            />
+          </div>
         </div>
 
         <div className="mx-auto mt-5 w-1/2">
@@ -233,6 +263,7 @@ export default function studentReg() {
             type="button"
             value="RESET"
             className="btn btn-warning btn-outline w-[150px] ml-9"
+            onClick={HdlReset}
           />
         </div>
       </form>

@@ -112,7 +112,7 @@ export default function adminForm() {
           </label>
         </form>
 
-        {students.length !== 0 ? (
+        {students && (
           <table className="table mt-5">
             <thead className="text-lg border-4">
               <tr>
@@ -126,14 +126,15 @@ export default function adminForm() {
             </thead>
             <tbody>
               {searchs.length === 0
-                ? joinT.map((std, index) => (
-                    <tr
-                      key={index}
+                ? joinT.map((std => (
+                  <tr
+                      key={std.std_id}
                       className="hover"
                       onClick={() =>
                         document
                           .getElementById(`my_modal_${std.std_id}`)
                           .showModal()
+                        // alert(JSON.stringify(std))
                       }
                     >
                       <td>{std.std_id}</td>
@@ -145,9 +146,17 @@ export default function adminForm() {
                           : "มัธยมต้น"}
                       </td>
                       <td>{std.major.major_type}</td>
-                      <td>{std.status}</td>
+                      <td>
+                        {std.status === "W8"
+                          ? "รอยืนยัน"
+                          : std.status === "AGREE"
+                          ? "ยอมรับ"
+                          : std.status === "REJECT"
+                          ? "ปฏิเสธ"
+                          : std.status}
+                      </td>
                     </tr>
-                  ))
+                )))
                 : searchs.map((std, index) => (
                     <tr
                       key={index}
@@ -167,16 +176,22 @@ export default function adminForm() {
                           : "มัธยมต้น"}
                       </td>
                       <td>{std.major.major_type}</td>
-                      <td>{std.status}</td>
+                      <td>
+                        {std.status === "W8"
+                          ? "รอยืนยัน"
+                          : std.status === "AGREE"
+                          ? "ยอมรับ"
+                          : std.status === "REJECT"
+                          ? "ปฏิเสธ"
+                          : std.status}
+                      </td>
                     </tr>
                   ))}
             </tbody>
           </table>
-        ) : (
-          <p className="text-3xl underline text-blue-300">ไม่พบข้อมูล</p>
         )}
-        {joinT.map((std, index) => (
-          <Modal key={index} student={std} />
+        {joinT.map(std => (
+          <Modal key={std.std_id} student={std} />
         ))}
       </div>
     );
@@ -184,6 +199,7 @@ export default function adminForm() {
 }
 
 const Modal = ({ student }) => {
+  // console.log(student);
   const modalId = `my_modal_${student.std_id}`;
   const [editData, setEditData] = useState({
     std_name: student.std_name,
@@ -250,53 +266,53 @@ const Modal = ({ student }) => {
     }
   };
   const hdlAGREE = async (e) => {
-    if(confirm("ต้องการยืนยันสถานะหรือไม่ ?") ===true){
-    try {
-     
-      e.stopPropagation();
-      const agree = {status: "AGREE"}
-      const std_id = student.std_id;
-      let token = localStorage.getItem("token");
-      const rs = await axios.patch(
-        `http://localhost:8000/student/upstatus/${std_id}`, agree,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    if (confirm("ต้องการยืนยันสถานะหรือไม่ ?") === true) {
+      try {
+        e.stopPropagation();
+        const agree = { status: "AGREE" };
+        const std_id = student.std_id;
+        let token = localStorage.getItem("token");
+        const rs = await axios.patch(
+          `http://localhost:8000/student/upstatus/${std_id}`,
+          agree,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(rs);
+        if (rs.status === 200) {
+          location.reload();
         }
-      );
-      console.log(rs);
-      if (rs.status === 200) {
-        location.reload();
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
     }
   };
   const hdlREJECT = async (e) => {
-    if(confirm("ต้องการปฏิเสธสถานะหรือไม่ ?") ===true){
-    try {
-     
-      e.stopPropagation();
-      const agree = {status: "REJECT"}
-      const std_id = student.std_id;
-      let token = localStorage.getItem("token");
-      const rs = await axios.patch(
-        `http://localhost:8000/student/reject/${std_id}`, agree,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    if (confirm("ต้องการปฏิเสธสถานะหรือไม่ ?") === true) {
+      try {
+        e.stopPropagation();
+        const agree = { status: "REJECT" };
+        const std_id = student.std_id;
+        let token = localStorage.getItem("token");
+        const rs = await axios.patch(
+          `http://localhost:8000/student/reject/${std_id}`,
+          agree,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(rs);
+        if (rs.status === 200) {
+          location.reload();
         }
-      );
-      console.log(rs);
-      if (rs.status === 200) {
-        location.reload();
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
     }
   };
   return (
@@ -387,7 +403,16 @@ const Modal = ({ student }) => {
             "มัธยมต้น"
           )}
         </h3>
-        <h3 className="font-bold text-lg">สถานะ {student.status}</h3>
+        <h3 className="font-bold text-lg">
+          สถานะ{" "}
+          {student.status === "W8"
+            ? "รอยืนยัน"
+            : student.status === "AGREE"
+            ? "ยอมรับ"
+            : student.status === "REJECT"
+            ? "ปฏิเสธ"
+            : student.status}
+        </h3>
 
         <div className="flex justify-end gap-3">
           <button className="btn btn-outline btn-success" onClick={hdlAGREE}>

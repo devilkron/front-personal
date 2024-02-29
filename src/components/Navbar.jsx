@@ -6,7 +6,7 @@ const adminNav = [
   { to: "/add", text: "กรอกข้อมูลผู้สมัคร" },
 ];
 const guestNav = [
- 
+
   
 ]
 
@@ -23,7 +23,7 @@ export default function Header() {
   };
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-sky-200 ">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">
           Hello, {user?.user_id ? user.user_name : "Guest"}

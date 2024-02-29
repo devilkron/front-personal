@@ -38,7 +38,7 @@ export default function Header() {
           </div>
           <div>
            <Link to='/home'> <img
-              className="rounded-full mx-auto"
+              className="rounded-full mx-auto "
               src="https://picsum.photos/id/120/50"
               alt=""
             /></Link>
