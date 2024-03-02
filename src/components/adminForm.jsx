@@ -91,7 +91,7 @@ export default function adminForm() {
           <label className="input input-bordered flex items-center w-1/2 justify-center mx-auto mt-3">
             <input
               type="text"
-              className="grow"
+              className="grow bg-transparent"
               placeholder=""
               name="search"
               value={input.search}
@@ -113,8 +113,8 @@ export default function adminForm() {
         </form>
 
         {students && (
-          <table className="table mt-5">
-            <thead className="text-lg border-4">
+          <table className="table mt-5 text-center ">
+            <thead className="text-xl ">
               <tr>
                 <th>ลำดับ</th>
                 <th>ชื่อ</th>
@@ -124,16 +124,17 @@ export default function adminForm() {
                 <th>สถานะ</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="cursor-pointer">
               {searchs.length === 0
-                ? joinT.map((std => (
-                  <tr
+                ? joinT.map((std) => (
+                    <tr
                       key={std.std_id}
                       className="hover"
-                      onClick={() =>
-                        document
-                          .getElementById(`my_modal_${std.std_id}`)
-                          .showModal()
+                      onClick={
+                        () =>
+                          document
+                            .getElementById(`my_modal_${std.std_id}`)
+                            .showModal()
                         // alert(JSON.stringify(std))
                       }
                     >
@@ -145,7 +146,19 @@ export default function adminForm() {
                           ? "มัธยมปลาย"
                           : "มัธยมต้น"}
                       </td>
-                      <td>{std.major.major_type}</td>
+                      <td>
+                        {std.major.major_type === "MATHSCI"
+                          ? "วิทย์คณิต"
+                          : std.major.major_type === "ARTMATH"
+                          ? "ศิลป์คำนวณ"
+                          : std.major.major_type === "ARTENG"
+                          ? "ศิลป์ภาษา"
+                          : std.major.major_type === "ARTSOC"
+                          ? "ศิลป์สังคม"
+                          : std.major.major_type === "ARTFREE"
+                          ? "ศิลป์ทั่วไป"
+                          : "ไม่ระบุ"}
+                      </td>
                       <td>
                         {std.status === "W8"
                           ? "รอยืนยัน"
@@ -156,7 +169,7 @@ export default function adminForm() {
                           : std.status}
                       </td>
                     </tr>
-                )))
+                  ))
                 : searchs.map((std, index) => (
                     <tr
                       key={index}
@@ -175,7 +188,19 @@ export default function adminForm() {
                           ? "มัธยมปลาย"
                           : "มัธยมต้น"}
                       </td>
-                      <td>{std.major.major_type}</td>
+                      <td>
+                        {std.major.major_type === "MATHSCI"
+                          ? "วิทย์คณิต"
+                          : std.major.major_type === "ARTMATH"
+                          ? "ศิลป์คำนวณ"
+                          : std.major.major_type === "ARTENG"
+                          ? "ศิลป์ภาษา"
+                          : std.major.major_type === "ARTSOC"
+                          ? "ศิลป์สังคม"
+                          : std.major.major_type === "ARTFREE"
+                          ? "ศิลป์ทั่วไป"
+                          : "ไม่ระบุ"}
+                      </td>
                       <td>
                         {std.status === "W8"
                           ? "รอยืนยัน"
@@ -190,7 +215,7 @@ export default function adminForm() {
             </tbody>
           </table>
         )}
-        {joinT.map(std => (
+        {joinT.map((std) => (
           <Modal key={std.std_id} student={std} />
         ))}
       </div>
@@ -315,6 +340,7 @@ const Modal = ({ student }) => {
       }
     }
   };
+
   return (
     <dialog id={modalId} className="modal select-none">
       <div className="modal-box">

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import adminAuth from "../hooks/adminAuth";
-
+import Swal from "sweetalert2";
 export default function studentReg() {
   // console.log(fileinput.current.files[0])
   const [input, setInput] = useState({
@@ -71,6 +71,14 @@ export default function studentReg() {
   const hdlSubmit = async (e) => {
     e.preventDefault();
 
+    if(input.std_phone.length < 10){
+      return alert("กรอกเบอร์โทรศัพท์ให้ครบ")
+    }
+
+    if(input.std_identity.length < 13){
+      return alert("กรอกรหัสบัตรประชาชนให้ครบ")
+    }
+
     try {
       const file = fileinput.current?.files[0];
       const formData = new FormData();
@@ -95,10 +103,18 @@ export default function studentReg() {
         }
       );
       if (rs.status === 200) {
-        alert("Create user success");
-        location.reload();
+        Swal.fire({
+          icon: "success",
+          text: " ขอให้โชคดีกับการสอบ",
+          timer: 1500,
+          showConfirmButton: false,
+          width: '500px'
+
+        }).then(()=> {
+          location.reload()
+        })
       }
-      console.log(rs);
+      // console.log(rs);
     } catch (err) {
       alert(err.message);
     }

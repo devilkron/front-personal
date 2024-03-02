@@ -67,6 +67,12 @@ export default function studentReg() {
   const hdlSubmit = async (e) => {
     e.preventDefault();
 
+if(input.std_phone.length < 10){
+  return alert("กรอกเบอร์โทรศัพท์ให้ครบ")
+}
+if(input.std_identity.length < 13){
+  return alert("กรอกรหัสบัตรประชาชนให้ครบ")
+}
     try {
       const file = fileinput.current?.files[0];
       const formData = new FormData();
@@ -94,14 +100,29 @@ export default function studentReg() {
         alert("Create user success");
         location.reload();
       }
-      console.log(rs);
+      // console.log(rs);
     } catch (err) {
       alert(err.message);
     }
   };
   // console.log(input.major_type)
   const HdlReset = () => {
-    setInput({});
+    setInput({
+      std_identity: "",
+      std_name: "",
+      std_lastname: "",
+      std_bd: "",
+      std_address: "",
+      std_phone: "",
+      std_email: "",
+      status: "W8",
+      img_profile: "",
+      majorId: "",
+      classId: "",
+    });
+    if (fileinput.current) {
+      fileinput.current.value = "";
+  };
   };
 
   return (

@@ -15,6 +15,9 @@ export default function adminReg() {
     setInput((prv) => ({ ...prv, [e.target.name]: e.target.value }));
   };
   const hdlSubmit = async (e) => {
+    if(input.identity.length < 13){
+      return alert("กรุณากรอกรหัสบัตรประชาชนให้ครบ")
+    }
     try {
       e.preventDefault();
 
@@ -46,22 +49,21 @@ export default function adminReg() {
       if (isConfirmed) {
         // console.log(typeof input.password)
         const rs = await axios.post("http://localhost:8000/auth/register", input);
-        if (rs.data === 200) {
-          alert("SUCCESS")
-          // Swal.fire({
-          //   icon: "success",
-          //   text: " สมัครเรียบร้อย",
-          //   timer: 1000,
-          //   showConfirmButton: false,
-          //   width: '500px'
+        if (rs.status === 200) {
+          // alert("SUCCESS")
+          Swal.fire({
+            icon: "success",
+            text: " สมัครเรียบร้อย",
+            timer: 1000,
+            showConfirmButton: false,
+            width: '500px'
 
-          // }).then(()=> {
-          //   setInput(null)
-          //   location.reload()
-          // })
+          }).then(()=> {
+            location.reload()
+          })
              
         }
-        location.reload()
+         
       }
     } catch (err) {
       Swal.fire({

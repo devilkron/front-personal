@@ -6,14 +6,12 @@ const adminNav = [
   { to: "/add", text: "กรอกข้อมูลผู้สมัคร" },
 ];
 const guestNav = [
-
-  
-]
-
+  {to: "/", text: "home"}
+];
 
 export default function Header() {
   const { user, logout, setTheme } = useAuth();
-  const finnalNav = user?.user_role ==="ADMIN" ? adminNav : guestNav;
+  const finnalNav = user?.user_role === "ADMIN" ? adminNav : guestNav;
 
   const navigate = useNavigate();
 
@@ -22,12 +20,18 @@ export default function Header() {
     navigate("/");
   };
 
+  const hdlChnage = (e) => {
+    setTheme(prv => !prv)
+  }
+
   return (
     <div className="navbar bg-sky-200 ">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">
-          Hello, {user?.user_id ? user.user_name : "Guest"}
-        </a>
+        <Link to={'/profile'}>
+          <p className="btn btn-ghost text-xl">
+            Hello, {user?.user_id ? user.user_name : "Guest"}
+          </p>
+        </Link>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 gap-3">
@@ -46,7 +50,7 @@ export default function Header() {
 
           <label className="swap swap-rotate border mx-2 rounded-full p-1">
             {/* this hidden checkbox controls the state */}
-            <input type="checkbox" onChange={() => setTheme((prev) => !prev)} />
+            <input type="checkbox" onChange={hdlChnage} />
 
             {/* sun icon */}
             <svg
