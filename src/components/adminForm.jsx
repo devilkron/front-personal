@@ -2,15 +2,13 @@ import { useState, useEffect } from "react";
 // import useAuth from "../hooks/adminAuth";
 import axios from "axios";
 
-export default function adminForm() {
+export default function Search() {
   const [students, setStudents] = useState([]);
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [searchs, setSearch] = useState([]);
   const [sTpye, setSType] = useState([]);
-  const [input, setInput] = useState({
-    search: "",
-  });
+  const [input, setInput] = useState('');
 
   useEffect(() => {
     const getStudent = async () => {
@@ -61,7 +59,8 @@ export default function adminForm() {
     };
   });
   const hdlChange = (e) => {
-    setInput((prv) => ({ ...prv, [e.target.name]: e.target.value }));
+setInput(e.target.value)
+    console.log(input)
   };
 
   const hdlsubmit = async (e) => {
@@ -69,7 +68,7 @@ export default function adminForm() {
       e.preventDefault();
       let token = localStorage.getItem("token");
       axios
-        .post("http://localhost:8000/student/search", input, {
+        .get(`http://localhost:8000/student/search?name=${input}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -93,8 +92,7 @@ export default function adminForm() {
               type="text"
               className="grow bg-transparent"
               placeholder=""
-              name="search"
-              value={input.search}
+              value={input}
               onChange={hdlChange}
             />
             <svg

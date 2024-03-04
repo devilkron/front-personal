@@ -13,7 +13,6 @@ import Contact from "../components/contact"
 import Footer from '../components/footer'
 import Profile from "../components/profile"
 import QRCODE from "../components/qrline"
-
 const guestRouter = createBrowserRouter([
   {
     path: "/",
@@ -72,7 +71,7 @@ const adminRouter = createBrowserRouter([
       { path: "/add", element: <AdminReg/> },
       { path: "/home", element: <Home /> },
       { path: "/", element: <AdminForm /> },
-      { path: "/profile", element: <Profile /> }
+      { path: "/profile", element: <Profile /> },
     ],
   },
 ]);

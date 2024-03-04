@@ -27,18 +27,18 @@ export default function Header() {
       
         <div>
           
-        <nav className="bg-sky-500 w-full h-[50px] flex flex-row justify-between text-3xl items-center px-5 text-white ">
+        <nav className="bg-sky-500 w-full h-[70px] flex flex-row justify-between text-3xl items-center px-5 text-white ">
         
                     
           
-          <div className="btn-ghost btn-xl text-lime-500">
+          <div className="btn-ghost btn-xl text-lime-500 hover:text-amber-400 w-[315px]">
             <Link to="/guest">
               ลงทะเบียนเรียน <i className="fa-solid fa-book"></i>
             </Link>
           </div>
           <div>
            <Link to='/home'> <img
-              className="rounded-full mx-auto "
+              className="rounded-full mx-auto"
               src="https://picsum.photos/id/120/50"
               alt=""
             /></Link>
@@ -48,7 +48,7 @@ export default function Header() {
             <div 
               tabIndex={0}
               role="button"
-              className=" btn-ghost btn-xl text-amber-400 "
+              className=" btn-ghost btn-xl text-amber-400 hover:text-lime-500 W-[315px]"
             >
                ล็อคอินสำหรับ Admin
              

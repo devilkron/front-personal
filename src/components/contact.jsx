@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 export default function contact() {
   return (
-    <div>
+    <div className="w-[80rem] mx-auto flex flex-col item-center justify-center">
       <h3 className="text-3xl mx-auto flex justify-center mt-3">
         ติดต่อโรงเรียน
       </h3>

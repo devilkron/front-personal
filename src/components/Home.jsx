@@ -50,7 +50,7 @@ const Home = () => {
         </Slide>
 
         </div>
-        <div >
+        <div>
             
             <div>
             <Slide indicators={indicators}>
