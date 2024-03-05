@@ -25,7 +25,7 @@ export default function Header() {
   }
 
   return (
-    <div className="navbar bg-sky-200 ">
+    <div className="navbar bg-gradient-to-l from-indigo-500 from-30% via-blue-500 via-40% to-teal-500 to-70% ">
       <div className="flex-1">
         <Link to={'/profile'}>
           <p className="btn btn-ghost text-xl">

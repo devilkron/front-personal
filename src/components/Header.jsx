@@ -27,7 +27,7 @@ export default function Header() {
       
         <div>
           
-        <nav className="bg-sky-500 w-full h-[70px] flex flex-row justify-between text-3xl items-center px-5 text-white ">
+        <nav className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-cyan-500 to-90% w-full h-[70px] flex flex-row justify-between text-3xl items-center px-5 text-white ">
         
                     
           
@@ -38,8 +38,8 @@ export default function Header() {
           </div>
           <div>
            <Link to='/home'> <img
-              className="rounded-full mx-auto"
-              src="https://picsum.photos/id/120/50"
+              className="rounded-full w-[60px]"
+              src="https://img.freepik.com/free-vector/hand-drawn-high-school-logo-template_23-2149689290.jpg"
               alt=""
             /></Link>
           </div>
@@ -58,7 +58,7 @@ export default function Header() {
               tabIndex={0}
               className="card compact dropdown-content z-[1] shadow bg-white rounded-box w-64  mt-5 p-3"
             >
-              <figure><img src="https://png.pngtree.com/png-clipart/20211017/original/pngtree-school-logo-png-image_6851480.png" className="h-[100px]" alt="logo" /></figure>
+              <figure><img src="https://img.freepik.com/free-vector/hand-drawn-high-school-logo-template_23-2149689290.jpg" className="h-[100px]" alt="logo" /></figure>
               <div tabIndex={0} className="card-body text-black">
                 <h2 className="card-title ">หากยังไม่มีโปรดติดต่อฝ่ายทะเบียน</h2>
                 

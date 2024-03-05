@@ -7,8 +7,9 @@ export default function Search() {
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [searchs, setSearch] = useState([]);
-  const [sTpye, setSType] = useState([]);
-  const [input, setInput] = useState('');
+  // const [sTpye, setSType] = useState([]);
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
 
   useEffect(() => {
     const getStudent = async () => {
@@ -59,8 +60,9 @@ export default function Search() {
     };
   });
   const hdlChange = (e) => {
-setInput(e.target.value)
-    console.log(input)
+setName(e.target.value)
+setLastname(e.target.value)
+    // console.log(input)
   };
 
   const hdlsubmit = async (e) => {
@@ -68,7 +70,7 @@ setInput(e.target.value)
       e.preventDefault();
       let token = localStorage.getItem("token");
       axios
-        .get(`http://localhost:8000/student/search?name=${input}`, {
+        .get(`http://localhost:8000/student/search?name=${name}&lastname=${lastname}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -92,7 +94,7 @@ setInput(e.target.value)
               type="text"
               className="grow bg-transparent"
               placeholder=""
-              value={input}
+              value={name}
               onChange={hdlChange}
             />
             <svg

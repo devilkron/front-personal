@@ -16,7 +16,7 @@ function App() {
 
   return (
     // <div data-theme="valentine" className="min-h-screen">
-    <div data-theme={theme ? "valentine" : "wireframe"} className="min-h-screen">
+    <div data-theme={theme ? "sunset" : "light"} className="min-h-screen">
       <AppRoute />
     </div>
   );

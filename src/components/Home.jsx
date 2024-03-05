@@ -2,11 +2,12 @@ import React from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import image1 from "../assets/schedule1.jpg"
-import image2 from "../assets/image2.jpg"
-import image3 from "../assets/image3.jpg"
-import imgspon1 from "../assets/imgspon1.jpg"
-import imgspon2 from "../assets/imgspon2.jpg"
+import image2 from "../assets/school.jpg"
+import image3 from "../assets/Schedule.png"
+import imgspon1 from "../assets/LEGO.png"
+import imgspon2 from "../assets/React.png"
 import imgspon3 from "../assets/imgspon3.jpg"
+import imgspon4 from "../assets/Apple.png"
 import adminAuth from '../hooks/adminAuth';
 
 
@@ -23,14 +24,15 @@ const Home = () => {
         image3,
         imgspon1,
             imgspon2,
-            imgspon3
+            imgspon3,
+            imgspon4
     ];
 
 
     return (
-        <div>
-            <div>
-        <Slide indicators={indicators}>
+        <div >
+            <div >
+        <Slide indicators={indicators} >
             <div className="each-slide-effect h-auto max-w-lg mx-auto"> 
                 <div style={{ 'backgroundImage': `url(${images[0]})` }}>
                     
@@ -50,9 +52,9 @@ const Home = () => {
         </Slide>
 
         </div>
-        <div>
+        <div >
             
-            <div>
+            <div >
             <Slide indicators={indicators}>
             <div className="each-slide-effect h-auto max-w-lg mx-auto">
                 <div style={{ 'backgroundImage': `url(${images[3]})` }}>
@@ -66,6 +68,11 @@ const Home = () => {
             </div>
             <div className="each-slide-effect h-auto max-w-lg mx-auto">
                 <div style={{ 'backgroundImage': `url(${images[5]})` }}>
+                    
+                </div>
+            </div>
+            <div className="each-slide-effect h-auto max-w-lg mx-auto">
+                <div style={{ 'backgroundImage': `url(${images[6]})` }}>
                     
                 </div>
             </div>

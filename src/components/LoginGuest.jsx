@@ -59,7 +59,7 @@ export default function loginform() {
         <div>
           <img
             className="rounded-full mx-auto h-auto max-w-[120px]"
-            src="https://png.pngtree.com/png-clipart/20211017/original/pngtree-school-logo-png-image_6851480.png"
+            src="https://img.freepik.com/free-vector/hand-drawn-high-school-logo-template_23-2149689290.jpg"
             alt=""
           />
         </div>
