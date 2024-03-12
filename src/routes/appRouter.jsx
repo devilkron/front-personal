@@ -14,6 +14,8 @@ import Footer from '../components/footer'
 import Profile from "../components/profile"
 import QRCODE from "../components/qrline"
 import Showstd from "../components/showstd"
+import Detail from "../components/showDetail"
+
 const guestRouter = createBrowserRouter([
   {
     path: "/",
@@ -53,7 +55,8 @@ const accountRouter = createBrowserRouter([
       { index: true, element: <StudentReg /> },
       {path: "/", element: <StudentReg/>},
       {path: "/profile", element: <Profile/>},
-      {path: "/show", element: <Showstd/>}
+      {path: "/show", element: <Showstd/>},
+      {path: "/detail/*", element: <Detail/>}
     ]
   }
 ])

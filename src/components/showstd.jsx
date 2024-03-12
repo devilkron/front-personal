@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function showstd() {
   const [students, setStudents] = useState([]);
@@ -16,7 +17,7 @@ export default function showstd() {
     };
     showSTD();
   }, []);
-  console.log(students);
+  // console.log(students);
   return (
     <div>
       <div className="overflow-x-auto">
@@ -66,7 +67,7 @@ export default function showstd() {
                       : std.status}
                   </td>
                   <th>
-                    <button className="btn btn-ghost btn-sm text-sky-400">เพิ่มเติม</button>
+                    <Link to={`/detail/${std.std_id}`} className="btn btn-ghost btn-sm text-sky-400">เพิ่มเติม</Link>
                   </th>
                 </tr>
               ))}

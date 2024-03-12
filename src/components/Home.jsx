@@ -32,7 +32,7 @@ const Home = () => {
             </div>
             <div >
         <Slide indicators={indicators} >
-            <div className="each-slide-effect h-auto max-w-lg"> 
+            <div className="each-slide-effect h-auto max-w-lg mx-auto"> 
                 <div style={{ 'backgroundImage': `url(${images[0]})` }}>
                     
                 </div>
