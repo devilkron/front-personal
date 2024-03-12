@@ -13,6 +13,7 @@ import Contact from "../components/contact"
 import Footer from '../components/footer'
 import Profile from "../components/profile"
 import QRCODE from "../components/qrline"
+import Showstd from "../components/showstd"
 const guestRouter = createBrowserRouter([
   {
     path: "/",
@@ -51,7 +52,8 @@ const accountRouter = createBrowserRouter([
     children: [
       { index: true, element: <StudentReg /> },
       {path: "/", element: <StudentReg/>},
-      {path: "/profile", element: <Profile/>}
+      {path: "/profile", element: <Profile/>},
+      {path: "/show", element: <Showstd/>}
     ]
   }
 ])
@@ -69,7 +71,6 @@ const adminRouter = createBrowserRouter([
     children: [
       { index: true, element: <AdminForm/> },
       { path: "/add", element: <AdminReg/> },
-      { path: "/home", element: <Home /> },
       { path: "/", element: <AdminForm /> },
       { path: "/profile", element: <Profile /> },
     ],

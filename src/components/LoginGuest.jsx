@@ -21,7 +21,6 @@ export default function loginform() {
       e.preventDefault();
 
       const rs = await axios.post("http://localhost:8000/auth/login", input);
-      console.log(rs.data.token);
       localStorage.setItem("token", rs.data.token);
       const rs1 = await axios.get("http://localhost:8000/auth/me", {
         headers: { Authorization: `Bearer ${rs.data.token}` },

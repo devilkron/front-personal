@@ -6,7 +6,8 @@ const adminNav = [
   { to: "/add", text: "กรอกข้อมูลผู้สมัคร" },
 ];
 const guestNav = [
-  {to: "/", text: "home"}
+  {to: "/", text: "home"},
+  {to: "/show", text: "ดูข้อมูล"}
 ];
 
 export default function Header() {

@@ -9,31 +9,32 @@
     flex-direction: row;
 } */
 .each-slide-effect > div {
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    height: 450px;
-  }
-  
-  .each-slide-effect span {
-    padding: 20px;
-    font-size: 20px;
-    background: #efefef;
-    text-align: center;
-  }
-  /* body {
+  /* align-items: center; */
+  /* justify-content: center; */
+  background-size: cover;
+  height: 450px;
+  width: 100%;
+}
+
+.each-slide-effect span {
+  padding: 20px;
+  font-size: 20px;
+  background: #efefef;
+  text-align: center;
+}
+/* body {
     height: 200vh;
   } */
-  
-  .indicator {
-    cursor: pointer;
-    padding: 10px;
-    text-align: center;
-    border: 1px #666 solid;
-    margin: 0;
-  }
-  
-  .indicator.active {
-    color: #fff;
-    background: #666;
-  }
+
+.indicator {
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  border: 1px #666 solid;
+  margin: 0;
+}
+
+.indicator.active {
+  color: #fff;
+  background: #666;
+}

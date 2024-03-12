@@ -1,9 +1,6 @@
-import Loginform from "./components/Loginform";
-// import Navbar from "./components/Navbar";
+
 import adminAuth from "./hooks/adminAuth";
-// import Mainnav from "./components/Mainnav";
-import Home from "./components/Home";
-import AdminReg from "./components/adminReg";
+
 import AppRoute from "./routes/appRouter";
 function App() {
   const { loading, theme } = adminAuth();

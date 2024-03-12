@@ -4,12 +4,8 @@ import 'react-slideshow-image/dist/styles.css';
 import image1 from "../assets/schedule1.jpg"
 import image2 from "../assets/school.jpg"
 import image3 from "../assets/Schedule.png"
-import imgspon1 from "../assets/LEGO.png"
-import imgspon2 from "../assets/React.png"
-import imgspon3 from "../assets/imgspon3.jpg"
-import imgspon4 from "../assets/Apple.png"
-import adminAuth from '../hooks/adminAuth';
-
+import image4 from "../assets/ss.png"
+import Sponsor from './Sponsor';
 
 const indicators = (index) => (<div className="indicator">{index + 1}</div>);
 
@@ -22,18 +18,21 @@ const Home = () => {
         image1,
         image2,
         image3,
-        imgspon1,
-            imgspon2,
-            imgspon3,
-            imgspon4
+        image4
+            
     ];
 
 
     return (
         <div >
+            
+            <div className='text-3xl text-amber-400 flex justify-center mb-5 mt-5 bg-yellow-200 w-[450px] mx-auto rounded-lg'>โรงเรียนมัธยมรังษีวิทยาแบ่งปัน</div>
+            <div>
+                hello
+            </div>
             <div >
         <Slide indicators={indicators} >
-            <div className="each-slide-effect h-auto max-w-lg mx-auto"> 
+            <div className="each-slide-effect h-auto max-w-lg"> 
                 <div style={{ 'backgroundImage': `url(${images[0]})` }}>
                     
                 </div>
@@ -43,8 +42,13 @@ const Home = () => {
                     
                 </div>
             </div>
-            <div className="each-slide-effect h-auto max-w-lg mx-auto" >
+            <div className="each-slide-effect object-cover mx-auto" >
                 <div style={{ 'backgroundImage': `url(${images[2]})` }}>
+                    
+                </div>
+            </div>
+            <div className="each-slide-effect  mx-auto" >
+                <div style={{ 'backgroundImage': `url(${images[3]})` }}>
                     
                 </div>
             </div>
@@ -53,34 +57,9 @@ const Home = () => {
 
         </div>
         <div >
-            
-            <div >
-            <Slide indicators={indicators}>
-            <div className="each-slide-effect h-auto max-w-lg mx-auto">
-                <div style={{ 'backgroundImage': `url(${images[3]})` }}>
-                    
-                </div>
-            </div>
-            <div className="each-slide-effect h-auto max-w-lg mx-auto">
-                <div style={{ 'backgroundImage': `url(${images[4]})` }}>
-                    
-                </div>
-            </div>
-            <div className="each-slide-effect h-auto max-w-lg mx-auto">
-                <div style={{ 'backgroundImage': `url(${images[5]})` }}>
-                    
-                </div>
-            </div>
-            <div className="each-slide-effect h-auto max-w-lg mx-auto">
-                <div style={{ 'backgroundImage': `url(${images[6]})` }}>
-                    
-                </div>
-            </div>
-           
-        </Slide>
-            </div>
 
-            
+            <Sponsor/>
+           
         </div>
          </div>
             

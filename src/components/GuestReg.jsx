@@ -15,12 +15,12 @@ export default function adminReg() {
     setInput((prv) => ({ ...prv, [e.target.name]: e.target.value }));
   };
   const hdlSubmit = async (e) => {
+    e.preventDefault();
     if(input.identity.length < 13){
       return alert("กรุณากรอกรหัสบัตรประชาชนให้ครบ")
     }
     try {
-      e.preventDefault();
-
+      
       //เช็คค่าว่าง
       for (const key in input) {
         if (input.hasOwnProperty(key) && input[key].trim() === "") {
@@ -57,11 +57,13 @@ export default function adminReg() {
             timer: 1000,
             showConfirmButton: false,
             width: '500px'
-
-          }).then(()=> {
+            
+          }
+          
+          ).then(()=> {
             location.reload()
           })
-             
+            
         }
          
       }

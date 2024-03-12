@@ -79,7 +79,7 @@ export default function studentReg() {
     } else {
       setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
-    console.log(input);
+    // console.log(input);
   };
 
   const hdlSubmit = async (e) => {

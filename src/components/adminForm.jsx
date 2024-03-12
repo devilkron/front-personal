@@ -1,21 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 // import useAuth from "../hooks/adminAuth";
 import axios from "axios";
+import SearchContext from "../contexts/SearchContext";
 
 export default function Search() {
+  const { studentSearch, setName, name } = useContext(SearchContext);
   const [students, setStudents] = useState([]);
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [searchs, setSearch] = useState([]);
-  // const [sTpye, setSType] = useState([]);
-  const [name, setName] = useState('');
-  const [lastname, setLastname] = useState('');
+  // const [name, setName] = useState("");
+  const [isSearch, setIsSearch] = useState(false);
+  const [skipstudent, setSkipstudent] = useState(0);
+  const nextPage = () => {
+    setSkipstudent((skip) => skip + 10);
+  };
+  const backPage = () => {
+    setSkipstudent((skip) => skip - 10);
+  };
+  // const [page, setPage] = useState('')
+  // const [lastname, setLastname] = useState('');
 
   useEffect(() => {
     const getStudent = async () => {
       let token = localStorage.getItem("token");
       axios
-        .get("http://localhost:8000/student/enrollment", {
+        .get(`http://localhost:8000/student/enrollment?skip=${skipstudent}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,7 +53,7 @@ export default function Search() {
     getStudent();
     getMajor();
     getClass();
-  }, []);
+  }, [skipstudent]);
   // console.log(searchs.major);
   const joinT = students.map((student) => {
     const matchT = classes.find(
@@ -60,29 +70,36 @@ export default function Search() {
     };
   });
   const hdlChange = (e) => {
-setName(e.target.value)
-setLastname(e.target.value)
+    setName(e.target.value);
+    // setPage(e.target.value)
     // console.log(input)
   };
 
   const hdlsubmit = async (e) => {
-    try {
-      e.preventDefault();
-      let token = localStorage.getItem("token");
-      axios
-        .get(`http://localhost:8000/student/search?name=${name}&lastname=${lastname}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => setSearch(response.data.getD))
-        .catch((error) => console.error("Search", error));
-      console.log(searchs);
-    } catch (err) {
-      next(err);
+    e.preventDefault();
+
+    if (name !== "") {
+      try {
+        e.preventDefault();
+        let token = localStorage.getItem("token");
+        axios
+          .get(`http://localhost:8000/student/search?name=${name}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => setSearch(response.data.getD))
+          .then(setIsSearch(true))
+          .catch((error) => console.error("Search", error));
+        // console.log(searchs);
+      } catch (err) {
+        next(err);
+      }
+    } else {
+      location.reload()
     }
   };
-
+  // console.log(skipstudent)
   if (joinT !== students) {
     return (
       <div className="overflow-x-auto">
@@ -215,6 +232,28 @@ setLastname(e.target.value)
             </tbody>
           </table>
         )}
+        <div className="gap-2 flex flex-row float-right">
+          {" "}
+          {(isSearch === false && skipstudent <= 9) || searchs.length >=1 ? (
+            <button disabled className="btn btn-outline btn-error">
+              back
+            </button>
+          ) : (
+            <button onClick={backPage} className="btn btn-outline btn-error">
+              back
+            </button>
+          )}
+          {isSearch === false && skipstudent + 10 <= students.length ? (
+            <button onClick={nextPage} className="btn btn-outline btn-success ">
+              next
+            </button>
+          ) : (
+            <button disabled className="btn btn-outline btn-success ">
+              next
+            </button>
+          )}
+        </div>
+
         {joinT.map((std) => (
           <Modal key={std.std_id} student={std} />
         ))}
