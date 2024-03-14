@@ -15,7 +15,7 @@ import Profile from "../components/profile"
 import QRCODE from "../components/qrline"
 import Showstd from "../components/showstd"
 import Detail from "../components/showDetail"
-
+import UpDetail from "../components/updateDetail"
 const guestRouter = createBrowserRouter([
   {
     path: "/",
@@ -56,7 +56,8 @@ const accountRouter = createBrowserRouter([
       {path: "/", element: <StudentReg/>},
       {path: "/profile", element: <Profile/>},
       {path: "/show", element: <Showstd/>},
-      {path: "/detail/*", element: <Detail/>}
+      {path: "/detail/*", element: <Detail/>},
+      {path: "/update/*", element: <UpDetail/>}
     ]
   }
 ])

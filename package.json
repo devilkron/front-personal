@@ -27,6 +27,7 @@
     "react-phone-number-input": "^3.3.9",
     "react-qr-code": "^2.0.12",
     "react-slideshow-image": "^4.3.0",
+    "react-to-print": "^2.15.1",
     "sweetalert2": "^11.10.5"
   },
   "devDependencies": {

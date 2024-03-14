@@ -67,7 +67,8 @@ export default function showstd() {
                       : std.status}
                   </td>
                   <th>
-                    <Link to={`/detail/${std.std_id}`} className="btn btn-ghost btn-sm text-sky-400">เพิ่มเติม</Link>
+                    {std.status ==="AGREE" ? "" : <Link to={`/update/${std.std_id}`} className="btn btn-ghost btn-sm text-yellow-400">แก้ไข</Link> }
+                  <Link to={`/detail/${std.std_id}`} className="btn btn-ghost btn-sm text-sky-400">เพิ่มเติม</Link>
                   </th>
                 </tr>
               ))}

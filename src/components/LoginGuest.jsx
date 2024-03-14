@@ -68,7 +68,7 @@ export default function loginform() {
           </p>
         </div>
         <div className=" mx-auto w-1/2">
-          <p className="mt-3">Username</p>
+          <p className="mt-3">Email</p>
           <input
             className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-2"
             type="email"

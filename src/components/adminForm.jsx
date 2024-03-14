@@ -96,7 +96,7 @@ export default function Search() {
         next(err);
       }
     } else {
-      location.reload()
+      location.reload();
     }
   };
   // console.log(skipstudent)
@@ -234,7 +234,7 @@ export default function Search() {
         )}
         <div className="gap-2 flex flex-row float-right">
           {" "}
-          {(isSearch === false && skipstudent <= 9) || searchs.length >=1 ? (
+          {(isSearch === false && skipstudent <= 9) || searchs.length >= 1 ? (
             <button disabled className="btn btn-outline btn-error">
               back
             </button>
@@ -255,15 +255,21 @@ export default function Search() {
         </div>
 
         {joinT.map((std) => (
-          <Modal key={std.std_id} student={std} />
+          <Modal
+            key={std.std_id}
+            student={std}
+            majors={majors}
+            classes={classes}
+          />
         ))}
       </div>
     );
   }
 }
 
-const Modal = ({ student }) => {
+const Modal = ({ student, majors, classes }) => {
   // console.log(student);
+
   const modalId = `my_modal_${student.std_id}`;
   const [editData, setEditData] = useState({
     std_name: student.std_name,
@@ -271,9 +277,10 @@ const Modal = ({ student }) => {
     std_lastname: student.std_lastname,
     std_address: student.std_address,
     std_phone: student.std_phone,
-    major_type: student.major_type,
+    majorId: student.majorId,
     class_type: student.class_type,
   });
+  // console.log(editData.majorId)
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
@@ -289,6 +296,7 @@ const Modal = ({ student }) => {
       e.stopPropagation();
       const std_id = student.std_id;
       // console.log(std_id)
+      // console.log(editData);
       const apiUrl = `http://localhost:8000/student/update/${std_id}`;
 
       await axios.patch(apiUrl, editData);
@@ -307,6 +315,7 @@ const Modal = ({ student }) => {
       ...prevData,
       [e.target.name]: e.target.value,
     }));
+    console.log(editData);
   };
   const hdlDelete = async (std_id) => {
     if (confirm("ต้องการลบข้อมูลหรือไม่") === true) {
@@ -379,7 +388,6 @@ const Modal = ({ student }) => {
       }
     }
   };
-
   return (
     <dialog id={modalId} className="modal select-none">
       <div className="modal-box">
@@ -443,12 +451,31 @@ const Modal = ({ student }) => {
         <h3 className="font-bold text-lg">
           สาขาวิชา :{" "}
           {isEditing ? (
-            <input
-              type="text "
-              name="major_type"
-              value={editData.major_type}
+            <select
+              name="majorId"
+              value={editData.majorId}
               onChange={handleChange}
-            ></input>
+            >
+              {/* <option value='' disabled>สาขาวิชา</option> */}
+              {majors.map((el, index) => (
+                // <option></option>
+                <>
+                  <option value={el.major_id} key={index}>
+                    {el.major_type === "MATHSCI"
+                      ? "วิทย์คณิต"
+                      : el.major_type === "ARTMATH"
+                      ? "ศิลป์คำนวณ"
+                      : el.major_type === "ARTENG"
+                      ? "ศิลป์ภาษา"
+                      : el.major_type === "ARTSOC"
+                      ? "ศิลป์สังคม"
+                      : el.major_type === "ARTFREE"
+                      ? "ศิลป์ทั่วไป"
+                      : "ไม่ระบุ"}
+                  </option>
+                </>
+              ))}
+            </select>
           ) : (
             student.major_type
           )}
@@ -456,12 +483,17 @@ const Modal = ({ student }) => {
         <h3 className="font-bold text-lg">
           ระดับการศึกษา :
           {isEditing ? (
-            <input
-              type="text"
-              name="class_type"
-              value={editData.class_type}
+            <select
+              name="classId"
+              value={editData.classId}
               onChange={handleChange}
-            ></input>
+            >
+              {classes.map((el, index) => (
+                <option value={el.class_id} key={index}>
+                  {el.class_type === "SECONDARY2" ? "มัธยมปลาย" : "มัธยมต้น"}
+                </option>
+              ))}
+            </select>
           ) : student.class_type === "SECONDARY2" ? (
             "มัธยมปลาย"
           ) : (

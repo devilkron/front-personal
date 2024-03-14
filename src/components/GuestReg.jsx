@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function adminReg() {
@@ -11,6 +12,7 @@ export default function adminReg() {
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate()
   const hdlChange = (e) => {
     setInput((prv) => ({ ...prv, [e.target.name]: e.target.value }));
   };
@@ -61,7 +63,7 @@ export default function adminReg() {
           }
           
           ).then(()=> {
-            location.reload()
+            navigate("/guest")
           })
             
         }

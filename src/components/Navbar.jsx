@@ -7,7 +7,7 @@ const adminNav = [
 ];
 const guestNav = [
   {to: "/", text: "home"},
-  {to: "/show", text: "ดูข้อมูล"}
+  {to: "/show", text: "ข้อมูลผู้สมัครสอบ"}
 ];
 
 export default function Header() {
