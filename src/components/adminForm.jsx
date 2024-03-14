@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 // import useAuth from "../hooks/adminAuth";
 import axios from "axios";
 import SearchContext from "../contexts/SearchContext";
+import Swal from "sweetalert2";
 
 export default function Search() {
   const { studentSearch, setName, name } = useContext(SearchContext);
@@ -9,6 +10,7 @@ export default function Search() {
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [searchs, setSearch] = useState([]);
+  const [reload, setLoad] = useState(false)
   // const [name, setName] = useState("");
   const [isSearch, setIsSearch] = useState(false);
   const [skipstudent, setSkipstudent] = useState(0);
@@ -53,7 +55,7 @@ export default function Search() {
     getStudent();
     getMajor();
     getClass();
-  }, [skipstudent]);
+  }, [skipstudent,reload]);
   // console.log(searchs.major);
   const joinT = students.map((student) => {
     const matchT = classes.find(
@@ -260,6 +262,7 @@ export default function Search() {
             student={std}
             majors={majors}
             classes={classes}
+            reload = {setLoad}
           />
         ))}
       </div>
@@ -267,7 +270,7 @@ export default function Search() {
   }
 }
 
-const Modal = ({ student, majors, classes }) => {
+const Modal = ({ student, majors, classes,reload }) => {
   // console.log(student);
 
   const modalId = `my_modal_${student.std_id}`;
@@ -300,9 +303,13 @@ const Modal = ({ student, majors, classes }) => {
       const apiUrl = `http://localhost:8000/student/update/${std_id}`;
 
       await axios.patch(apiUrl, editData);
+      Swal.fire({
+        title: "แก้ไขสำเร็จ",
+        icon: "success",
+        timer: 1500,
 
-      alert("แก้ไขสำเร็จ");
-      location.reload();
+      });
+      reload(prv => !prv) //reloadแบบใหม่
       setIsEditing(false);
       document.getElementById(modalId).close();
       // onEdit();
@@ -315,7 +322,7 @@ const Modal = ({ student, majors, classes }) => {
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-    console.log(editData);
+    // console.log(editData);
   };
   const hdlDelete = async (std_id) => {
     if (confirm("ต้องการลบข้อมูลหรือไม่") === true) {
@@ -388,11 +395,33 @@ const Modal = ({ student, majors, classes }) => {
       }
     }
   };
+
+  let thaiTranslation = "";
+  switch (student.major?.major_type) {
+    case "MATHSCI":
+      thaiTranslation = "วิทย์คณิต";
+      break;
+    case "ARTMATH":
+      thaiTranslation = "ศิลป์คำนวณ";
+      break;
+    case "ARTSOC":
+      thaiTranslation = "ศิลป์สังคม";
+      break;
+    case "ARTENG":
+      thaiTranslation = "ศิลป์ภาษา";
+      break;
+    case "ARTFREE":
+      thaiTranslation = "ศิลป์ทั่วไป";
+      break;
+    default:
+      thaiTranslation = "ไม่ระบุ";
+      break;
+  }
   return (
     <dialog id={modalId} className="modal select-none">
       <div className="modal-box">
         <img
-          className="w-[250px] mx-auto rounded-md mb-5 pointer-events-none"
+          className="w-[4cm] h-[5.23cm] mx-auto rounded-md mb-5 pointer-events-none"
           src={student.img_profile}
         />
         <h3 className="font-bold text-lg">
@@ -459,7 +488,7 @@ const Modal = ({ student, majors, classes }) => {
               {/* <option value='' disabled>สาขาวิชา</option> */}
               {majors.map((el, index) => (
                 // <option></option>
-                <>
+                
                   <option value={el.major_id} key={index}>
                     {el.major_type === "MATHSCI"
                       ? "วิทย์คณิต"
@@ -473,11 +502,11 @@ const Modal = ({ student, majors, classes }) => {
                       ? "ศิลป์ทั่วไป"
                       : "ไม่ระบุ"}
                   </option>
-                </>
+  
               ))}
             </select>
           ) : (
-            student.major_type
+            thaiTranslation
           )}
         </h3>
         <h3 className="font-bold text-lg">

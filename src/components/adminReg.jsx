@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
-import adminAuth from "../hooks/adminAuth";
+import { useEffect, useState, useRef, useContext } from "react";
+// import adminAuth from "../hooks/adminAuth";
 import Swal from "sweetalert2";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import AuthContext from "../contexts/AuthContext";
 export default function studentReg() {
   // console.log(fileinput.current.files[0])
   const [phone, setPhone] = useState("");
+  const {user} = useContext(AuthContext)
   const [input, setInput] = useState({
     std_identity: "",
     std_name: "",
@@ -19,7 +21,15 @@ export default function studentReg() {
     img_profile: "",
     majorId: "",
     classId: "",
+    user_id: user?.user_id
   });
+  const [skipstudent, setSkipstudent] = useState(0);
+  const nextPage = () => {
+    setSkipstudent((skip) => skip + 10);
+  };
+  const backPage = () => {
+    setSkipstudent((skip) => skip - 10);
+  };
 
   const fileinput = useRef(null);
   const [major, setMajor] = useState([]);
@@ -45,7 +55,7 @@ export default function studentReg() {
     const getStudent = async () => {
       let token = localStorage.getItem("token");
       axios
-        .get("http://localhost:8000/student/enrollment", {
+        .get(`http://localhost:8000/student/enrollment?skip=${skipstudent}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => setStudents(response.data.getS))
