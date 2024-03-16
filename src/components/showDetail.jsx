@@ -28,7 +28,7 @@ export default function showDetail() {
   const componentRef = useRef();
   const hdlPrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: "บัตรเข้าห้องสอบ"
+    documentTitle: `บัตรเข้าห้องสอบ_${students.std_name}_${students.std_lastname}`
   });
   
   // console.log(students.major?.major_type
@@ -56,18 +56,18 @@ switch (students.major?.major_type) {
     break;
 }
   return (
-    <div className="mt-5 mx-auto w-1/3" >
+    <div className="mt-5 mx-auto w-1/3 select-none" >
      <div ref={componentRef}>
      <div className="bg-[#637aa4] text-2xl text-white  h-16 flex items-center  rounded-t-[16px] px-4 " >
         ข้อมูลผู้สมัครสอบ
       </div>
-      <div className="card rounded-t-none flex flex-row bg-base-100 shadow-xl gap-4 p-5" >
+      <div className="card rounded-t-none flex flex-row bg-base-100 shadow-xl gap-4 p-5 pointer-events-none " >
         
           <img className="w-[4cm] h-[5.23cm] rounded-md"
             src={students.img_profile}
           />
         
-        <div className="card-body p-0">
+        <div className="card-body p-0 ">
           <h2 className="card-title"><label className="text-gray-600 font-normal">ชื่อ</label> {students.std_name} {students.std_lastname}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">ที่อยู่</label> {students.std_address}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">เบอร์โทร</label> +{students.std_phone}</h2>

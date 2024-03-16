@@ -56,11 +56,11 @@ const Home = () => {
         </Slide>
 
         </div>
-        <div >
+        {/* <div >
 
             <Sponsor/>
            
-        </div>
+        </div> */}
          </div>
             
         

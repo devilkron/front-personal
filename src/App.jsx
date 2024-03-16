@@ -8,7 +8,7 @@ function App() {
   // console.log(theme);
 
   if (loading) {
-    return <p className="text-4xl text-primary">LOADING</p>;
+    return <span className="loading loading-ring loading-lg">Loading</span>
   }
 
   return (
