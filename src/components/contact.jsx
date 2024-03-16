@@ -25,7 +25,7 @@ export default function contact() {
         </div>
       </div>
 
-      <div  className="flex flex-row">
+      <div className="flex flex-row">
         <div className="flex justify-end">
           <img
             src="https://i.pinimg.com/564x/90/55/09/905509e37d5fb75b1aaf4866a93c9d46.jpg"
@@ -34,25 +34,60 @@ export default function contact() {
         </div>
         <div className="mt-10 text-2xl">
           <h1 className="mt-4 ">Email</h1>
-          <p className="mt-5">chalongrach.ph64@snru.ac.th, devilkron@gmail.com</p>
+          <p className="mt-5">
+            chalongrach.ph64@snru.ac.th, devilkron@gmail.com
+          </p>
         </div>
       </div>
 
       <div className="flex flex-row">
         <div className="flex justify-end">
-        <img src="https://sakolraj.ac.th/wp-content/uploads/2023/06/Gold-Elegant-Wedding-Circular-Logo-5.png" 
-        className="w-[300px] max-h-[300px]"/>
-      </div>
+          <img
+            src="https://sakolraj.ac.th/wp-content/uploads/2023/06/Gold-Elegant-Wedding-Circular-Logo-5.png"
+            className="w-[300px] max-h-[300px]"
+          />
+        </div>
 
-      <div className="mt-10 text-2xl">
+        <div className="mt-10 text-2xl">
           <h1 className="mt-4 ">Social Network</h1>
-          <p className="mt-5">Facebook <a href="https://www.facebook.com/CP.KornEiEi40" target="_blank" className="text-sky-300 hover:text-blue-400">Chalongrach Phukhongnak</a></p>
-          <p className="mt-5">Linkdin <a href="https://www.linkedin.com/in/chalongrach-phukhongnak-a2b8002ab/" target="_blank" className="text-sky-300 hover:text-blue-400">Chalongrach Phukhongnak</a></p>
-          <p className="mt-5">Line <Link to={'/line'} className=" text-sky-300 hover:text-blue-400">kroneiei40</Link></p>
-          <p className="mt-5">Instagram <a href="https://www.instagram.com/kkorn_ii/?hl=th" target="_blank" className="text-sky-300 hover:text-blue-400">kkorn_ii</a> </p>
+          <p className="mt-5">
+            Facebook{" "}
+            <a
+              href="https://www.facebook.com/CP.KornEiEi40"
+              target="_blank"
+              className="text-sky-300 hover:text-blue-400"
+            >
+              Chalongrach Phukhongnak
+            </a>
+          </p>
+          <p className="mt-5">
+            Linkdin{" "}
+            <a
+              href="https://www.linkedin.com/in/chalongrach-phukhongnak-a2b8002ab/"
+              target="_blank"
+              className="text-sky-300 hover:text-blue-400"
+            >
+              Chalongrach Phukhongnak
+            </a>
+          </p>
+          <p className="mt-5">
+            Line{" "}
+            <Link to={"/line"} className=" text-sky-300 hover:text-blue-400">
+              kroneiei40
+            </Link>
+          </p>
+          <p className="mt-5">
+            Instagram{" "}
+            <a
+              href="https://www.instagram.com/kkorn_ii/?hl=th"
+              target="_blank"
+              className="text-sky-300 hover:text-blue-400"
+            >
+              kkorn_ii
+            </a>{" "}
+          </p>
         </div>
       </div>
-      
     </div>
   );
 }

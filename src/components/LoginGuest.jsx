@@ -64,7 +64,7 @@ export default function loginform() {
         </div>
         <div>
           <p className="text-center w-[70%] mx-auto my-5 bg-red-300 text-red-600 rounded-md">
-            กรุณาสมัครสมาชิกก่อนเข้าใช้ระบบ ลงทะเบียนเรียน
+            สมัครสมาชิกเพื่อเข้าใช้ระบบ ลงทะเบียนเรียน
           </p>
         </div>
         <div className=" mx-auto w-1/2">
@@ -99,6 +99,11 @@ export default function loginform() {
             value="Register"
             className="btn btn-warning btn-outline w-[150px] ml-9 "
           /></Link> 
+          
+        </div>
+        <div className="flex justify-end my-1">
+
+        <Link to="/TEST_DOWNLOAD.pdf" target="_blank" download className="underline text-blue-600 underline-offset-2">Download แบบฟอร์ม</Link>
         </div>
       </form>
     </div>

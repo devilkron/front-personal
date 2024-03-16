@@ -39,7 +39,7 @@ export default function profile() {
   return (
     <>
       {edit ? (
-        <div className="border-2 border-sky-200 bg-base-100 w-1/2 mx-auto text-xl  mt-5 rounded-lg">
+        <div className="border-2   w-1/2 mx-auto text-xl  mt-5 rounded-lg bg-[url(https://img.freepik.com/free-photo/abstract-extruded-voronoi-blocks-background-minimal-light-clean-corporate-wall-3d-geometric-surface-illustration-polygonal-elements-displacement_1217-2503.jpg)] ">
           <div className="flex gap-2 py-3 items-center text-base pl-2">
             <div className="w-full ">
               <p>ชื่อ</p>
@@ -97,13 +97,16 @@ export default function profile() {
           </div>
         </div>
       ) : (
-        <div className="border-2 border-sky-200 bg-base-100 w-1/2 mx-auto text-xl text-center mt-5 rounded-lg">
-          <div className="flex gap-3 justify-center py-3">
-            <h1>{user.user_name}</h1>
-            <h1>{user.user_lastname}</h1>
-          </div>
-          <h1>{user.user_email}</h1>
-          <h1>{user.user_identity}</h1>
+        <div className="border-2   w-1/2 mx-auto text-xl  mt-5 rounded-lg bg-[url(https://img.freepik.com/free-photo/abstract-extruded-voronoi-blocks-background-minimal-light-clean-corporate-wall-3d-geometric-surface-illustration-polygonal-elements-displacement_1217-2503.jpg)] ">
+          <div className="flex justify-center py-3">
+            <h1>ชื่อ {user.user_name} {user.user_lastname}</h1>
+            </div>
+            <div className="flex flex-col justify-center items-center"> 
+
+          <h1>อีเมล {user.user_email}</h1>
+          <h1>รหัสบัตรประชาชน {user.user_identity}</h1>
+            </div>
+          
           <div className="flex justify-end p-2">
             <button className="btn btn-outline btn-warning" onClick={Click}>
               แก้ไขข้อมูล

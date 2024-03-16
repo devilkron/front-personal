@@ -68,6 +68,7 @@ switch (students.major?.major_type) {
           />
         
         <div className="card-body p-0 ">
+          <h2 className="card-title"><label className="text-gray-600 font-normal">เลขประชาชน</label> {students.std_identity}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">ชื่อ</label> {students.std_name} {students.std_lastname}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">ที่อยู่</label> {students.std_address}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">เบอร์โทร</label> +{students.std_phone}</h2>

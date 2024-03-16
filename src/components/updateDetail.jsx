@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Inputmask from "react-input-mask";
+
 
 export default function updateDetail() {
   const [students, setStudents] = useState({});
@@ -64,8 +66,8 @@ export default function updateDetail() {
           <label className="block text-sm font-medium text-white">
             รหัสบัตรประชาชน
           </label>
-          <input
-            type="text"
+          <Inputmask
+            mask="9-9999-99999-99-9"
             name="std_identity"
             value={students.std_identity || ""}
             onChange={hdlChange}
@@ -73,9 +75,7 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-white">
-            ชื่อ
-          </label>
+          <label className="block text-sm font-medium text-white">ชื่อ</label>
           <input
             type="text"
             name="std_name"
@@ -121,38 +121,49 @@ export default function updateDetail() {
           />
         </div>
         <div className="w-full flex flex-row text-white">
-        <p className="w-1/2">สาขา</p> <p className="w-1/2 px-2">ระดับการศึกษา</p>
+          <p className="w-1/2">สาขา</p>{" "}
+          <p className="w-1/2 px-2">ระดับการศึกษา</p>
         </div>
-        
-        <div className="flex flex-row gap-3 w-full">
-        <select name="majorId" onChange={hdlChange} className="w-1/2 py-2 rounded-md px-2">
-          {majors.map((el, index) => (
-            <option value={el.major_id} key={index}>
-              {" "}
-              {el.major_type === "MATHSCI"
-                ? "วิทย์คณิต"
-                : el.major_type === "ARTMATH"
-                ? "ศิลป์คำนวณ"
-                : el.major_type === "ARTENG"
-                ? "ศิลป์ภาษา"
-                : el.major_type === "ARTSOC"
-                ? "ศิลป์สังคม"
-                : el.major_type === "ARTFREE"
-                ? "ศิลป์ทั่วไป"
-                : "ไม่ระบุ"}
-            </option>
-          ))}
-        </select>
 
-        <select name="classId" value={students.classId} onChange={hdlChange} className="w-1/2 py-2 rounded-md px-2">
-          {classes.map((el, index) => (
-            <option value={el.class_id} key={index}>
-              {el.class_type === "SECONDARY2" ? "มัธยมปลาย" : "มัธยมต้น"}
-            </option>
-          ))}
-        </select>
+        <div className="flex flex-row gap-3 w-full">
+          <select
+            name="majorId"
+            value={students.majorId}
+            onChange={hdlChange}
+            className="w-1/2 py-2 rounded-md px-2"
+          >
+            {majors.map((el, index) => (
+              <option value={el.major_id} key={index}>
+                {" "}
+                {el.major_type === "MATHSCI"
+                  ? "วิทย์คณิต"
+                  : el.major_type === "ARTMATH"
+                  ? "ศิลป์คำนวณ"
+                  : el.major_type === "ARTENG"
+                  ? "ศิลป์ภาษา"
+                  : el.major_type === "ARTSOC"
+                  ? "ศิลป์สังคม"
+                  : el.major_type === "ARTFREE"
+                  ? "ศิลป์ทั่วไป"
+                  : "ไม่ระบุ"}
+              </option>
+            ))}
+          </select>
+
+          <select
+            name="classId"
+            value={students.classId}
+            onChange={hdlChange}
+            className="w-1/2 py-2 rounded-md px-2"
+          >
+            {classes.map((el, index) => (
+              <option value={el.class_id} key={index}>
+                {el.class_type === "SECONDARY2" ? "มัธยมปลาย" : "มัธยมต้น"}
+              </option>
+            ))}
+          </select>
         </div>
-        
+
         <button
           type="submit"
           className="btn  btn-success text-white px-4 py-2 rounded-md mt-3 "

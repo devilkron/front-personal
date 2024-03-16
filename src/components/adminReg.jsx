@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import AuthContext from "../contexts/AuthContext";
+import Inputmask from 'react-input-mask'
 export default function studentReg() {
   // console.log(fileinput.current.files[0])
   const [phone, setPhone] = useState("");
@@ -220,9 +221,9 @@ export default function studentReg() {
               </select>
             </div>
             <div className="w-2/3 mt-3">
-              <input
+              <Inputmask
                 className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-                type="text"
+                mask="9-9999-99999-99-9"
                 name="std_identity"
                 value={input.std_identity}
                 onChange={hdlChange}
