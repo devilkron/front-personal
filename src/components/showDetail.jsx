@@ -58,10 +58,10 @@ switch (students.major?.major_type) {
   return (
     <div className="mt-5 mx-auto w-1/3" >
      <div ref={componentRef}>
-     <div className="bg-[#637aa4] text-2xl text-white  h-16 flex items-center  rounded-t-lg px-4 " >
+     <div className="bg-[#637aa4] text-2xl text-white  h-16 flex items-center  rounded-t-[16px] px-4 " >
         ข้อมูลผู้สมัครสอบ
       </div>
-      <div className="card flex flex-row bg-base-100 shadow-xl gap-4 p-5" >
+      <div className="card rounded-t-none flex flex-row bg-base-100 shadow-xl gap-4 p-5" >
         
           <img className="w-[4cm] h-[5.23cm] rounded-md"
             src={students.img_profile}

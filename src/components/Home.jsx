@@ -6,7 +6,7 @@ import image2 from "../assets/school.jpg"
 import image3 from "../assets/Schedule.png"
 import image4 from "../assets/ss.png"
 import Sponsor from './Sponsor';
-
+import Dashboard from './Dashboard';
 const indicators = (index) => (<div className="indicator">{index + 1}</div>);
 
 // const { user } = adminAuth();
@@ -27,10 +27,10 @@ const Home = () => {
         <div >
             
             <div className='text-3xl text-amber-400 flex justify-center mb-5 mt-5 bg-yellow-200 w-[450px] mx-auto rounded-lg'>โรงเรียนมัธยมรังษีวิทยาแบ่งปัน</div>
-            <div>
-                hello
+            <div className='mb-5'>
+                <Dashboard/>
             </div>
-            <div >
+            <div className='mb-10'>
         <Slide indicators={indicators} >
             <div className="each-slide-effect h-auto max-w-lg mx-auto"> 
                 <div style={{ 'backgroundImage': `url(${images[0]})` }}>

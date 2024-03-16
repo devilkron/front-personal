@@ -55,13 +55,13 @@ export default function updateDetail() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto max-w-[50rem]">
       <form
-        className="bg-gray-100 p-6 rounded-lg shadow-md"
+        className="bg-slate-500 p-6 rounded-lg shadow-md mt-5"
         onSubmit={hdlSubmit}
       >
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-white">
             รหัสบัตรประชาชน
           </label>
           <input
@@ -73,7 +73,7 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-white">
             ชื่อ
           </label>
           <input
@@ -85,7 +85,7 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-white">
             นามสกุล
           </label>
           <input
@@ -97,7 +97,7 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-white">
             ที่อยู่
           </label>
           <input
@@ -109,7 +109,7 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-white">
             เบอร์โทร
           </label>
           <input
@@ -120,8 +120,12 @@ export default function updateDetail() {
             className="mt-1 p-2 w-full border rounded-md"
           />
         </div>
-        <div className="flex flex-row gap-3 ">
-        <select name="majorId" onChange={hdlChange}>
+        <div className="w-full flex flex-row text-white">
+        <p className="w-1/2">สาขา</p> <p className="w-1/2 px-2">ระดับการศึกษา</p>
+        </div>
+        
+        <div className="flex flex-row gap-3 w-full">
+        <select name="majorId" onChange={hdlChange} className="w-1/2 py-2 rounded-md px-2">
           {majors.map((el, index) => (
             <option value={el.major_id} key={index}>
               {" "}
@@ -140,7 +144,7 @@ export default function updateDetail() {
           ))}
         </select>
 
-        <select name="classId" value={students.classId} onChange={hdlChange}>
+        <select name="classId" value={students.classId} onChange={hdlChange} className="w-1/2 py-2 rounded-md px-2">
           {classes.map((el, index) => (
             <option value={el.class_id} key={index}>
               {el.class_type === "SECONDARY2" ? "มัธยมปลาย" : "มัธยมต้น"}
