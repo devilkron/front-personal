@@ -103,7 +103,7 @@ export default function loginform() {
         </div>
         <div className="flex justify-end my-1">
 
-        <Link to="/TEST_DOWNLOAD.pdf" target="_blank" download className="underline text-blue-600 underline-offset-2">Download แบบฟอร์ม</Link>
+        <Link to="/แบบฟอร์มสมัครสอบ.pdf" target="_blank" download className="underline text-blue-600 underline-offset-2">Download แบบฟอร์ม</Link>
         </div>
       </form>
     </div>
