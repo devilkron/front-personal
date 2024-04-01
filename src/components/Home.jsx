@@ -24,7 +24,7 @@ const Home = () => {
 
 
     return (
-        <div >
+        <div className=' relative'>
             
             <div className='text-3xl text-amber-400 flex justify-center mb-5 mt-5 bg-yellow-200 w-[450px] mx-auto rounded-lg'>โรงเรียนมัธยมรังษีวิทยาแบ่งปัน</div>
             <div className='mb-5'>

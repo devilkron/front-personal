@@ -50,9 +50,9 @@ export default function loginform() {
     }
   };
   return (
-    <div>
+    <div className="relative">
       <form
-        className=" max-w-[800px] max-h-[600px] mx-auto mt-5 p-5 bg-sky-200 rounded-lg shadow-lg"
+        className=" md:scale-100 scale-90 max-w-[800px] max-h-[600px] mx-auto mt-5 p-5 bg-sky-200 rounded-lg shadow-lg"
         onSubmit={hdlSubmit}
       >
         
@@ -64,41 +64,41 @@ export default function loginform() {
           />
         </div>
         <div>
-          <p className="text-center w-[70%] mx-auto my-5 bg-red-300 text-red-600 rounded-md">
+          <p className="text-center w-[70%] mx-auto my-5 text-xl  rounded-md">
             เข้าสู่ระบบไม่ได้ติดต่อ ฝ่ายทะเบียน โรงเรียน
           </p>
         </div>
         <div className=" mx-auto w-1/2">
-          <p className="mt-3">Email</p>
+          
           <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-2"
+            className="rounded-md border-white border bg-white text-violet-500 w-full mt-1 px-2 h-10"
             type="email"
             name="email"
             value={input.email}
             onChange={hdlChange}
-            placeholder="Enter your Email"
+            placeholder="กรอกอีเมล"
           />
-          <p className="mt-3">Password</p>
+          
           <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-2"
+            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-2 h-10"
             type="password"
             name="password"
             value={input.password}
             onChange={hdlChange}
-            placeholder="Enter Your Password"
+            placeholder="รหัสผ่าน"
           />
         </div>
 
-        <div className="mx-auto mt-5 w-1/2">
+        <div className="mx-auto mt-5 w-1/2 ">
           <input
             type="submit"
             value="login"
-            className="btn btn-success btn-outline w-[150px] mr-10 "
+            className="btn btn-success btn-outline w-[90px] bt:w-[150px] mr-10 "
           />
           <input
             type="reset"
             value="BACK"
-            className="btn btn-error btn-outline w-[150px] ml-9 "
+            className="btn btn-error btn-outline w-[90px] bt:w-[150px] ml-9 "
             onClick={() => window.location.href = '/'}
           />
         </div>

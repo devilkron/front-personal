@@ -176,7 +176,7 @@ export default function studentReg() {
           </div>
           <div className=" mx-auto  w-full">
             <div className="flex gap-2 mt-3 w-3/4 mx-auto">
-              <p className="mt-3 text-xl">สาขา:</p>
+              <p className="mt-3 text-xl">วิชา:</p>
               <select
                 name="majorId"
                 className="select select-bordered w-full max-w-xs text-violet-500"
@@ -264,7 +264,7 @@ export default function studentReg() {
                 name="std_address"
                 value={input.std_address}
                 onChange={hdlChange}
-                placeholder="ที่อยู่"
+                placeholder="ที่อยู่ที่สามารถติดต่อได้"
               />
               {/* <p className="mt-3">Phone</p> */}
               <PhoneInput

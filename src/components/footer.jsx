@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 export default function footer() {
   return (
-    <div className="text-center text-sm mt-5 bg-sky-500 ">
+    <div className="text-center text-sm mt-5 bg-sky-500  w-full bottom-0">
       <Link to="/contact">
         <p className="text-white hover:text-red-400">ติดต่อเรา</p>
       </Link>

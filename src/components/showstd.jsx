@@ -48,7 +48,8 @@ export default function showstd() {
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">{std.std_name}</div>
+                        
+                        <div className="font-bold">{std.gender?.gender_type === "MISS" ? "นางสาว" : std.gender?.gender_type === "GIRL" ? "ด.ญ." :std.gender?.gender_type === "MRS" ? "นาง" : std.gender?.gender_type === "BOY" ? "ด.ช." : std.gender?.gender_type === "MR" ? "นาย" : std.gender?.gender_id} {std.std_name}</div>
                         <div className="text-sm opacity-50">{std.std_id}</div>
                       </div>
                     </div>
@@ -68,7 +69,7 @@ export default function showstd() {
                   </td>
                   <th>
                     {std.status ==="AGREE" ? "" : <Link to={`/update/${std.std_id}`} className="btn btn-ghost btn-sm text-yellow-400">แก้ไข</Link> }
-                  <Link to={`/detail/${std.std_id}`} className="btn btn-ghost btn-sm text-sky-400">เพิ่มเติม</Link>
+                  <Link to={`/detail/${std.std_id}`} className="btn btn-ghost btn-sm text-sky-400">รายละเอียด</Link>
                   </th>
                 </tr>
               ))}

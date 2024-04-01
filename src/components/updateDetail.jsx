@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Inputmask from "react-input-mask";
 
-
 export default function updateDetail() {
   const [students, setStudents] = useState({});
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [gender, setGender] = useState([]);
   const [update, setUpdate] = useState({
     std_name: "",
     std_bd: "",
@@ -25,6 +25,10 @@ export default function updateDetail() {
       //   setUpdate(rs.data.showDt);
       // console.log(rs.data.showDt)
     };
+    const getGender = async () => {
+      const rs = await axios.get("http://localhost:8000/student/gender");
+      setGender(rs.data.getGen);
+    };
     const getMajor = async () => {
       const rs = await axios.get("http://localhost:8000/student/major");
       setMajors(rs.data.getM);
@@ -33,7 +37,7 @@ export default function updateDetail() {
       const rs = await axios.get("http://localhost:8000/student/class");
       setClasses(rs.data.getC);
     };
-
+    getGender();
     getClass();
     getMajor();
     showDT();
@@ -74,6 +78,24 @@ export default function updateDetail() {
             className="mt-1 p-2 w-full border rounded-md"
           />
         </div>
+        <div className="w-full flex flex-row text-white">
+          <p className="w-1/2">คำนำหน้า</p>
+        </div>
+
+        <div className="flex flex-row gap-3 w-full">
+          <select
+            name="gender_id"
+            value={students.gender_id}
+            onChange={hdlChange}
+            className="w-32 py-2 rounded-md px-2 "
+          >
+            {gender.map((el, index) => (
+              <option value={el.gender_id} key={index}>
+                {el.gender_type ==="MISS" ? "นางสาว" : el.gender_type === "GIRL" ?"ด.ญ." : el.gender_type === "MRS" ? "นาง" : el.gender_type === "BOY" ? "ด.ช." : el.gender_type === "MR" ? "นาย" : el.gender_type}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-white">ชื่อ</label>
           <input
@@ -84,6 +106,7 @@ export default function updateDetail() {
             className="mt-1 p-2 w-full border rounded-md"
           />
         </div>
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-white">
             นามสกุล

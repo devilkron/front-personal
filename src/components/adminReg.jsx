@@ -264,7 +264,7 @@ export default function studentReg() {
                 name="std_address"
                 value={input.std_address}
                 onChange={hdlChange}
-                placeholder="ที่อยู่"
+                placeholder="ที่อยู่ที่สามารถติดต่อได้"
               />
               {/* <p className="mt-3">Phone</p> */}
               <PhoneInput

@@ -31,7 +31,7 @@ export default function Header() {
         
                     
           
-          <div className="btn-ghost btn-xl text-lime-500 hover:text-amber-400 w-[286px]">
+          <div className="btn-ghost  btn-xl text-lime-500 hover:text-amber-400 w-[286px]">
             <Link to="/guest">
               ลงทะเบียนเรียน <i className="fa-solid fa-book"></i>
             </Link>
@@ -48,7 +48,7 @@ export default function Header() {
             <div 
               tabIndex={0}
               role="button"
-              className=" btn-ghost btn-xl text-amber-400 hover:text-lime-500 W-[315px]"
+              className="btn-ghost btn-xl   text-amber-400 hover:text-lime-500 w-[315px]"
             >
                ล็อคอินสำหรับ Admin
              

@@ -30,7 +30,7 @@ export default function Header() {
       <div className="flex-1">
         <Link to={'/profile'}>
           <p className="btn btn-ghost text-xl">
-            Hello, {user?.user_id ? user.user_name : "Guest"}
+            Hello,{user.user_gender ==="BOY" ? "ด.ช." : user.user_gender === "MR" ? "นาย" : user.user_gender === "GIRL" ? "ด.ญ." : user.user_gender ==="MISS" ?"นางสาว" : user.user_gender === "MRS" ? "นาง" : user.user_gender} {user?.user_id ? user.user_name : "Guest"}
           </p>
         </Link>
       </div>

@@ -10,6 +10,13 @@ export default {
       sans: ['Prompt','sans-serif'],
     },
     extend: {},
+    screens: {
+      "sm" : '475px',
+      "md" : "685px",
+      "lg" : "769px",
+      "bt" : "790px"
+
+    }
   },
   daisyui: {
     themes: [
