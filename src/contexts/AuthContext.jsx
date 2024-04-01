@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createContext, useEffect, useState } from "react";
-
+import Swal from 'sweetalert2';
 
 const AuthContext = createContext();
 
@@ -35,6 +35,12 @@ function AuthContextProvider(props) {
     run()
   },[]);
   const logout = () => {
+    Swal.fire({
+      icon: "success",
+      text: "Logout",
+      showConfirmButton: false,
+      width: "500px",
+    })
     setUser(null)
     localStorage.removeItem('token')
   }

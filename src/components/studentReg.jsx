@@ -6,8 +6,10 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import AuthContext from "../contexts/AuthContext";
 import Inputmask from "react-input-mask";
+import { useNavigate } from "react-router-dom";
 export default function studentReg() {
   // console.log(fileinput.current.files[0])
+  const navigate = useNavigate();
   const [phone, setPhone] = useState("");
   const { user } = useContext(AuthContext);
   // console.log(user)
@@ -22,6 +24,11 @@ export default function studentReg() {
     std_identity: "",
     std_name: "",
     std_lastname: "",
+    std_nameEN: "",
+    std_lastnameEN: "",
+    std_grade: "",
+    std_yearIn:"",
+    std_school:"",
     std_bd: "",
     std_address: "",
     std_phone: phone ? phone : "1234567890",
@@ -30,6 +37,8 @@ export default function studentReg() {
     img_profile: "",
     majorId: "",
     classId: "",
+    gender_id:"",
+    nation_id: "",
     user_id: user?.user_id,
   });
 
@@ -42,6 +51,22 @@ export default function studentReg() {
       setMajor(rs.data.getM);
     };
     getMajor();
+  }, []);
+  const [gender, setGender] = useState([]);
+  useEffect(() => {
+    const getGen = async () => {
+      const rs = await axios.get("http://localhost:8000/student/gender");
+      setGender(rs.data.getGen);
+    };
+    getGen();
+  }, []);
+  const [nation, setNation] = useState([]);
+  useEffect(() => {
+    const getNation = async () => {
+      const rs = await axios.get("http://localhost:8000/student/nation");
+      setNation(rs.data.getNation);
+    };
+    getNation()
   }, []);
 
   const [Class, setClass] = useState([]);
@@ -120,29 +145,41 @@ export default function studentReg() {
         formData.append("image", file);
       }
 
-      const token = localStorage.getItem("token");
-      const rs = await axios.post(
-        "http://localhost:8000/student/add",
-        formData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (rs.status === 200) {
-        Swal.fire({
-          icon: "success",
-          text: " ขอให้โชคดีกับการสอบ",
-          timer: 1500,
-          showConfirmButton: false,
-          width: "500px",
-        }).then(() => {
-          location.reload();
-        });
-      }
-      // console.log(rs);
-    } catch (err) {
-      alert(err.message);
+      const { isConfirmed } = await Swal.fire({
+        icon: "info",
+        title: "กรุณาเช็คข้อมูลให้ครบถ้วนถูกต้องก่อนทำการส่ง",
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      });
+if  (isConfirmed) {
+  const token = localStorage.getItem("token");
+  const rs = await axios.post(
+    "http://localhost:8000/student/add",
+    formData,
+    {
+      headers: { Authorization: `Bearer ${token}` },
     }
+  );
+  if (rs.status === 200) {
+    Swal.fire({
+      icon: "success",
+      text: " ขอให้โชคดีกับการสอบ",
+      timer: 1500,
+      showConfirmButton: false,
+      width: "500px",
+    }).then(() => {
+      navigate("/show");
+    });
+  }
+}
+}catch(err){
+  Swal.fire({
+    icon:"error",
+    title:"ผิดพลาด",
+    text: err.message
+  })
+}
   };
   // console.log(input.major_type)
   const HdlReset = (e) => {
@@ -150,6 +187,11 @@ export default function studentReg() {
       std_identity: "",
       std_name: "",
       std_lastname: "",
+      std_nameEN: "",
+      std_lastnameEN: "",
+      std_yearIn: "",
+      std_school:"",
+      std_grade: "",
       std_bd: "",
       std_address: "",
       std_phone: "",
@@ -158,13 +200,15 @@ export default function studentReg() {
       img_profile: "",
       majorId: "",
       classId: "",
+      gender_id: "",
+      nation_id: "",
     });
     if (fileinput.current) {
       fileinput.current.value = "";
     }
   };
   return (
-    <div className="bg-[url(https://img.freepik.com/free-vector/back-school-background-flat-design_23-2148596550.jpg)] h-screen ">
+    <div className="bg-base-100 h-screen ">
       <div className="backdrop-blur-sm h-screen py-20">
         <form
           className=" max-w-[800px] max-h-[1400px] mx-auto  p-5 bg-sky-300 rounded-lg drop-shadow-2xl"
@@ -172,7 +216,7 @@ export default function studentReg() {
         >
           {/* bg-[url(https://img.freepik.com/free-vector/back-school-background-flat-design_23-2148596550.jpg)] */}
           <div className="flex justify-center text-2xl">
-            กรอกแบบฟอร์มสมัครสอบ
+            แบบฟอร์มสมัครสอบ
           </div>
           <div className=" mx-auto  w-full">
             <div className="flex gap-2 mt-3 w-3/4 mx-auto">
@@ -220,6 +264,32 @@ export default function studentReg() {
                 ))}
               </select>
             </div>
+            <div className="flex gap-2 ">
+            <input
+                className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
+                type="text"
+                name="std_yearIn"
+                value={input.std_yearIn}
+                onChange={hdlChange}
+                placeholder="ปีการศึกษา"
+              />
+            <input
+                className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
+                type="text"
+                name="std_school"
+                value={input.std_school}
+                onChange={hdlChange}
+                placeholder="จบจากโรงเรียน"
+              />
+            <input
+                className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
+                type="text"
+                name="std_grade"
+                value={input.std_grade}
+                onChange={hdlChange}
+                placeholder="เกรดเฉลี่ย"
+              />
+            </div>
             <div className="w-2/3 mt-3">
               <Inputmask
                 className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
@@ -229,6 +299,21 @@ export default function studentReg() {
                 onChange={hdlChange}
                 placeholder="รหัสบัตรประชาชน"
               />
+            </div>
+            <div className="w-36 py-2">
+              <select
+                name="gender_id"
+                value={input.gender_id}
+                onChange={hdlChange}
+                className="select select-bordered w-full max-w-xs text-violet-500"
+              >
+                <option hidden>คำนำหน้า</option>
+                {gender.map((el, index) => (
+                  <option value={el.gender_id} key={index}>
+                    {el.gender_type === "MR" ? "นาย" : el.gender_type === "BOY" ? "ด.ช." : el.gender_type ==="GIRL" ? "ด.ญ." : el.gender_type === "MISS" ?"นางสาว" : el.gender_type === "MRS" ? "นาง" : ""}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex gap-2  ">
               {" "}
@@ -255,6 +340,41 @@ export default function studentReg() {
                 value={input.std_bd}
                 onChange={hdlChange}
               />
+            </div>
+            <div className="flex gap-2  ">
+              {" "}
+              <input
+                className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+                type="text"
+                name="std_nameEN"
+                value={input.std_nameEN}
+                onChange={hdlChange}
+                placeholder="Name"
+              />
+              <input
+                className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+                type="text"
+                name="std_lastnameEN"
+                value={input.std_lastnameEN}
+                onChange={hdlChange}
+                placeholder="Lastname"
+              />
+              
+            </div>
+            <div className="w-36 py-2">
+              <select
+                name="nation_id"
+                value={input.nation_id}
+                onChange={hdlChange}
+                className="select select-bordered w-full max-w-xs text-violet-500"
+              >
+                <option hidden>สัญชาติ</option>
+                {nation?.map((el, index) => (
+                  <option value={el.nation_id} key={index}>
+                    {el.nation_name }
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="flex gap-2">

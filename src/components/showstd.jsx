@@ -25,9 +25,11 @@ export default function showstd() {
           <thead className="text-[18px]">
             <tr>
                 
-              <th>Name</th>
-              <th>Lastname</th>
-              <th>Status</th>
+              <th>ชื่อ</th>
+              <th>นามสกุล</th>
+              <th>โรงเรียน</th>
+              <th>สัญชาติ</th>
+              <th>สถานะ</th>
               <th></th>
               <th></th>
             </tr>
@@ -50,15 +52,22 @@ export default function showstd() {
                       <div>
                         
                         <div className="font-bold">{std.gender?.gender_type === "MISS" ? "นางสาว" : std.gender?.gender_type === "GIRL" ? "ด.ญ." :std.gender?.gender_type === "MRS" ? "นาง" : std.gender?.gender_type === "BOY" ? "ด.ช." : std.gender?.gender_type === "MR" ? "นาย" : std.gender?.gender_id} {std.std_name}</div>
-                        <div className="text-sm opacity-50">{std.std_id}</div>
+                        <div className="text-sm opacity-50">{std.gender?.gender_type === "GIRL" ? "MISS" : std.gender?.gender_type === "BOY" ?"MRST" : std.gender?.gender_type} {std.std_nameEN}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="font-bold">
-                    {std.std_lastname}
-                    <br />
+                  <td>
+                    
+                      <div className="font-bold">{std.std_lastname}</div>
+                    <div className="text-sm opacity-50">{std.std_lastnameEN}</div>
                   </td>
                   <td>
+                    <div className="font-bold">{std.std_school}</div>
+                  </td>
+                  <td>
+                    <div className="font-bold">{std.nationality?.nation_name}</div>
+                  </td>
+                  <td className="font-bold">
                     {std.status === "W8"
                       ? "รอยืนยัน"
                       : std.status === "AGREE"
@@ -69,7 +78,7 @@ export default function showstd() {
                   </td>
                   <th>
                     {std.status ==="AGREE" ? "" : <Link to={`/update/${std.std_id}`} className="btn btn-ghost btn-sm text-yellow-400">แก้ไข</Link> }
-                  <Link to={`/detail/${std.std_id}`} className="btn btn-ghost btn-sm text-sky-400">รายละเอียด</Link>
+                  <Link to={`/detail/${std.std_id}`} className="btn btn-ghost btn-sm text-sky-400">ปริ้นบัตรเข้าห้องสอบ</Link>
                   </th>
                 </tr>
               ))}

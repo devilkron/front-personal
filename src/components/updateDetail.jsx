@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import Inputmask from "react-input-mask";
+import PhoneInput from "react-phone-input-2";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function updateDetail() {
   const [students, setStudents] = useState({});
+  const [phone, setPhone] = useState("");
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [gender, setGender] = useState([]);
+  const [nationality, setNationality] =useState([])
+  const navigate = useNavigate()
   const [update, setUpdate] = useState({
     std_name: "",
     std_bd: "",
@@ -16,6 +22,7 @@ export default function updateDetail() {
     majorId: "",
     class_type: "",
   });
+  const phoneInputRef = useRef();
   useEffect(() => {
     const showDT = async () => {
       const std_id = location.pathname.split("/")[2];
@@ -37,6 +44,11 @@ export default function updateDetail() {
       const rs = await axios.get("http://localhost:8000/student/class");
       setClasses(rs.data.getC);
     };
+    const getNation = async() => {
+      const rs = await axios.get("http://localhost:8000/student/nation")
+      setNationality(rs.data.getNation)
+    }
+    getNation();
     getGender();
     getClass();
     getMajor();
@@ -44,8 +56,15 @@ export default function updateDetail() {
   }, []);
   //   console.log(update.std_name);
 
-  const hdlChange = (e) => {
-    setStudents((prv) => ({ ...prv, [e.target.name]: e.target.value }));
+  const hdlChange = (e, value) => {
+    if (e.target.name === "std_phone") {
+      setPhone(value)
+      setStudents((prev) => ({ ...prev, [e.target.name]: value }));
+    }
+    else{
+      
+      setStudents((prv) => ({ ...prv, [e.target.name]: e.target.value }));
+    }
     // console.log(students)
   };
   const hdlSubmit = async (e) => {
@@ -56,7 +75,15 @@ export default function updateDetail() {
       students
     );
     if (rs.status === 200) {
-      alert("แก้ไขสำเร็จ");
+      Swal.fire({
+        icon: "success",
+        text: " แก้ไขสำเร็จ",
+        timer: 1500,
+        showConfirmButton: false,
+        width: "500px",
+      }).then(() => {
+        navigate('/show')
+      });
     }
   };
 
@@ -87,7 +114,7 @@ export default function updateDetail() {
             name="gender_id"
             value={students.gender_id}
             onChange={hdlChange}
-            className="w-32 py-2 rounded-md px-2 "
+            className="w-36 py-2 rounded-md px-2 mb-2"
           >
             {gender.map((el, index) => (
               <option value={el.gender_id} key={index}>
@@ -96,6 +123,7 @@ export default function updateDetail() {
             ))}
           </select>
         </div>
+        
         <div className="mb-4">
           <label className="block text-sm font-medium text-white">ชื่อ</label>
           <input
@@ -120,6 +148,44 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
+          <label className="block text-sm font-medium text-white">ชื่อ(อังกฤษ)</label>
+          <input
+            type="text"
+            name="std_nameEN"
+            value={students.std_nameEN || ""}
+            onChange={hdlChange}
+            className="mt-1 p-2 w-full border rounded-md"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-white">นามสกุล(อังกฤษ)</label>
+          <input
+            type="text"
+            name="std_lastnameEN"
+            value={students.std_lastnameEN || ""}
+            onChange={hdlChange}
+            className="mt-1 p-2 w-full border rounded-md"
+          />
+        </div>
+        <div className="w-full flex flex-row text-white">
+          <p className="w-1/2">สัญชาติ</p>
+        </div>
+
+        <div className="flex flex-row gap-3 w-full">
+          <select
+            name="nation_id"
+            value={students.nation_id}
+            onChange={hdlChange}
+            className="w-36 py-2 rounded-md px-2 mb-2 "
+          >
+            {nationality.map((el, index) => (
+              <option value={el.nation_id} key={index}>
+                {el.nation_name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
           <label className="block text-sm font-medium text-white">
             ที่อยู่
           </label>
@@ -135,12 +201,14 @@ export default function updateDetail() {
           <label className="block text-sm font-medium text-white">
             เบอร์โทร
           </label>
-          <input
-            type="text"
-            name="std_phone"
+          <PhoneInput
+            // country={"th"}
+            // name="std_phone"
+            ref={phoneInputRef}
             value={students.std_phone || ""}
-            onChange={hdlChange}
-            className="mt-1 p-2 w-full border rounded-md"
+            onChange={(value) =>{setPhone(value) 
+              hdlChange({target: {name: "std_phone"}},value)}}
+            className="w-full number"
           />
         </div>
         <div className="w-full flex flex-row text-white">
