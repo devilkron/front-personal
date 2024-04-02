@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 function AuthContextProvider(props) {
   const [user, setUser] = useState(null);
-  const [account, setAccount] = useState(null);
+  // const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState(null);
 

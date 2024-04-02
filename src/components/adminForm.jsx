@@ -10,7 +10,9 @@ export default function Search() {
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [searchs, setSearch] = useState([]);
-  const [reload, setLoad] = useState(false)
+  const [gender, setGender] = useState([]);
+  const [nation, setNation] = useState([]);
+  const [reload, setLoad] = useState(false);
   // const [name, setName] = useState("");
   const [isSearch, setIsSearch] = useState(false);
   const [skipstudent, setSkipstudent] = useState(0);
@@ -51,13 +53,25 @@ export default function Search() {
           console.error("ไม่สามารถหาข้อมูลจาก Classes:", error)
         );
     };
-    
-
+    const getGen = async () => {
+      axios
+        .get("http://localhost:8000/student/gender")
+        .then((response) => setGender(response.data.getGen))
+        .catch((error) => console.error("เพศไม่มี", error));
+    };
+    const getNtn = async () => {
+      axios
+        .get("http://localhost:8000/student/nation")
+        .then((response) => setNation(response.data.getNation))
+        .catch((error) => console.error("หาประเทศไม่เจอ"), error);
+    };
+    getNtn();
+    getGen();
     getStudent();
     getMajor();
     getClass();
-  }, [skipstudent,reload]);
-  
+  }, [skipstudent, reload]);
+
   // console.log(searchs.major);
   const joinT = students.map((student) => {
     const matchT = classes.find(
@@ -161,13 +175,27 @@ export default function Search() {
                       }
                     >
                       <td>{std.std_id}</td>
-                      <td>{std.gender?.gender_type === "MR" ? "นาย" : std.gender?.gender_type === "BOY" ? "ด.ช." : std.gender?.gender_type === "MRS" ? "นาง" : std.gender?.gender_type === "MISS" ? "นางสาว" : std.gender?.gender_type === "GIRL" ? "ด.ญ." : std.gender?.gender_type} {std.std_name} {std.std_lastname}</td>
-                      <td>{std.std_school}</td>
                       <td>
-                        {std.class_type === "SECONDARY2"
-                          ? "ม.4"
-                          : "ม.1"}
+                        {std.gender?.gender_type === "MR"
+                          ? "นาย"
+                          : std.gender?.gender_type === "BOY"
+                          ? "ด.ช."
+                          : std.gender?.gender_type === "MRS"
+                          ? "นาง"
+                          : std.gender?.gender_type === "MISS"
+                          ? "นางสาว"
+                          : std.gender?.gender_type === "GIRL"
+                          ? "ด.ญ."
+                          : std.gender?.gender_type}{" "}
+                        {std.std_name} {std.std_lastname}
+                        <div className="opacity-50">{std.gender?.gender_type === "BOY"
+                          ? "MSRT"
+                          : std.gender?.gender_type === "GIRL"
+                          ? "MISS"
+                          : std.gender?.gender_type} {std.std_nameEN} {std.std_lastnameEN}</div>
                       </td>
+                      <td>{std.std_school}</td>
+                      <td>{std.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}</td>
                       <td>
                         {std.major.major_type === "MATHSCI"
                           ? "วิทย์คณิต"
@@ -181,9 +209,7 @@ export default function Search() {
                           ? "ศิลป์ทั่วไป"
                           : "ไม่ระบุ"}
                       </td>
-                      <td>
-                        {std.std_yearIn}
-                      </td>
+                      <td>{std.std_yearIn}</td>
                       <td>
                         {std.status === "W8"
                           ? "รอยืนยัน"
@@ -206,13 +232,27 @@ export default function Search() {
                       }
                     >
                       <td>{std.std_id}</td>
-                      <td>{std.gender?.gender_type === "MR" ? "นาย" : std.gender?.gender_type === "BOY" ? "ด.ช." : std.gender?.gender_type === "MRS" ? "นาง" : std.gender?.gender_type === "MISS" ? "นางสาว" : std.gender?.gender_type === "GIRL" ? "ด.ญ." : std.gender?.gender_type} {std.std_name} {std.std_lastname}</td>
-                      <td>{std.std_school}</td>
                       <td>
-                        {std.class_type === "SECONDARY2"
-                          ? "ม.4"
-                          : "ม.1"}
+                        {std.gender?.gender_type === "MR"
+                          ? "นาย"
+                          : std.gender?.gender_type === "BOY"
+                          ? "ด.ช."
+                          : std.gender?.gender_type === "MRS"
+                          ? "นาง"
+                          : std.gender?.gender_type === "MISS"
+                          ? "นางสาว"
+                          : std.gender?.gender_type === "GIRL"
+                          ? "ด.ญ."
+                          : std.gender?.gender_type}{" "}
+                        {std.std_name} {std.std_lastname}
+                        <div className="opacity-50">{std.gender?.gender_type === "BOY"
+                          ? "MSRT"
+                          : std.gender?.gender_type === "GIRL"
+                          ? "MISS"
+                          : std.gender?.gender_type} {std.std_nameEN} {std.std_lastnameEN}</div>
                       </td>
+                      <td>{std.std_school}</td>
+                      <td>{std.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}</td>
                       <td>
                         {std.major.major_type === "MATHSCI"
                           ? "วิทย์คณิต"
@@ -269,7 +309,9 @@ export default function Search() {
             student={std}
             majors={majors}
             classes={classes}
-            reload = {setLoad}
+            gender = {gender}
+            nation = {nation}
+            reload={setLoad}
           />
         ))}
       </div>
@@ -277,12 +319,12 @@ export default function Search() {
   }
 }
 
-const Modal = ({ student, majors, classes,reload }) => {
+const Modal = ({ student, majors, classes,gender,nation, reload }) => {
   // console.log(student);
 
   const modalId = `my_modal_${student.std_id}`;
   const [editData, setEditData] = useState({
-    // std_gender: student.gender_type,
+    std_gender: student.gender_type,
     std_name: student.std_name,
     std_bd: student.std_bd,
     std_lastname: student.std_lastname,
@@ -315,9 +357,8 @@ const Modal = ({ student, majors, classes,reload }) => {
         title: "แก้ไขสำเร็จ",
         icon: "success",
         timer: 1500,
-
       });
-      reload(prv => !prv) //reloadแบบใหม่
+      reload((prv) => !prv); //reloadแบบใหม่
       setIsEditing(false);
       document.getElementById(modalId).close();
       // onEdit();
@@ -496,21 +537,20 @@ const Modal = ({ student, majors, classes,reload }) => {
               {/* <option value='' disabled>สาขาวิชา</option> */}
               {majors.map((el, index) => (
                 // <option></option>
-                
-                  <option value={el.major_id} key={index}>
-                    {el.major_type === "MATHSCI"
-                      ? "วิทย์คณิต"
-                      : el.major_type === "ARTMATH"
-                      ? "ศิลป์คำนวณ"
-                      : el.major_type === "ARTENG"
-                      ? "ศิลป์ภาษา"
-                      : el.major_type === "ARTSOC"
-                      ? "ศิลป์สังคม"
-                      : el.major_type === "ARTFREE"
-                      ? "ศิลป์ทั่วไป"
-                      : "ไม่ระบุ"}
-                  </option>
-  
+
+                <option value={el.major_id} key={index}>
+                  {el.major_type === "MATHSCI"
+                    ? "วิทย์คณิต"
+                    : el.major_type === "ARTMATH"
+                    ? "ศิลป์คำนวณ"
+                    : el.major_type === "ARTENG"
+                    ? "ศิลป์ภาษา"
+                    : el.major_type === "ARTSOC"
+                    ? "ศิลป์สังคม"
+                    : el.major_type === "ARTFREE"
+                    ? "ศิลป์ทั่วไป"
+                    : "ไม่ระบุ"}
+                </option>
               ))}
             </select>
           ) : (
@@ -547,6 +587,7 @@ const Modal = ({ student, majors, classes,reload }) => {
             ? "ปฏิเสธ"
             : student.status}
         </h3>
+        
 
         <div className="flex justify-end gap-3">
           <button className="btn btn-outline btn-success" onClick={hdlAGREE}>

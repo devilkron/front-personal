@@ -114,9 +114,12 @@ export default function studentReg() {
       setPhone(value);
       setInput((prev) => ({ ...prev, [e.target.name]: value }));
     } else {
-      setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+      const newValue = e.target.name === "std_yearIn" ? 
+        e.target.value === "2567" ? "2567" : "2568" :
+        e.target.value;
+  
+      setInput((prev) => ({ ...prev, [e.target.name]: newValue }));
     }
-    // console.log(input);
   };
 
   const hdlSubmit = async (e) => {
@@ -265,14 +268,11 @@ if  (isConfirmed) {
               </select>
             </div>
             <div className="flex gap-2 ">
-            <input
-                className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
-                type="text"
-                name="std_yearIn"
-                value={input.std_yearIn}
-                onChange={hdlChange}
-                placeholder="ปีการศึกษา"
-              />
+            <select name="std_yearIn" value={input.std_yearIn} onChange={hdlChange} className="select select-bordered w-1/4 max-w-xs text-violet-500">
+                <option hidden>ปีการศึกษา</option>
+                <option value="2567" >2567</option>
+                <option value="2568" >2568</option>
+              </select>
             <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
                 type="text"
