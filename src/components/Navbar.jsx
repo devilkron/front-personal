@@ -9,7 +9,7 @@ const guestNav = [
   {to: "/", text: "home"},
   {to: "/show", text: "ข้อมูลผู้สมัครสอบ"}
 ];
-
+// console.log(user?.gender_id)
 export default function Header() {
   const { user, logout, setTheme } = useAuth();
   const finnalNav = user?.user_role === "ADMIN" ? adminNav : guestNav;
@@ -30,7 +30,7 @@ export default function Header() {
       <div className="flex-1">
         <Link to={'/profile'}>
           <p className="btn btn-ghost text-xl">
-            Hello,{user.user_gender ==="BOY" ? "ด.ช." : user.user_gender === "MR" ? "นาย" : user.user_gender === "GIRL" ? "ด.ญ." : user.user_gender ==="MISS" ?"นางสาว" : user.user_gender === "MRS" ? "นาง" : user.user_gender} {user?.user_id ? user.user_name : "Guest"}
+            Hello,{user.gender?.gender_type ==="BOY" ? "ด.ช." :user.gender?.gender_type === "MR" ? "นาย" : user.gender?.gender_type === "GIRL" ? "ด.ญ." : user.gender?.gender_type ==="MISS" ?"นางสาว" : user.gender?.gender_type === "MRS" ? "นาง" : user.gender?.gender_type} {user?.user_id ? user.user_name : "Guest"}
           </p>
         </Link>
       </div>
@@ -38,7 +38,7 @@ export default function Header() {
         <ul className="menu menu-horizontal px-1 gap-3">
           {finnalNav.map((el) => (
             
-              <Link className="text-[16px] px-4 rounded-lg border-2 border-[rgb(0_147_95)] text-[rgb(0_147_95)] hover:bg-[rgb(0_147_95)] py-3 active:scale-95 transform ease-in-out active:text-black hover:text-black flex items-center justify-end" key={el.to} to={el.to}>{el.text}</Link>
+              <Link className="text-[16px] px-4 rounded-lg  text-white hover:bg-slate-300 py-3 active:scale-95 transform ease-in-out active:text-black hover:text-black flex items-center justify-end" key={el.to} to={el.to}>{el.text}</Link>
            
           ))}
           {user?.user_id && (

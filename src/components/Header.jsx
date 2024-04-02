@@ -27,7 +27,7 @@ export default function Header() {
       
         <div>
           
-        <nav className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-cyan-500 to-90% w-full h-[70px] flex flex-row justify-between text-3xl items-center px-5 text-white ">
+        <nav className="bg-gradient-to-r from-blue-700 from-10% via-sky-500 via-30% to-pink-500 to-90% w-full h-[70px] flex flex-row justify-between text-3xl items-center px-5 text-white ">
         
                     
           

@@ -256,9 +256,9 @@ if  (isConfirmed) {
                 {Class.map((el) => (
                   <option key={el.class_id} value={el.class_id}>
                     {el.class_type === "SECONDARY1"
-                      ? "มัธยมต้น"
+                      ? "ม.1"
                       : el.class_type === "SECONDARY2"
-                      ? "มัธยมปลาย"
+                      ? "ม.4"
                       : el.class_type}
                   </option>
                 ))}

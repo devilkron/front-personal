@@ -51,11 +51,13 @@ export default function Search() {
           console.error("ไม่สามารถหาข้อมูลจาก Classes:", error)
         );
     };
+    
 
     getStudent();
     getMajor();
     getClass();
   }, [skipstudent,reload]);
+  
   // console.log(searchs.major);
   const joinT = students.map((student) => {
     const matchT = classes.find(
@@ -136,10 +138,11 @@ export default function Search() {
             <thead className="text-xl ">
               <tr>
                 <th>ลำดับ</th>
-                <th>ชื่อ</th>
-                <th>สกุล</th>
-                <th>ระดับการศึกษา</th>
+                <th>ชื่อ - สกุล</th>
+                <th>โรงเรียน</th>
+                <th>ระดับ</th>
                 <th>สาขาวิชา</th>
+                <th>ปีการศึกษา</th>
                 <th>สถานะ</th>
               </tr>
             </thead>
@@ -158,12 +161,12 @@ export default function Search() {
                       }
                     >
                       <td>{std.std_id}</td>
-                      <td>{std.std_name}</td>
-                      <td>{std.std_lastname}</td>
+                      <td>{std.gender?.gender_type === "MR" ? "นาย" : std.gender?.gender_type === "BOY" ? "ด.ช." : std.gender?.gender_type === "MRS" ? "นาง" : std.gender?.gender_type === "MISS" ? "นางสาว" : std.gender?.gender_type === "GIRL" ? "ด.ญ." : std.gender?.gender_type} {std.std_name} {std.std_lastname}</td>
+                      <td>{std.std_school}</td>
                       <td>
                         {std.class_type === "SECONDARY2"
-                          ? "มัธยมปลาย"
-                          : "มัธยมต้น"}
+                          ? "ม.4"
+                          : "ม.1"}
                       </td>
                       <td>
                         {std.major.major_type === "MATHSCI"
@@ -177,6 +180,9 @@ export default function Search() {
                           : std.major.major_type === "ARTFREE"
                           ? "ศิลป์ทั่วไป"
                           : "ไม่ระบุ"}
+                      </td>
+                      <td>
+                        {std.std_yearIn}
                       </td>
                       <td>
                         {std.status === "W8"
@@ -200,12 +206,12 @@ export default function Search() {
                       }
                     >
                       <td>{std.std_id}</td>
-                      <td>{std.std_name}</td>
-                      <td>{std.std_lastname}</td>
+                      <td>{std.gender?.gender_type === "MR" ? "นาย" : std.gender?.gender_type === "BOY" ? "ด.ช." : std.gender?.gender_type === "MRS" ? "นาง" : std.gender?.gender_type === "MISS" ? "นางสาว" : std.gender?.gender_type === "GIRL" ? "ด.ญ." : std.gender?.gender_type} {std.std_name} {std.std_lastname}</td>
+                      <td>{std.std_school}</td>
                       <td>
                         {std.class_type === "SECONDARY2"
-                          ? "มัธยมปลาย"
-                          : "มัธยมต้น"}
+                          ? "ม.4"
+                          : "ม.1"}
                       </td>
                       <td>
                         {std.major.major_type === "MATHSCI"
@@ -220,6 +226,7 @@ export default function Search() {
                           ? "ศิลป์ทั่วไป"
                           : "ไม่ระบุ"}
                       </td>
+                      <td>{std.std_yearIn}</td>
                       <td>
                         {std.status === "W8"
                           ? "รอยืนยัน"
@@ -275,6 +282,7 @@ const Modal = ({ student, majors, classes,reload }) => {
 
   const modalId = `my_modal_${student.std_id}`;
   const [editData, setEditData] = useState({
+    // std_gender: student.gender_type,
     std_name: student.std_name,
     std_bd: student.std_bd,
     std_lastname: student.std_lastname,
@@ -519,14 +527,14 @@ const Modal = ({ student, majors, classes,reload }) => {
             >
               {classes.map((el, index) => (
                 <option value={el.class_id} key={index}>
-                  {el.class_type === "SECONDARY2" ? "มัธยมปลาย" : "มัธยมต้น"}
+                  {el.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}
                 </option>
               ))}
             </select>
           ) : student.class_type === "SECONDARY2" ? (
-            "มัธยมปลาย"
+            "ม.4"
           ) : (
-            "มัธยมต้น"
+            "ม.1"
           )}
         </h3>
         <h3 className="font-bold text-lg">

@@ -1,28 +1,48 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Inputmask from "react-input-mask";
 
 export default function adminReg() {
   const [input, setInput] = useState({
+    role: "",
     identity: "",
-    name : "",
-    lastname : "",
+    gender_id: "",
+    name: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const navigate = useNavigate()
+  const [gender, setGender] = useState([]);
+  useEffect(() => {
+    const getGen = async () => {
+      const rs = await axios.get("http://localhost:8000/student/gender");
+      setGender(rs.data.getGen);
+    };
+    getGen();
+  }, []);
+  const navigate = useNavigate();
   const hdlChange = (e) => {
-    setInput((prv) => ({ ...prv, [e.target.name]: e.target.value }));
+    if (e.target.type === "checkbox") {
+      setInput((prev) => ({
+        ...prev,
+        role: e.target.value === "STUDENT" ? "STUDENT" : "PARENT"
+      }));
+    } else {
+      setInput((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value
+      }));
+    }
   };
   const hdlSubmit = async (e) => {
     e.preventDefault();
-    if(input.identity.length < 13){
-      return alert("กรุณากรอกรหัสบัตรประชาชนให้ครบ")
+    if (input.identity.length < 13) {
+      return alert("กรุณากรอกรหัสบัตรประชาชนให้ครบ");
     }
     try {
-      
       //เช็คค่าว่าง
       for (const key in input) {
         if (input.hasOwnProperty(key) && input[key].trim() === "") {
@@ -50,7 +70,10 @@ export default function adminReg() {
 
       if (isConfirmed) {
         // console.log(typeof input.password)
-        const rs = await axios.post("http://localhost:8000/auth/register", input);
+        const rs = await axios.post(
+          "http://localhost:8000/auth/register",
+          input
+        );
         if (rs.status === 200) {
           // alert("SUCCESS")
           Swal.fire({
@@ -58,16 +81,11 @@ export default function adminReg() {
             text: " สมัครเรียบร้อย",
             timer: 1000,
             showConfirmButton: false,
-            width: '500px'
-            
-          }
-          
-          ).then(()=> {
-            navigate("/guest")
-          })
-            
+            width: "500px",
+          }).then(() => {
+            navigate("/guest");
+          });
         }
-         
       }
     } catch (err) {
       Swal.fire({
@@ -79,34 +97,66 @@ export default function adminReg() {
   };
 
   return (
-    
     <div>
       <form
-        className=" max-w-[800px] max-h-[600px] mx-auto mt-5 p-5 bg-sky-200 rounded-lg shadow-lg"
+        className=" max-w-[800px] max-h-[1000px] mx-auto mt-5 p-5 bg-sky-200 rounded-lg shadow-lg"
         onSubmit={hdlSubmit}
       >
-        
-        <div className="flex justify-center text-2xl">Account ชั่วคราว</div>
+        <div className="flex justify-center text-2xl">สมัครเข้าใช้งานระบบ</div>
         <div className=" mx-auto w-1/2">
+          <div className="text-lg flex flex-row gap-2 mt-3">
+            <input type="checkbox" name="role" value={input.role ==="STUDENT"} onChange={hdlChange} className="checked:bg-base-100 " />
+            <label>นักเรียน</label>
+            <input type="checkbox"name="role" value={input.role === "PARENT"} onChange={hdlChange} className="checked:bg-base-100 " />
+            <label>ผู้ปกครอง</label>
+          </div>
+
           <p className="mt-3">รหัสบัตรประชาชน</p>
-          <input
+          <Inputmask
             className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
+            mask="9-9999-99999-99-9"
             name="identity"
             value={input.identity}
             onChange={hdlChange}
             placeholder="Enter your Identity"
           />
-          <p className="mt-3">Name</p>
-          <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-            type="text"
-            name="name"
-            value={input.name}
-            onChange={hdlChange}
-            placeholder="Enter your Name"
-          />
-         
+          <div className="w-36 py-2 mt-2">
+            <select
+              name="gender_id"
+              value={input.gender_id}
+              onChange={hdlChange}
+              className="select select-bordered w-full text-violet-500"
+            >
+              <option hidden>คำนำหน้า</option>
+              {gender.map((el, index) => (
+                <option value={el.gender_id} key={index}>
+                  {el.gender_type === "MR"
+                    ? "นาย"
+                    : el.gender_type === "BOY"
+                    ? "ด.ช."
+                    : el.gender_type === "GIRL"
+                    ? "ด.ญ."
+                    : el.gender_type === "MISS"
+                    ? "นางสาว"
+                    : el.gender_type === "MRS"
+                    ? "นาง"
+                    : ""}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <p className="mt-3">Name</p>
+            <input
+              className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+              type="text"
+              name="name"
+              value={input.name}
+              onChange={hdlChange}
+              placeholder="Enter your Name"
+            />
+          </div>
+
           <p className="mt-3">Lastname</p>
           <input
             className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
@@ -125,7 +175,7 @@ export default function adminReg() {
             onChange={hdlChange}
             placeholder="Enter your Email"
           />
-         
+
           <p className="mt-3">Password</p>
           <input
             className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3  px-3"
@@ -157,7 +207,7 @@ export default function adminReg() {
             type="button"
             value="CANCEL"
             className="btn btn-error btn-outline w-[150px] ml-9"
-            onClick={() => window.location.href = '/guest'}
+            onClick={() => (window.location.href = "/guest")}
           />
         </div>
       </form>

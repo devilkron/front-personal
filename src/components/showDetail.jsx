@@ -87,7 +87,7 @@ switch (students.major?.major_type) {
         :
         <div className="card-body p-0 ">
         <h2 className="card-title"><label className="text-gray-600 font-normal">Identity ID</label> {students.std_identity}</h2>
-        <h2 className="card-title"><label className="text-gray-600 font-normal">Name</label>{students.gender?.gender_type} {students.std_nameEN} {students.std_lastnameEN}</h2>
+        <h2 className="card-title"><label className="text-gray-600 font-normal">Name</label>{students.gender?.gender_type === "GIRL" ? "MISS" : students.gender?.gender_type ==="BOY" ? "MRST" : students.gender?.gender_type} {students.std_nameEN} {students.std_lastnameEN}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Address</label> {students.std_address}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Phone</label> +{students.std_phone}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Major</label> {students.major?.major_type}</h2>
