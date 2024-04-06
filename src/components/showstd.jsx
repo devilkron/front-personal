@@ -24,7 +24,7 @@ export default function showstd() {
         <table className="table">
           <thead className="text-[18px]">
             <tr>
-                
+              <th></th>
               <th>ชื่อ</th>
               <th>นามสกุล</th>
               <th>โรงเรียน</th>
@@ -49,12 +49,13 @@ export default function showstd() {
                           />
                         </div>
                       </div>
-                      <div>
+                     
+                    </div>
+                  </td>
+                  <td>
                         
                         <div className="font-bold">{std.gender?.gender_type === "MISS" ? "นางสาว" : std.gender?.gender_type === "GIRL" ? "ด.ญ." :std.gender?.gender_type === "MRS" ? "นาง" : std.gender?.gender_type === "BOY" ? "ด.ช." : std.gender?.gender_type === "MR" ? "นาย" : std.gender?.gender_id} {std.std_name}</div>
                         <div className="text-sm opacity-50">{std.gender?.gender_type === "GIRL" ? "MISS" : std.gender?.gender_type === "BOY" ?"MRST" : std.gender?.gender_type} {std.std_nameEN}</div>
-                      </div>
-                    </div>
                   </td>
                   <td>
                     

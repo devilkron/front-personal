@@ -88,11 +88,20 @@ export default function updateDetail() {
   };
 
   return (
-    <div className="container mx-auto max-w-[50rem]">
+    <div className="container mx-auto max-w-[50rem] ">
       <form
         className="bg-slate-500 p-6 rounded-lg shadow-md mt-5"
         onSubmit={hdlSubmit}
       >
+        <div className="mb-4">
+        <label className="block text-sm font-medium text-white">ปีการศึกษา</label>
+         <select name="std_yearIn" value={students.std_yearIn} onChange={hdlChange} className="select select-bordered w-1/4 max-w-xs  ">
+                <option hidden>ปีการศึกษา</option>
+                <option value="2567" >2567</option>
+                <option value="2568" >2568</option>
+              </select>
+        </div>
+        
         <div className="mb-4">
           <label className="block text-sm font-medium text-white">
             รหัสบัตรประชาชน

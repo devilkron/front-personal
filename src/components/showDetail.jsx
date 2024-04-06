@@ -80,8 +80,11 @@ switch (students.major?.major_type) {
           <h2 className="card-title"><label className="text-gray-600 font-normal">ที่อยู่</label> {students.std_address}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">เบอร์โทร</label> +{students.std_phone}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">สาขา</label> {thaiTranslation}</h2>
+          <div className="flex gap-2">
           <h2 className="card-title"><label className="text-gray-600 font-normal">ระดับการศึกษา</label> {students.class?.class_type === "SECONDARY1" ? "ม.1" :"ม.4"}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">ปีการศึกษา</label> {students.std_yearIn }</h2>
+            
+          </div>
           
         </div>
         :
@@ -91,8 +94,11 @@ switch (students.major?.major_type) {
         <h2 className="card-title"><label className="text-gray-600 font-normal">Address</label> {students.std_address}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Phone</label> +{students.std_phone}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Major</label> {students.major?.major_type}</h2>
+        <div className="flex gap-2">
+
         <h2 className="card-title"><label className="text-gray-600 font-normal">Class</label> {students.class?.class_type === "SECONDARY1" ? "M.1" :"M.4"}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Year</label> {students.std_yearIn - 543 }</h2>
+        </div>
       </div> 
 }
         <div>

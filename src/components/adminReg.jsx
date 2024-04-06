@@ -213,7 +213,7 @@ if  (isConfirmed) {
     <div className="bg-base-100 h-screen ">
       <div className="backdrop-blur-sm h-screen py-20">
         <form
-          className=" max-w-[800px] max-h-[1400px] mx-auto  p-5 bg-sky-300 rounded-lg drop-shadow-2xl"
+          className=" max-w-[800px] max-h-[1400px] mx-auto  p-5 bg-gradient-to-b from-cyan-500 to-sky-300 rounded-lg drop-shadow-2xl"
           onSubmit={hdlSubmit}
         >
           {/* bg-[url(https://img.freepik.com/free-vector/back-school-background-flat-design_23-2148596550.jpg)] */}

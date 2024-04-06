@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import adminAuth from "../hooks/adminAuth";
 import axios from "axios";
 
@@ -10,7 +10,9 @@ export default function profile() {
     user_lastname: user.user_lastname,
     user_email: user.user_email,
     user_identity: user.user_identity,
+   
   });
+  
   const Click = () => {
     setEdit(!edit);
   };
@@ -18,7 +20,7 @@ export default function profile() {
     setInput((prv) => ({ ...prv, [e.target.name]: e.target.value }));
   };
   const hdlSubmit = async (e) => {
-    if(!input.user_name || !input.user_lastname || !input.user_email || !input.user_identity){
+    if(!input.user_name || !input.user_lastname || !input.user_email || !input.user_identity ){
         return alert("ห้ามไม่ให้ข้อมูลว่าง")
     }
     try {
@@ -41,8 +43,9 @@ export default function profile() {
       {edit ? (
         <div className="border-2   w-1/2 mx-auto text-xl  mt-5 rounded-lg bg-[url(https://img.freepik.com/free-photo/abstract-extruded-voronoi-blocks-background-minimal-light-clean-corporate-wall-3d-geometric-surface-illustration-polygonal-elements-displacement_1217-2503.jpg)] ">
           <div className="flex gap-2 py-3 items-center text-base pl-2">
+          
             <div className="w-full ">
-              <p>ชื่อ</p>
+              <p>ชื่อ</p> 
               <input
                 type="text"
                 name="user_name"
@@ -97,9 +100,9 @@ export default function profile() {
           </div>
         </div>
       ) : (
-        <div className="border-2   w-1/2 mx-auto text-xl  mt-5 rounded-lg bg-[url(https://img.freepik.com/free-photo/abstract-extruded-voronoi-blocks-background-minimal-light-clean-corporate-wall-3d-geometric-surface-illustration-polygonal-elements-displacement_1217-2503.jpg)] ">
+        <div className="border-2   w-1/2 mx-auto text-xl text-sky-400 mt-5 rounded-lg bg-[url(https://img.freepik.com/free-photo/abstract-extruded-voronoi-blocks-background-minimal-light-clean-corporate-wall-3d-geometric-surface-illustration-polygonal-elements-displacement_1217-2503.jpg)] ">
           <div className="flex justify-center py-3">
-            <h1>ชื่อ {user.user_name} {user.user_lastname}</h1>
+            <h1>ชื่อ {user.gender?.gender_type === "BOY" ? "ด.ช." : user.gender?.gender_type === "MR" ? "นาย" : user.gender?.gender_type === "GIRL" ? "ด.ญ." : user.gender?.gender_type === "MISS" ? "นางสาว" : user.gender?.gender_type === "MRS" ? "นาง"  : user.gender?.gender_type} {user.user_name} {user.user_lastname}</h1>
             </div>
             <div className="flex flex-col justify-center items-center"> 
 

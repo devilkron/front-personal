@@ -21,9 +21,9 @@ export default function Header() {
     navigate("/");
   };
 
-  const hdlChnage = (e) => {
-    setTheme(prv => !prv)
-  }
+  // const hdlChnage = (e) => {
+  //   setTheme(prv => !prv)
+  // }
 
   return (
     <div className="navbar bg-gradient-to-l from-blue-700 from-30%  to-pink-500 to-70% ">

@@ -105,9 +105,6 @@ export default function studentReg() {
     };
   });
 
-  // const hdlChange = (e) => {
-  //   setInput((prv) => ({ ...prv, [e.target.name]: e.target.value }));
-  // };
 
   const hdlChange = (e, value) => {
     if (e.target.name === "std_phone") {
@@ -180,7 +177,7 @@ if  (isConfirmed) {
   Swal.fire({
     icon:"error",
     title:"ผิดพลาด",
-    text: err.message
+    text: "กรุณากรอกข้อมูลให้ครบ"
   })
 }
   };
@@ -214,7 +211,7 @@ if  (isConfirmed) {
     <div className="bg-base-100 h-screen ">
       <div className="backdrop-blur-sm h-screen py-20">
         <form
-          className=" max-w-[800px] max-h-[1400px] mx-auto  p-5 bg-sky-300 rounded-lg drop-shadow-2xl"
+          className=" max-w-[800px] max-h-[1400px] mx-auto  p-5 bg-gradient-to-b from-cyan-500 to-sky-300 rounded-lg drop-shadow-2xl"
           onSubmit={hdlSubmit}
         >
           {/* bg-[url(https://img.freepik.com/free-vector/back-school-background-flat-design_23-2148596550.jpg)] */}
