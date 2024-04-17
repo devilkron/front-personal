@@ -11,8 +11,11 @@
 .each-slide-effect > div {
   /* align-items: center; */
   /* justify-content: center; */
-  background-size: cover;
-  height: 450px;
+  /* object-fit: cover; */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 60vh;
   width: 100%;
 }
 

@@ -37,9 +37,9 @@ export default function Header() {
             </Link>
           </div>
           <div>
-           <Link to='/home'> <img
+           <Link to='/'> <img
               className="rounded-full w-[60px]"
-              src="https://img.freepik.com/free-vector/hand-drawn-high-school-logo-template_23-2149689290.jpg"
+              src="https://www.sps.ac.th/wp-content/uploads/2018/06/logosps64x64.png"
               alt=""
             /></Link>
           </div>
