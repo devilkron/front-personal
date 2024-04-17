@@ -5,12 +5,15 @@ const SearchContext = createContext();
 function SearchContextProvider(props) {
   const [studentSearch, setStudentSearch] = useState(null);
   const [name, setName] = useState("");
+  const [year, setYear] = useState("");
+  const [cls , setCls] = useState("");
+
   const run = async (e) => {
     try {
       e.preventDefault();
       let token = localStorage.getItem("token");
       axios
-        .get(`http://localhost:8000/student/search?name=${name}`, {
+        .get(`http://localhost:8000/student/search?name=${name}&year=${year}&cls=${cls}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -23,7 +26,7 @@ function SearchContextProvider(props) {
     }
   };
   return (
-    <SearchContext.Provider value={{ studentSearch, setName, name }}>
+    <SearchContext.Provider value={{ studentSearch, setName, name, setYear, year, setCls, cls }}>
       {props.children}
     </SearchContext.Provider>
   );

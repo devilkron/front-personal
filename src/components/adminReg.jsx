@@ -266,7 +266,7 @@ if  (isConfirmed) {
                 ))}
               </select>
             </div>
-            <div className="flex gap-2 ">
+            <div className="flex gap-2 mt-2 ">
               <select name="std_yearIn" value={input.std_yearIn} onChange={hdlChange} className="select select-bordered w-1/4 max-w-xs text-violet-500">
                 <option hidden>ปีการศึกษา</option>
                 <option value="2567" >2567</option>

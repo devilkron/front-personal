@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 export default function contact() {
+//   useEffect(()=> {
+// location.reload()
+//   },[])
+
   return (
     <div className="w-[80rem] mx-auto flex flex-col item-center justify-center">
       <h3 className="text-3xl mx-auto flex justify-center mt-3">

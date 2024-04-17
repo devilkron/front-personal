@@ -5,7 +5,8 @@ import SearchContext from "../contexts/SearchContext";
 import Swal from "sweetalert2";
 
 export default function Search() {
-  const { studentSearch, setName, name } = useContext(SearchContext);
+  const { studentSearch, setName, name, setYear, year, setCls, cls } =
+    useContext(SearchContext);
   const [students, setStudents] = useState([]);
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -63,7 +64,7 @@ export default function Search() {
       axios
         .get("http://localhost:8000/student/nation")
         .then((response) => setNation(response.data.getNation))
-        .catch((error) => console.error("หาประเทศไม่เจอ"), error);
+        .catch((error) => console.error("หาประเทศไม่เจอ", error));
     };
     getNtn();
     getGen();
@@ -87,29 +88,45 @@ export default function Search() {
       major_type: matchTMajor ? matchTMajor.major_type : null,
     };
   });
-  const hdlChange = (e) => {
+  const handleNameChange = (e) => {
     setName(e.target.value);
-    // setPage(e.target.value)
-    // console.log(input)
+    // console.log(name)
   };
+  
+  const handleYearChange = (e) => {
+    setYear(e.target.value);
+    // console.log(year)
+  };
+  
+  const handleClassChange = (e) => {
+    setCls(e.target.value);
+    // console.log(cls)
+  };
+  
 
   const hdlsubmit = async (e) => {
     e.preventDefault();
 
-    if (name !== "") {
+    if (name !== "" || year !== "" || cls !== "" ) {
       try {
         e.preventDefault();
         let token = localStorage.getItem("token");
         axios
-          .get(`http://localhost:8000/student/search?name=${name}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          .get(
+            `http://localhost:8000/student/search?name=${name}&year=${year}&cls=${cls}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           .then((response) => setSearch(response.data.getD))
           .then(setIsSearch(true))
           .catch((error) => console.error("Search", error));
-        // console.log(searchs);
+          
+        // console.log(name)
+        // console.log(year)
+        // console.log(cls)
       } catch (err) {
         next(err);
       }
@@ -117,6 +134,7 @@ export default function Search() {
       location.reload();
     }
   };
+  console.log(searchs);
   // console.log(skipstudent)
   if (joinT !== students) {
     return (
@@ -124,13 +142,14 @@ export default function Search() {
         {/* {JSON.stringify(majors)}
         {JSON.stringify(searchs)} */}
         <form onSubmit={hdlsubmit}>
+          <div className=" flex flex-row gap-2">
           <label className="input input-bordered flex items-center w-1/2 justify-center mx-auto mt-3">
             <input
               type="text"
               className="grow bg-transparent"
               placeholder=""
               value={name}
-              onChange={hdlChange}
+              onChange={handleNameChange}
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -145,6 +164,29 @@ export default function Search() {
               />
             </svg>
           </label>
+          <select name="std_yearIn" value={year} onChange={handleYearChange} className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500">
+                <option hidden>ปีการศึกษา</option>
+                <option value="2567" >2567</option>
+                <option value="2568" >2568</option>
+              </select>
+              <select
+                name="classId"
+                className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500"
+                onChange={handleClassChange}
+                value={cls}
+              >
+                <option hidden>ระดับชั้น</option>
+                {classes.map((el) => (
+                  <option key={el.class_id} value={el.class_id}>
+                    {el.class_type === "SECONDARY1"
+                      ? "ม.1"
+                      : el.class_type === "SECONDARY2"
+                      ? "ม.4"
+                      : el.class_type}
+                  </option>
+                ))}
+              </select>
+              </div>
         </form>
 
         {students && (
@@ -188,11 +230,14 @@ export default function Search() {
                           ? "ด.ญ."
                           : std.gender?.gender_type}{" "}
                         {std.std_name} {std.std_lastname}
-                        <div className="opacity-50">{std.gender?.gender_type === "BOY"
-                          ? "MSRT"
-                          : std.gender?.gender_type === "GIRL"
-                          ? "MISS"
-                          : std.gender?.gender_type} {std.std_nameEN} {std.std_lastnameEN}</div>
+                        <div className="opacity-50">
+                          {std.gender?.gender_type === "BOY"
+                            ? "MSRT"
+                            : std.gender?.gender_type === "GIRL"
+                            ? "MISS"
+                            : std.gender?.gender_type}{" "}
+                          {std.std_nameEN} {std.std_lastnameEN}
+                        </div>
                       </td>
                       <td>{std.std_school}</td>
                       <td>{std.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}</td>
@@ -245,14 +290,17 @@ export default function Search() {
                           ? "ด.ญ."
                           : std.gender?.gender_type}{" "}
                         {std.std_name} {std.std_lastname}
-                        <div className="opacity-50">{std.gender?.gender_type === "BOY"
-                          ? "MSRT"
-                          : std.gender?.gender_type === "GIRL"
-                          ? "MISS"
-                          : std.gender?.gender_type} {std.std_nameEN} {std.std_lastnameEN}</div>
+                        <div className="opacity-50">
+                          {std.gender?.gender_type === "BOY"
+                            ? "MSRT"
+                            : std.gender?.gender_type === "GIRL"
+                            ? "MISS"
+                            : std.gender?.gender_type}{" "}
+                          {std.std_nameEN} {std.std_lastnameEN}
+                        </div>
                       </td>
                       <td>{std.std_school}</td>
-                      <td>{std.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}</td>
+                      <td>{std.class.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}</td>
                       <td>
                         {std.major.major_type === "MATHSCI"
                           ? "วิทย์คณิต"
@@ -309,8 +357,8 @@ export default function Search() {
             student={std}
             majors={majors}
             classes={classes}
-            gender = {gender}
-            nation = {nation}
+            gender={gender}
+            nation={nation}
             reload={setLoad}
           />
         ))}
@@ -319,7 +367,7 @@ export default function Search() {
   }
 }
 
-const Modal = ({ student, majors, classes,gender,nation, reload }) => {
+const Modal = ({ student, majors, classes, gender, nation, reload }) => {
   // console.log(student);
 
   const modalId = `my_modal_${student.std_id}`;
@@ -587,7 +635,6 @@ const Modal = ({ student, majors, classes,gender,nation, reload }) => {
             ? "ปฏิเสธ"
             : student.status}
         </h3>
-        
 
         <div className="flex justify-end gap-3">
           <button className="btn btn-outline btn-success" onClick={hdlAGREE}>
