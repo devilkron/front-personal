@@ -407,7 +407,7 @@ if  (isConfirmed) {
             <div className="flex gap-2 ">
               <p className="mt-3 text-xl">รูปถ่ายขนาด 2 นิ้ว</p>
               <input
-                className=" rounded-md  bg-white mt-3 px-2 w-60"
+                className=" rounded-md  file:py-2 file:px-2 file:border-0 file:rounded-md file:hover:cursor-pointer hover:bg-violet-500 hover:text-white file:hover:text-white file:bg-transparent  bg-white mt-3 px-2 w-60"
                 type="file"
                 accept="image/*"
                 ref={fileinput}
@@ -420,12 +420,12 @@ if  (isConfirmed) {
             <input
               type="submit"
               value="SEND"
-              className="btn btn-success btn-outline w-[150px] mr-10 "
+              className="btn btn-success btn-outline w-[150px] mr-10 hover:scale-[1.1]"
             />
             <input
               type="button"
               value="RESET"
-              className="btn btn-warning btn-outline w-[150px] ml-9"
+              className="btn btn-warning btn-outline w-[150px] ml-9 hover:scale-[1.1]"
               onClick={HdlReset}
             />
           </div>
