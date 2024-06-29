@@ -43,8 +43,10 @@ export default function Header() {
               alt=""
             /></Link>
           </div>
-         
-          <div className="dropdown dropdown-end ">
+
+       
+          
+         <div className="dropdown dropdown-end ">
             <div 
               tabIndex={0}
               role="button"
@@ -69,6 +71,7 @@ export default function Header() {
               </div>
             </div>
           </div>
+          
         </nav>
       </div>
      

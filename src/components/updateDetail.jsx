@@ -82,7 +82,7 @@ export default function updateDetail() {
         showConfirmButton: false,
         width: "500px",
       }).then(() => {
-        navigate('/show')
+        navigate('/')
       });
     }
   };
@@ -258,7 +258,7 @@ export default function updateDetail() {
           >
             {classes.map((el, index) => (
               <option value={el.class_id} key={index}>
-                {el.class_type === "SECONDARY2" ? "มัธยมปลาย" : "มัธยมต้น"}
+                {el.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}
               </option>
             ))}
           </select>

@@ -14,12 +14,12 @@ const indicators = (index) => <div className="indicator">{index + 1}</div>;
 // console.log(user)
 
 const proprietes = {
-    duration: 5000,
-    transitionDuration: 750,
-    infinite: true,
-    indicators: true,
-    arrows: true
-}
+  duration: 5000,
+  transitionDuration: 750,
+  infinite: true,
+  indicators: true,
+  arrows: true,
+};
 
 const Home = () => {
   const images = [image1, image2, image3, image4];
@@ -27,7 +27,9 @@ const Home = () => {
   return (
     <div className=" relative">
       <div className="text-3xl text-sky-400 flex justify-center mb-5 mt-5 bg-yellow-200 w-[450px] py-2  mx-auto rounded-lg">
-        <p className=" drop-shadow-md">โรงเรียนมัธยมรังษีวิทยาแบ่งปัน</p>
+        <marquee scrollamount={10}>
+          โรงเรียนรังษีวิทยาแบ่งปัน ยินดีต้อนรับครับ/ค่ะ
+        </marquee>
       </div>
       <div className="mb-5">
         <Dashboard />
