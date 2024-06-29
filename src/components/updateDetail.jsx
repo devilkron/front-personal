@@ -245,7 +245,7 @@ export default function updateDetail() {
                   ? "ศิลป์สังคม"
                   : el.major_type === "ARTFREE"
                   ? "ศิลป์ทั่วไป"
-                  : "ไม่ระบุ"}
+                  : el.major_type}
               </option>
             ))}
           </select>

@@ -111,6 +111,8 @@ switch (students.major?.major_type) {
             
             {students.status === "AGREE" ? <button className="btn btn-primary" onClick={hdlPrint}>ปริ้นบัตร</button> : <button className="btn btn-primary" disabled onClick={hdlPrint}>ปริ้นบัตร</button>}
           </div>
+          
     </div>
+
   );
 }

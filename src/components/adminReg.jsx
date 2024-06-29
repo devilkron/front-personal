@@ -5,13 +5,16 @@ import Swal from "sweetalert2";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import AuthContext from "../contexts/AuthContext";
-import Inputmask from 'react-input-mask'
+import Inputmask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import Input from "postcss/lib/input";
+
 export default function studentReg() {
   // console.log(fileinput.current.files[0])
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [input, setInput] = useState({
     std_identity: "",
     std_name: "",
@@ -19,8 +22,8 @@ export default function studentReg() {
     std_nameEN: "",
     std_lastnameEN: "",
     std_grade: "",
-    std_yearIn:"",
-    std_school:"",
+    std_yearIn: "",
+    std_school: "",
     std_bd: "",
     std_address: "",
     std_phone: phone ? phone : "1234567890",
@@ -29,8 +32,11 @@ export default function studentReg() {
     img_profile: "",
     majorId: "",
     classId: "",
-    gender_id:"",
+    religion_id: "",
+    religion_other: "",
+    gender_id: "",
     nation_id: "",
+    nation_other: "",
     user_id: user?.user_id,
   });
   const [skipstudent, setSkipstudent] = useState(0);
@@ -74,7 +80,15 @@ export default function studentReg() {
       const rs = await axios.get("http://localhost:8000/student/nation");
       setNation(rs.data.getNation);
     };
-    getNation()
+    getNation();
+  }, []);
+  const [religion, setReligion] = useState([]);
+  useEffect(() => {
+    const getReligion = async () => {
+      const rs = await axios.get("http://localhost:8000/student/religion");
+      setReligion(rs.data.getReligion);
+    };
+    getReligion();
   }, []);
   const [students, setStudents] = useState([]);
   useEffect(() => {
@@ -104,21 +118,41 @@ export default function studentReg() {
     };
   });
 
+  // const hdlChange = (e, value) => {
+  //   const { name, value: targetValue } = e.target;
 
+  //   if (name === "std_phone") {
+  //     setPhone(value);
+  //     setInput((prev) => ({ ...prev, [name]: value }));
+  //   } else {
+  //     const newValue = name === "std_yearIn" ?
+  //       (targetValue === "2567" ? "2567" : "2568") :
+  //       targetValue;
+
+  //     setInput((prev) => ({
+  //       ...prev,
+  //       [name]: newValue,
+  //       ...(name === "religion_id" && newValue !== '3' && { religion_other: "" })
+  //     }));
+  //   }
+  // };
 
   const hdlChange = (e, value) => {
     if (e.target.name === "std_phone") {
       setPhone(value);
       setInput((prev) => ({ ...prev, [e.target.name]: value }));
     } else {
-      const newValue = e.target.name === "std_yearIn" ? 
-        e.target.value === "2567" ? "2567" : "2568" :
-        e.target.value;
-  
+      const newValue =
+        e.target.name === "std_yearIn"
+          ? e.target.value === "2567"
+            ? "2567"
+            : "2568"
+          : e.target.value;
+
       setInput((prev) => ({ ...prev, [e.target.name]: newValue }));
     }
   };
-  
+
   const hdlSubmit = async (e) => {
     e.preventDefault();
     // console.log(input.std_phone.length)
@@ -133,7 +167,6 @@ export default function studentReg() {
     try {
       const file = fileinput.current?.files[0];
       const formData = new FormData();
-      // console.log(file);
       if (!file) {
         return alert("กรุณาแนบรูปภาพ");
       }
@@ -147,68 +180,81 @@ export default function studentReg() {
 
       const { isConfirmed } = await Swal.fire({
         icon: "info",
-        title: "กรุณาเช็คข้อมูลให้ครบถ้วนถูกต้องก่อนทำการส่ง",
+        title: "โปรดเช็คข้อมูลให้ครบถ้วนถูกต้องก่อนทำการส่ง",
         showCancelButton: true,
         confirmButtonText: "ตกลง",
         cancelButtonText: "ยกเลิก",
       });
-if  (isConfirmed) {
-  const token = localStorage.getItem("token");
-  const rs = await axios.post(
-    "http://localhost:8000/student/add",
-    formData,
-    {
-      headers: { Authorization: `Bearer ${token}` },
+      if (isConfirmed) {
+        const token = localStorage.getItem("token");
+        const rs = await axios.post(
+          "http://localhost:8000/student/add",
+          formData,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (rs.status === 200) {
+          Swal.fire({
+            icon: "success",
+            text: " สมัครเรียบร้อย",
+            timer: 1500,
+            showConfirmButton: false,
+            width: "500px",
+          }).then(() => {
+            navigate("/");
+          });
+        }
+        
+
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "ผิดพลาด",
+        text: err.message,
+      });
     }
-  );
-  if (rs.status === 200) {
-    Swal.fire({
-      icon: "success",
-      text: " สมัครเรียบร้อย",
-      timer: 1500,
-      showConfirmButton: false,
-      width: "500px",
-    }).then(() => {
-      navigate("/");
-    });
-  }
-}
-}catch(err){
-  Swal.fire({
-    icon:"error",
-    title:"ผิดพลาด",
-    text: err.message
-  })
-}
   };
   // console.log(input.major_type)
   const HdlReset = (e) => {
     setInput({
       std_identity: "",
-    std_name: "",
-    std_lastname: "",
-    std_nameEN: "",
-    std_lastnameEN: "",
-    std_grade: "",
-    std_yearIn:"",
-    std_school:"",
-    std_bd: "",
-    std_address: "",
-    std_phone: phone ? phone : "1234567890",
-    std_email: "",
-    status: "W8",
-    img_profile: "",
-    majorId: "",
-    classId: "",
-    gender_id:"",
-    nation_id: "",
-    user_id: user?.user_id,
+      std_name: "",
+      std_lastname: "",
+      std_nameEN: "",
+      std_lastnameEN: "",
+      std_grade: "",
+      std_yearIn: "",
+      std_school: "",
+      std_bd: "",
+      std_address: "",
+      std_phone: phone ? phone : "1234567890",
+      std_email: "",
+      status: "W8",
+      img_profile: "",
+      majorId: "",
+      classId: "",
+      gender_id: "",
+      religion_id: "",
+      religion_other: "",
+      nation_other: "",
+      nation_id: "",
+      user_id: user?.user_id,
     });
     if (fileinput.current) {
       fileinput.current.value = "";
     }
   };
 
+  const [type, setType] = useState("text");
+
+  const handleFocus = () => setType("date");
+  const handleBlur = (e) => {
+    if (e.target.value === "") {
+      setType("text");
+    }
+  };
   return (
     <div className="bg-base-100 h-screen ">
       <div className="backdrop-blur-sm h-screen py-20">
@@ -217,9 +263,7 @@ if  (isConfirmed) {
           onSubmit={hdlSubmit}
         >
           {/* bg-[url(https://img.freepik.com/free-vector/back-school-background-flat-design_23-2148596550.jpg)] */}
-          <div className="flex justify-center text-2xl">
-            แบบฟอร์มสมัครสอบ
-          </div>
+          <div className="flex justify-center text-2xl">แบบฟอร์มสมัครสอบ</div>
           <div className=" mx-auto  w-full">
             <div className="flex gap-2 mt-3 w-3/4 mx-auto">
               <p className="mt-3 text-xl">วิชา:</p>
@@ -267,12 +311,17 @@ if  (isConfirmed) {
               </select>
             </div>
             <div className="flex gap-2 mt-2 ">
-              <select name="std_yearIn" value={input.std_yearIn} onChange={hdlChange} className="select select-bordered w-1/4 max-w-xs text-violet-500">
+              <select
+                name="std_yearIn"
+                value={input.std_yearIn}
+                onChange={hdlChange}
+                className="select select-bordered w-1/4 max-w-xs text-violet-500"
+              >
                 <option hidden>ปีการศึกษา</option>
-                <option value="2567" >2567</option>
-                <option value="2568" >2568</option>
+                <option value="2567">2567</option>
+                <option value="2568">2568</option>
               </select>
-            <input
+              <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
                 type="text"
                 name="std_school"
@@ -280,7 +329,7 @@ if  (isConfirmed) {
                 onChange={hdlChange}
                 placeholder="จบจากโรงเรียน"
               />
-            <input
+              <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
                 type="text"
                 name="std_grade"
@@ -309,7 +358,17 @@ if  (isConfirmed) {
                 <option hidden>คำนำหน้า</option>
                 {gender.map((el, index) => (
                   <option value={el.gender_id} key={index}>
-                    {el.gender_type === "MR" ? "นาย" : el.gender_type === "BOY" ? "ด.ช." : el.gender_type ==="GIRL" ? "ด.ญ." : el.gender_type === "MISS" ?"นางสาว" : el.gender_type === "MRS" ? "นาง" : ""}
+                    {el.gender_type === "MR"
+                      ? "นาย"
+                      : el.gender_type === "BOY"
+                      ? "ด.ช."
+                      : el.gender_type === "GIRL"
+                      ? "ด.ญ."
+                      : el.gender_type === "MISS"
+                      ? "นางสาว"
+                      : el.gender_type === "MRS"
+                      ? "นาง"
+                      : ""}
                   </option>
                 ))}
               </select>
@@ -334,10 +393,13 @@ if  (isConfirmed) {
               />
               <input
                 className=" rounded-md border-white border bg-white  w-full mt-3 px-3"
-                type="Date"
+                type={type}
+                placeholder="วันเดือนปีเกิด"
                 name="std_bd"
                 value={input.std_bd}
                 onChange={hdlChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
               />
             </div>
             <div className="flex gap-2  ">
@@ -358,22 +420,67 @@ if  (isConfirmed) {
                 onChange={hdlChange}
                 placeholder="Lastname"
               />
-              
             </div>
-            <div className="w-36 py-2">
-              <select
-                name="nation_id"
-                value={input.nation_id}
-                onChange={hdlChange}
-                className="select select-bordered w-full max-w-xs text-violet-500"
-              >
-                <option hidden>สัญชาติ</option>
-                {nation?.map((el, index) => (
-                  <option value={el.nation_id} key={index}>
-                    {el.nation_name }
-                  </option>
-                ))}
-              </select>
+            <div className="flex flex-row gap-2">
+              <div className="w-36 py-2">
+                <select
+                  name="religion_id"
+                  value={input.religion_id}
+                  onChange={hdlChange}
+                  className="select select-bordered w-full max-w-xs text-violet-500"
+                >
+                  <option hidden>ศาสนา</option>
+                  {religion?.map((el, index) => (
+                    <option value={el.religion_id} key={index}>
+                      {el.religion_name === "buddhism"
+                        ? "พุทธ"
+                        : el.religion_name === "Christian"
+                        ? "คริสต์"
+                        : el.religion_name === "OTHER"
+                        ? "อื่นๆ"
+                        : el.religion_name}
+                    </option>
+                  ))}
+                </select>
+                {
+                  <input
+                    type="text"
+                    name="religion_other"
+                    placeholder="โปรดระบุศาสนา"
+                    disabled={input.religion_id !== "3" ? "block" : "none"}
+                    className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
+                    value={input.religion_other}
+                    onChange={hdlChange}
+                  />
+                }
+              </div>
+
+              <div className="w-36 py-2">
+                <select
+                  name="nation_id"
+                  value={input.nation_id}
+                  onChange={hdlChange}
+                  className="select select-bordered w-full max-w-xs text-violet-500"
+                >
+                  <option hidden>สัญชาติ</option>
+                  {nation?.map((el, index) => (
+                    <option value={el.nation_id} key={index}>
+                      {el.nation_name}
+                    </option>
+                  ))}
+                </select>
+                {
+                  <input
+                    type="text"
+                    name="nation_other"
+                    placeholder="โปรดระบุสัญชาติ"
+                    disabled={input.nation_id !== "11" }
+                    className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
+                    value={input.nation_other}
+                    onChange={hdlChange}
+                  />
+                }
+              </div>
             </div>
 
             <div className="flex gap-2">

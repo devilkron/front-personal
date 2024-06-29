@@ -8,6 +8,7 @@ export default function Dashboard() {
     const getS = async () => {
       const rs = await axios.get("http://localhost:8000/user/dashboard");
       setStudents(rs.data);
+      console.log(students);
     };
     getS();
   }, []);
@@ -19,7 +20,7 @@ export default function Dashboard() {
             <div>
               <h1 className="text-1xl font-bold text-sky-500">จำนวนผู้สมัคร</h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.count}
+                {students.count === 0 ? "0" : students.count}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
@@ -27,7 +28,7 @@ export default function Dashboard() {
             <div>
               <h1 className="text-1xl  font-bold text-sky-500">ม.1</h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countClass}
+                {students.countClass === 0 ? "0" : students.countClass}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
@@ -35,7 +36,7 @@ export default function Dashboard() {
             <div>
               <h1 className="text-1xl  font-bold text-sky-500">ม.4</h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countClass2}
+                {students.countClass2 === 0 ? "0" : students.countClass2}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
@@ -46,37 +47,62 @@ export default function Dashboard() {
         <div className=" bg-[#C3E0E5] p-3 rounded-2xl max-w-[53rem] mx-auto">
           <div className="mt-3 flex gap-5 justify-around text-white text-center">
             <div>
-              <h1 className="text-1xl font-bold text-sky-500 tooltip" data-tip={`ม.1 : ${students.countclsMATHSCI} คน / ม.4 : ${students.countcls2MATHSCI} คน`}>สาขาวิทย์คณิต</h1>
+              <h1
+                className="text-1xl font-bold text-sky-500 tooltip"
+                data-tip={`ม.1 : ${students.countclsMATHSCI === undefined ? "0" : students.countclsMATHSCI} คน / ม.4 : ${students.countcls2MATHSCI === undefined ? "0" : students.countcls2MATHSCI} คน`}
+              >
+                สาขาวิทย์คณิต
+              </h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countMATHSCI}
+                {students.countMATHSCI === 0 ? "0" : students.countMATHSCI}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
             <div>
-              <h1 className="text-1xl font-bold text-sky-500 tooltip" data-tip={`ม.1 : ${students.countcls1ARTMATH} คน / ม.4 : ${students.countcls2ARTMATH} คน`}>สาขาศิลป์คำนวณ</h1>
+              <h1
+                className="text-1xl font-bold text-sky-500 tooltip"
+                data-tip={`ม.1 : ${students.countcls1ARTMATH === undefined ? "0" : students.countcls1ARTMATH} คน / ม.4 : ${students.countcls2ARTMATH === undefined ? "0" : students.countcls2ARTMATH} คน`}
+              >
+                สาขาศิลป์คำนวณ
+              </h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countARTMATH}
+                {students.countARTMATH === 0 ? "0" : students.countARTMATH}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
             <div>
-              <h1 className="text-1xl font-bold text-sky-500 tooltip" data-tip={`ม.1 : ${students.countcls1ARTENG} คน / ม.4 : ${students.countcls2ARTENG} คน`}>สาขาศิลป์ภาษา</h1>
+              <h1
+                className="text-1xl font-bold text-sky-500 tooltip"
+                data-tip={`ม.1 : ${students.countcls1ARTENG === undefined ? "0" : students.countcls1ARTENG} คน / ม.4 : ${students.countcls2ARTENG === undefined ? "0" : students.countcls2ARTENG} คน`}
+              >
+                สาขาศิลป์ภาษา
+              </h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countARTENG}
+                {students.countARTENG === 0 ? "0" : students.countARTENG}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
             <div>
-              <h1 className="text-1xl font-bold text-sky-500 tooltip" data-tip={`ม.1 : ${students.countcls1ARTSOC} คน / ม.4 : ${students.countcls2ARTSOC} คน`}>สาขาศิลป์สังคม</h1>
+              <h1
+                className="text-1xl font-bold text-sky-500 tooltip"
+                data-tip={`ม.1 : ${students.countcls1ARTSOC === undefined ? "0" : students.countcls1ARTSOC} คน / ม.4 : ${students.countcls2ARTSOC === undefined ? "0" : students.countcls2ARTSOC} คน`}
+              >
+                สาขาศิลป์สังคม
+              </h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countARTSOC}
+                {students.countARTSOC === 0 ? "0" : students.countARTSOC}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
             <div>
-              <h1 className="text-1xl font-bold text-sky-500 tooltip" data-tip={`ม.1 : ${students.countcls1ARTFREE} คน / ม.4 : ${students.countcls2ARTFREE} คน`}>สาขาศิลป์ทั่วไป</h1>
+              <h1
+                className="text-1xl font-bold text-sky-500 tooltip"
+                data-tip={`ม.1 : ${students.countcls1ARTFREE === undefined ? "0" : students.countcls1ARTFREE} คน / ม.4 : ${students.countcls2ARTFREE === undefined ? "0" : students.countcls2ARTFREE} คน`}
+              >
+                สาขาศิลป์ทั่วไป
+              </h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countARTFREE}
+                {students.countARTFREE === 0 ? "0" : students.countARTFREE}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>

@@ -3,8 +3,7 @@ import LoginFrom from "../components/Loginform";
 import adminAuth from "../hooks/adminAuth";
 import Header from "../components/Header";
 import Home from "../components/Home";
-import StudentReg from "../components/studentReg";
-import AdminReg from "../components/adminReg"
+import Enroll from "../components/adminReg"
 import AdminForm from "../components/adminForm";
 import Nav from "../components/Navbar"
 import LoginGuest from "../components/LoginGuest"
@@ -52,10 +51,10 @@ const accountRouter = createBrowserRouter([
       </>
     ),
     children: [
-      { index: true, element: <StudentReg /> },
-      {path: "/", element: <StudentReg/>},
+      { index: true, element: <Showstd /> },
+      {path: "/", element: <Showstd/>},
       {path: "/profile", element: <Profile/>},
-      {path: "/show", element: <Showstd/>},
+      {path: "/add", element: <Enroll/>},
       {path: "/detail/*", element: <Detail/>},
       {path: "/update/*", element: <UpDetail/>}
     ]
@@ -74,7 +73,7 @@ const adminRouter = createBrowserRouter([
     ),
     children: [
       { index: true, element: <AdminForm/> },
-      { path: "/add", element: <AdminReg/> },
+      { path: "/add", element: <Enroll/> },
       { path: "/", element: <AdminForm /> },
       { path: "/profile", element: <Profile /> },
     ],
