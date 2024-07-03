@@ -1,27 +1,23 @@
 import { useState, useEffect, useContext } from "react";
 // import useAuth from "../hooks/adminAuth";
 import axios from "axios";
-import SearchContext from "../contexts/SearchContext";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 export default function Search() {
-  // const { studentSearch, setName, name, setYear, year, setCls, cls } =
-  //   useContext(SearchContext);
   const [students, setStudents] = useState([]);
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
-  const [search, setSearch] = useState(""); 
+  const [search, setSearch] = useState("");
   const [gender, setGender] = useState([]);
   const [nation, setNation] = useState([]);
   const [reload, setLoad] = useState(false);
-  const [limit, setLimit] = useState(10); 
+  const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
-  const [skipstudent, setSkipstudent] = useState(0); 
-  const [cls , setCls] = useState("");
+  const [skipstudent, setSkipstudent] = useState(0);
+  const [cls, setCls] = useState("");
 
   useEffect(() => {
-   
-
     const getMajor = async () => {
       axios
         .get("http://localhost:8000/student/major")
@@ -56,7 +52,6 @@ export default function Search() {
     getClass();
   }, [skipstudent, reload]);
 
-  
   const hdlChangeLimit = (e) => {
     setLimit(e.target.value);
   };
@@ -69,50 +64,43 @@ export default function Search() {
     }, 1000);
   };
 
-
   const nextPage = () => {
     setPage((prevPage) => prevPage + 1);
-    setSkipstudent((prevSkip) => prevSkip + 10); 
+    setSkipstudent((prevSkip) => prevSkip + 10);
   };
 
   const backPage = () => {
     if (page > 1) {
       setPage((prevPage) => prevPage - 1);
-      setSkipstudent((prevSkip) => prevSkip - 10); 
+      setSkipstudent((prevSkip) => prevSkip - 10);
     }
   };
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-    // console.log(name)
-  };
-  
-  const handleYearChange = (e) => {
-    setYear(e.target.value);
-    // console.log(year)
-  };
-  
+
   const handleClassChange = (e) => {
     setCls(e.target.value);
+
     // console.log(cls)
   };
+
   useEffect(() => {
     const searchUser = async () => {
       let token = localStorage.getItem("token");
       try {
         const rs = await axios.get(
-          `http://localhost:8000/student/search/std?page=${page}&name=${search}`,
+          `http://localhost:8000/student/search/std?page=${page}&name=${search}&grade=${cls}`,
           {
             params: {
               search: search || "",
               page: 1,
               limit: limit || 10,
-              cls: cls || ""
+              cls: cls || "",
             },
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
+        // console.log(rs)
         if (rs.status === 200) {
           setStudents(rs.data.getD);
         }
@@ -121,10 +109,9 @@ export default function Search() {
       }
     };
     searchUser();
-  }, [reload, limit, search, page]);
-  
+  }, [reload, limit, search, page, cls]);
 
-  console.log(search);
+  // console.log(search);
   // console.log(skipstudent)
   if (students !== 0) {
     return (
@@ -163,10 +150,18 @@ export default function Search() {
             </svg>
           </label>
           <select
-            name="classId"
+            name="select"
+            className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500"
+            onChange={hdlSearch}
+          >
+            <option hidden>ปีการศึกษา</option>
+            <option value="2567">2567</option>
+            <option value="2568">2568</option>
+          </select>
+          <select
+            name="select"
             className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500"
             onChange={handleClassChange}
-            value={cls}
           >
             <option hidden>ระดับชั้น</option>
             {classes.map((el) => (
@@ -232,7 +227,9 @@ export default function Search() {
                         </div>
                       </td>
                       <td>{std.std_school}</td>
-                      <td>{std.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}</td>
+                      <td>
+                        {std.class.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}
+                      </td>
                       <td>
                         {std.major.major_type === "MATHSCI"
                           ? "วิทย์คณิต"
@@ -292,7 +289,9 @@ export default function Search() {
                         </div>
                       </td>
                       <td>{std.std_school}</td>
-                      <td>{std.class.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}</td>
+                      <td>
+                        {std.class.class_type === "SECONDARY2" ? "ม.4" : "ม.1"}
+                      </td>
                       <td>
                         {std.major.major_type === "MATHSCI"
                           ? "วิทย์คณิต"
@@ -371,7 +370,7 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
     std_address: student.std_address,
     std_phone: student.std_phone,
     majorId: student.majorId,
-    class_type: student.class_type,
+    class_type: student.class.class_type,
   });
   // console.log(editData.majorId)
   const [isEditing, setIsEditing] = useState(false);
@@ -428,8 +427,8 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
         console.log(rs);
         if (rs.status === 200) {
           // location.reload();
-          alert("ลบข้อมูลเรียบร้อย")
-          setLoad(prev => !prev)
+          alert("ลบข้อมูลเรียบร้อย");
+          setLoad((prev) => !prev);
         }
       } catch (err) {
         alert(err);
@@ -613,7 +612,7 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
                 </option>
               ))}
             </select>
-          ) : student.class_type === "SECONDARY2" ? (
+          ) : student.class?.class_type === "SECONDARY2" ? (
             "ม.4"
           ) : (
             "ม.1"

@@ -1,5 +1,7 @@
 
 import adminAuth from "./hooks/adminAuth";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import AppRoute from "./routes/appRouter";
 function App() {
@@ -14,6 +16,7 @@ function App() {
   return (
     // <div data-theme="valentine" className="min-h-screen">
     <div data-theme={theme ? "sunset" : "light"} className="min-h-screen">
+      <ToastContainer/>
       <AppRoute />
     </div>
   );

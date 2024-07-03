@@ -30,6 +30,7 @@
     "react-select": "^5.8.0",
     "react-slideshow-image": "^4.3.0",
     "react-to-print": "^2.15.1",
+    "react-toastify": "^10.0.5",
     "sweetalert2": "^11.10.5"
   },
   "devDependencies": {
