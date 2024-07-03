@@ -5,39 +5,22 @@ import SearchContext from "../contexts/SearchContext";
 import Swal from "sweetalert2";
 
 export default function Search() {
-  const { studentSearch, setName, name, setYear, year, setCls, cls } =
-    useContext(SearchContext);
+  // const { studentSearch, setName, name, setYear, year, setCls, cls } =
+  //   useContext(SearchContext);
   const [students, setStudents] = useState([]);
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
-  const [searchs, setSearch] = useState([]);
+  const [search, setSearch] = useState(""); 
   const [gender, setGender] = useState([]);
   const [nation, setNation] = useState([]);
   const [reload, setLoad] = useState(false);
-  // const [name, setName] = useState("");
-  const [isSearch, setIsSearch] = useState(false);
-  const [skipstudent, setSkipstudent] = useState(0);
-  const nextPage = () => {
-    setSkipstudent((skip) => skip + 10);
-  };
-  const backPage = () => {
-    setSkipstudent((skip) => skip - 10);
-  };
-  // const [page, setPage] = useState('')
-  // const [lastname, setLastname] = useState('');
+  const [limit, setLimit] = useState(10); 
+  const [page, setPage] = useState(1);
+  const [skipstudent, setSkipstudent] = useState(0); 
+  const [cls , setCls] = useState("");
 
   useEffect(() => {
-    const getStudent = async () => {
-      let token = localStorage.getItem("token");
-      axios
-        .get(`http://localhost:8000/student/enrollment?skip=${skipstudent}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => setStudents(response.data.getS))
-        .catch((error) => console.error("student", error));
-    };
+   
 
     const getMajor = async () => {
       axios
@@ -68,26 +51,36 @@ export default function Search() {
     };
     getNtn();
     getGen();
-    getStudent();
+    // getStudent();
     getMajor();
     getClass();
   }, [skipstudent, reload]);
 
-  // console.log(searchs.major);
-  const joinT = students.map((student) => {
-    const matchT = classes.find(
-      (classItem) => classItem.class_id === student.classId
-    );
-    const matchTMajor = majors.find(
-      (majorItem) => majorItem.major_id === student.majorId
-    );
+  
+  const hdlChangeLimit = (e) => {
+    setLimit(e.target.value);
+  };
 
-    return {
-      ...student,
-      class_type: matchT ? matchT.class_type : null,
-      major_type: matchTMajor ? matchTMajor.major_type : null,
-    };
-  });
+  let timeout = null;
+  const hdlSearch = (e) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      setSearch(e.target.value);
+    }, 1000);
+  };
+
+
+  const nextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+    setSkipstudent((prevSkip) => prevSkip + 10); 
+  };
+
+  const backPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+      setSkipstudent((prevSkip) => prevSkip - 10); 
+    }
+  };
   const handleNameChange = (e) => {
     setName(e.target.value);
     // console.log(name)
@@ -102,54 +95,59 @@ export default function Search() {
     setCls(e.target.value);
     // console.log(cls)
   };
+  useEffect(() => {
+    const searchUser = async () => {
+      let token = localStorage.getItem("token");
+      try {
+        const rs = await axios.get(
+          `http://localhost:8000/student/search/std?page=${page}&name=${search}`,
+          {
+            params: {
+              search: search || "",
+              page: 1,
+              limit: limit || 10,
+              cls: cls || ""
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (rs.status === 200) {
+          setStudents(rs.data.getD);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    searchUser();
+  }, [reload, limit, search, page]);
   
 
-  const hdlsubmit = async (e) => {
-    e.preventDefault();
-
-    if (name !== "" || year !== "") {
-      try {
-        e.preventDefault();
-        let token = localStorage.getItem("token");
-        axios
-          .get(
-            `http://localhost:8000/student/search/std?name=${name}&grade=${year}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          .then((response) => setSearch(response.data.getD))
-          .then(setIsSearch(true))
-          .catch((error) => console.error("Search", error));
-          
-        // console.log(name)
-        // console.log(year)
-        // console.log(cls)
-      } catch (err) {
-        next(err);
-      }
-    } else {
-      location.reload();
-    }
-  };
-  console.log(searchs);
+  console.log(search);
   // console.log(skipstudent)
-  if (joinT !== students) {
+  if (students !== 0) {
     return (
       <div className="overflow-x-auto">
-        {/* {JSON.stringify(majors)}
-        {JSON.stringify(searchs)} */}
-        <form onSubmit={hdlsubmit}>
-          <div className=" flex flex-row gap-2">
+        <div className=" flex flex-row gap-2">
+          <select
+            className="mt-3 select select-bordered max-w-xs text-violet-500"
+            name="limit"
+            onChange={hdlChangeLimit}
+            value={limit}
+          >
+            <option value={10}>10</option>
+            <option value={30}>30</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
           <label className="input input-bordered flex items-center w-1/2 justify-center mx-auto mt-3">
             <input
               type="text"
               className="grow bg-transparent"
               placeholder=""
-              value={name}
-              onChange={handleNameChange}
+              name="search"
+              onChange={hdlSearch}
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -164,30 +162,24 @@ export default function Search() {
               />
             </svg>
           </label>
-          {/* <select name="std_yearIn" value={year} onChange={handleYearChange} className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500">
-                <option hidden>ปีการศึกษา</option>
-                <option value="2567" >2567</option>
-                <option value="2568" >2568</option>
-              </select> */}
-              <select
-                name="classId"
-                className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500"
-                onChange={handleClassChange}
-                value={cls}
-              >
-                <option hidden>ระดับชั้น</option>
-                {classes.map((el) => (
-                  <option key={el.class_id} value={el.class_id}>
-                    {el.class_type === "SECONDARY1"
-                      ? "ม.1"
-                      : el.class_type === "SECONDARY2"
-                      ? "ม.4"
-                      : el.class_type}
-                  </option>
-                ))}
-              </select>
-              </div>
-        </form>
+          <select
+            name="classId"
+            className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500"
+            onChange={handleClassChange}
+            value={cls}
+          >
+            <option hidden>ระดับชั้น</option>
+            {classes.map((el) => (
+              <option key={el.class_id} value={el.class_id}>
+                {el.class_type === "SECONDARY1"
+                  ? "ม.1"
+                  : el.class_type === "SECONDARY2"
+                  ? "ม.4"
+                  : el.class_type}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {students && (
           <table className="table mt-5 text-center ">
@@ -203,8 +195,8 @@ export default function Search() {
               </tr>
             </thead>
             <tbody className="cursor-pointer">
-              {searchs.length === 0
-                ? joinT.map((std) => (
+              {search.length === 0
+                ? students.map((std) => (
                     <tr
                       key={std.std_id}
                       className="hover"
@@ -266,7 +258,7 @@ export default function Search() {
                       </td>
                     </tr>
                   ))
-                : searchs.map((std, index) => (
+                : students.map((std, index) => (
                     <tr
                       key={index}
                       className="hover"
@@ -331,7 +323,7 @@ export default function Search() {
         )}
         <div className="gap-2 flex flex-row float-right">
           {" "}
-          {(isSearch === false && skipstudent <= 9) || searchs.length >= 1 ? (
+          {(search === false && skipstudent <= 9) || search.length >= 1 ? (
             <button disabled className="btn btn-outline btn-error">
               back
             </button>
@@ -340,7 +332,7 @@ export default function Search() {
               back
             </button>
           )}
-          {isSearch === false && skipstudent + 10 <= students.length ? (
+          {search === false && skipstudent + 10 <= students.length ? (
             <button onClick={nextPage} className="btn btn-outline btn-success ">
               next
             </button>
@@ -351,7 +343,7 @@ export default function Search() {
           )}
         </div>
 
-        {joinT.map((std) => (
+        {students.map((std) => (
           <Modal
             key={std.std_id}
             student={std}
