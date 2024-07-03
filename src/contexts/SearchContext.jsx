@@ -13,7 +13,7 @@ function SearchContextProvider(props) {
       e.preventDefault();
       let token = localStorage.getItem("token");
       axios
-        .get(`http://localhost:8000/student/search?name=${name}&year=${year}&cls=${cls}`, {
+        .get(`http://localhost:8000/student/search/std?name=${name}&year=${year}&cls=${cls}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

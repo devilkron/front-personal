@@ -107,13 +107,13 @@ export default function Search() {
   const hdlsubmit = async (e) => {
     e.preventDefault();
 
-    if (name !== "" || year !== "" || cls !== "" ) {
+    if (name !== "" || year !== "") {
       try {
         e.preventDefault();
         let token = localStorage.getItem("token");
         axios
           .get(
-            `http://localhost:8000/student/search?name=${name}&year=${year}&cls=${cls}`,
+            `http://localhost:8000/student/search/std?name=${name}&grade=${year}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -164,11 +164,11 @@ export default function Search() {
               />
             </svg>
           </label>
-          <select name="std_yearIn" value={year} onChange={handleYearChange} className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500">
+          {/* <select name="std_yearIn" value={year} onChange={handleYearChange} className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500">
                 <option hidden>ปีการศึกษา</option>
                 <option value="2567" >2567</option>
                 <option value="2568" >2568</option>
-              </select>
+              </select> */}
               <select
                 name="classId"
                 className="mt-3 select select-bordered w-1/4 max-w-xs text-violet-500"
@@ -252,7 +252,7 @@ export default function Search() {
                           ? "ศิลป์สังคม"
                           : std.major.major_type === "ARTFREE"
                           ? "ศิลป์ทั่วไป"
-                          : "ไม่ระบุ"}
+                          : std.major.major_type}
                       </td>
                       <td>{std.std_yearIn}</td>
                       <td>
@@ -312,7 +312,7 @@ export default function Search() {
                           ? "ศิลป์สังคม"
                           : std.major.major_type === "ARTFREE"
                           ? "ศิลป์ทั่วไป"
-                          : "ไม่ระบุ"}
+                          : std.major.major_type}
                       </td>
                       <td>{std.std_yearIn}</td>
                       <td>
@@ -435,7 +435,9 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
         );
         console.log(rs);
         if (rs.status === 200) {
-          location.reload();
+          // location.reload();
+          alert("ลบข้อมูลเรียบร้อย")
+          setLoad(prev => !prev)
         }
       } catch (err) {
         alert(err);
@@ -511,7 +513,7 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
       thaiTranslation = "ศิลป์ทั่วไป";
       break;
     default:
-      thaiTranslation = "ไม่ระบุ";
+      thaiTranslation = student.major?.major_type;
       break;
   }
   return (
@@ -597,7 +599,7 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
                     ? "ศิลป์สังคม"
                     : el.major_type === "ARTFREE"
                     ? "ศิลป์ทั่วไป"
-                    : "ไม่ระบุ"}
+                    : el.major_type}
                 </option>
               ))}
             </select>

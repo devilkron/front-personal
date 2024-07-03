@@ -49,7 +49,6 @@ export default function Dashboard() {
             <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
-                data-tip={`ม.1 : ${students.countclsMATHSCI === undefined ? "0" : students.countclsMATHSCI} คน / ม.4 : ${students.countcls2MATHSCI === undefined ? "0" : students.countcls2MATHSCI} คน`}
               >
                 สาขาวิทย์คณิต
               </h1>
@@ -61,7 +60,6 @@ export default function Dashboard() {
             <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
-                data-tip={`ม.1 : ${students.countcls1ARTMATH === undefined ? "0" : students.countcls1ARTMATH} คน / ม.4 : ${students.countcls2ARTMATH === undefined ? "0" : students.countcls2ARTMATH} คน`}
               >
                 สาขาศิลป์คำนวณ
               </h1>
@@ -73,7 +71,6 @@ export default function Dashboard() {
             <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
-                data-tip={`ม.1 : ${students.countcls1ARTENG === undefined ? "0" : students.countcls1ARTENG} คน / ม.4 : ${students.countcls2ARTENG === undefined ? "0" : students.countcls2ARTENG} คน`}
               >
                 สาขาศิลป์ภาษา
               </h1>
@@ -85,7 +82,6 @@ export default function Dashboard() {
             <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
-                data-tip={`ม.1 : ${students.countcls1ARTSOC === undefined ? "0" : students.countcls1ARTSOC} คน / ม.4 : ${students.countcls2ARTSOC === undefined ? "0" : students.countcls2ARTSOC} คน`}
               >
                 สาขาศิลป์สังคม
               </h1>
@@ -97,7 +93,6 @@ export default function Dashboard() {
             <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
-                data-tip={`ม.1 : ${students.countcls1ARTFREE === undefined ? "0" : students.countcls1ARTFREE} คน / ม.4 : ${students.countcls2ARTFREE === undefined ? "0" : students.countcls2ARTFREE} คน`}
               >
                 สาขาศิลป์ทั่วไป
               </h1>

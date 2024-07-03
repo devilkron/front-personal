@@ -33,7 +33,7 @@ export default function Header() {
           
           <div className="btn-ghost  btn-xl text-lime-500 hover:text-amber-400 w-[286px]">
             <Link to="/guest">
-              ลงทะเบียนเรียน <i className="fa-solid fa-book"></i>
+              ลงทะเบียนสมัครสอบ 
             </Link>
           </div>
           <div>
