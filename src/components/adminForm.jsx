@@ -105,7 +105,8 @@ export default function Search() {
           setStudents(rs.data.getD);
         }
       } catch (err) {
-        console.error(err);
+        // console.error(err.response.data.message);
+        toast.warning(err.response.data.Error)
       }
     };
     searchUser();
@@ -155,6 +156,7 @@ export default function Search() {
             onChange={hdlSearch}
           >
             <option hidden>ปีการศึกษา</option>
+            <option value=''>ดูทั้งหมด</option>
             <option value="2567">2567</option>
             <option value="2568">2568</option>
           </select>
@@ -164,6 +166,7 @@ export default function Search() {
             onChange={handleClassChange}
           >
             <option hidden>ระดับชั้น</option>
+            <option value=''>ดูทั้งหมด</option>
             {classes.map((el) => (
               <option key={el.class_id} value={el.class_id}>
                 {el.class_type === "SECONDARY1"

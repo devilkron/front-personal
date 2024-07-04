@@ -29,7 +29,7 @@ export default function Header() {
     <div className="navbar bg-gradient-to-l from-blue-700 from-30%  to-pink-500 to-70% ">
       <div className="flex-1">
         <Link to={'/profile'}>
-          <p className="btn btn-ghost text-xl">
+          <p className="btn btn-ghost text-xl text-white">
             Hello,{user.gender?.gender_type ==="BOY" ? "ด.ช." :user.gender?.gender_type === "MR" ? "นาย" : user.gender?.gender_type === "GIRL" ? "ด.ญ." : user.gender?.gender_type ==="MISS" ?"นางสาว" : user.gender?.gender_type === "MRS" ? "นาง" : user.gender?.gender_type} {user?.user_id ? user.user_name : "Guest"}
           </p>
         </Link>

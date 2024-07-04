@@ -7,8 +7,6 @@ import "react-phone-input-2/lib/style.css";
 import AuthContext from "../contexts/AuthContext";
 import Inputmask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
-import Select from "react-select";
-import Input from "postcss/lib/input";
 
 export default function studentReg() {
   // console.log(fileinput.current.files[0])
@@ -37,8 +35,11 @@ export default function studentReg() {
     gender_id: "",
     nation_id: "",
     nation_other: "",
+    eth_id: "",
+    eth_other: "",
     user_id: user?.user_id,
   });
+  const [idType, setIdType] = useState("citizen");
   const [skipstudent, setSkipstudent] = useState(0);
   const nextPage = () => {
     setSkipstudent((skip) => skip + 10);
@@ -48,6 +49,7 @@ export default function studentReg() {
   };
 
   const fileinput = useRef(null);
+
   const [major, setMajor] = useState([]);
   useEffect(() => {
     const getMajor = async () => {
@@ -66,6 +68,7 @@ export default function studentReg() {
     };
     getClass();
   }, []);
+
   const [gender, setGender] = useState([]);
   useEffect(() => {
     const getGen = async () => {
@@ -74,6 +77,7 @@ export default function studentReg() {
     };
     getGen();
   }, []);
+
   const [nation, setNation] = useState([]);
   useEffect(() => {
     const getNation = async () => {
@@ -82,6 +86,7 @@ export default function studentReg() {
     };
     getNation();
   }, []);
+
   const [religion, setReligion] = useState([]);
   useEffect(() => {
     const getReligion = async () => {
@@ -90,6 +95,16 @@ export default function studentReg() {
     };
     getReligion();
   }, []);
+
+  const [eth, setETH] = useState([]);
+  useEffect(() => {
+    const getETH = async () => {
+      const rs = await axios.get("http://localhost:8000/student/ethicity");
+      setETH(rs.data.getETH);
+    };
+    getETH();
+  }, []);
+
   const [students, setStudents] = useState([]);
   useEffect(() => {
     const getStudent = async () => {
@@ -117,26 +132,9 @@ export default function studentReg() {
       major_type: matchTMajor ? matchTMajor.major_type : null,
     };
   });
-
-  // const hdlChange = (e, value) => {
-  //   const { name, value: targetValue } = e.target;
-
-  //   if (name === "std_phone") {
-  //     setPhone(value);
-  //     setInput((prev) => ({ ...prev, [name]: value }));
-  //   } else {
-  //     const newValue = name === "std_yearIn" ?
-  //       (targetValue === "2567" ? "2567" : "2568") :
-  //       targetValue;
-
-  //     setInput((prev) => ({
-  //       ...prev,
-  //       [name]: newValue,
-  //       ...(name === "religion_id" && newValue !== '3' && { religion_other: "" })
-  //     }));
-  //   }
-  // };
-
+  const handleIdTypeChange = (e) => {
+    setIdType(e.target.value);
+  };
   const hdlChange = (e, value) => {
     if (e.target.name === "std_phone") {
       setPhone(value);
@@ -160,9 +158,9 @@ export default function studentReg() {
       return alert("กรอกเบอร์โทรศัพท์ให้ครบ");
     }
 
-    if (input.std_identity.length < 13) {
-      return alert("กรอกรหัสบัตรประชาชนให้ครบ");
-    }
+    // if (input.std_identity.length < 13) {
+    //   return alert("กรอกรหัสบัตรประชาชนให้ครบ");
+    // }  
 
     try {
       const file = fileinput.current?.files[0];
@@ -205,8 +203,6 @@ export default function studentReg() {
             navigate("/");
           });
         }
-        
-
       }
     } catch (err) {
       Swal.fire({
@@ -240,6 +236,8 @@ export default function studentReg() {
       religion_other: "",
       nation_other: "",
       nation_id: "",
+      eth_id: "",
+      eth_other: "",
       user_id: user?.user_id,
     });
     if (fileinput.current) {
@@ -339,14 +337,32 @@ export default function studentReg() {
               />
             </div>
             <div className="w-2/3 mt-3">
-              <Inputmask
-                className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
-                mask="9-9999-99999-99-9"
-                name="std_identity"
-                value={input.std_identity}
-                onChange={hdlChange}
-                placeholder="รหัสบัตรประชาชน"
-              />
+            <div>
+        <input type="radio" value="citizen" id="citizen" name="idType" onChange={handleIdTypeChange} checked={idType === "citizen"} />
+        <label htmlFor="citizen">รหัสบัตรประชาชน</label>
+        <input type="radio" value="passport" id="passport" name="idType" onChange={handleIdTypeChange} checked={idType === "passport"} />
+        <label htmlFor="passport">Passport</label>
+      </div>
+
+              {idType === "citizen" ? (
+                <Inputmask
+                  className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+                  mask="9-9999-99999-99-9"
+                  name="std_identity"
+                  value={input.std_identity}
+                  onChange={hdlChange}
+                  placeholder="รหัสบัตรประชาชน"
+                />
+              ) : (
+                <input
+                  className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
+                  type="text"
+                  name="std_identity"
+                  value={input.std_identity}
+                  onChange={hdlChange}
+                  placeholder="Passport Number"
+                />
+              )}
             </div>
             <div className="w-36 py-2">
               <select
@@ -381,7 +397,7 @@ export default function studentReg() {
                 name="std_name"
                 value={input.std_name}
                 onChange={hdlChange}
-                placeholder="ชื่อ"
+                placeholder="ชื่อ (TH)"
               />
               <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
@@ -389,12 +405,12 @@ export default function studentReg() {
                 name="std_lastname"
                 value={input.std_lastname}
                 onChange={hdlChange}
-                placeholder="นามสกุล"
+                placeholder="นามสกุล (TH)"
               />
               <input
                 className=" rounded-md border-white border bg-white  w-full mt-3 px-3"
                 type={type}
-                placeholder="วันเดือนปีเกิด"
+                placeholder="วันเดือนปีเกิด (BD)"
                 name="std_bd"
                 value={input.std_bd}
                 onChange={hdlChange}
@@ -410,7 +426,7 @@ export default function studentReg() {
                 name="std_nameEN"
                 value={input.std_nameEN}
                 onChange={hdlChange}
-                placeholder="Name"
+                placeholder="ชื่อ (EN)"
               />
               <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
@@ -418,38 +434,32 @@ export default function studentReg() {
                 name="std_lastnameEN"
                 value={input.std_lastnameEN}
                 onChange={hdlChange}
-                placeholder="Lastname"
+                placeholder="นามสกุล (EN)"
               />
             </div>
             <div className="flex flex-row gap-2">
               <div className="w-36 py-2">
                 <select
-                  name="religion_id"
-                  value={input.religion_id}
+                  name="eth_id"
+                  value={input.eth_id}
                   onChange={hdlChange}
                   className="select select-bordered w-full max-w-xs text-violet-500"
                 >
-                  <option hidden>ศาสนา</option>
-                  {religion?.map((el, index) => (
-                    <option value={el.religion_id} key={index}>
-                      {el.religion_name === "buddhism"
-                        ? "พุทธ"
-                        : el.religion_name === "Christian"
-                        ? "คริสต์"
-                        : el.religion_name === "OTHER"
-                        ? "อื่นๆ"
-                        : el.religion_name}
+                  <option hidden>เชื้อชาติ</option>
+                  {eth?.map((el, index) => (
+                    <option value={el.eth_id} key={index}>
+                      {el.eth_name === "THAI" ? "ไทย" : "อื่นๆ"}
                     </option>
                   ))}
                 </select>
                 {
                   <input
                     type="text"
-                    name="religion_other"
-                    placeholder="โปรดระบุศาสนา"
-                    disabled={input.religion_id !== "3" ? "block" : "none"}
+                    name="eth_other"
+                    placeholder="โปรดระบุสัญชาติ"
+                    disabled={input.eth_id !== "2"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
-                    value={input.religion_other}
+                    value={input.eth_other}
                     onChange={hdlChange}
                   />
                 }
@@ -465,7 +475,7 @@ export default function studentReg() {
                   <option hidden>สัญชาติ</option>
                   {nation?.map((el, index) => (
                     <option value={el.nation_id} key={index}>
-                      {el.nation_name}
+                      {el.nation_name === "THAI" ? "ไทย" : "อื่นๆ"}
                     </option>
                   ))}
                 </select>
@@ -474,9 +484,44 @@ export default function studentReg() {
                     type="text"
                     name="nation_other"
                     placeholder="โปรดระบุสัญชาติ"
-                    disabled={input.nation_id !== "11" }
+                    disabled={input.nation_id !== "11"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.nation_other}
+                    onChange={hdlChange}
+                  />
+                }
+              </div>
+
+              <div className="w-36 py-2">
+                <select
+                  name="religion_id"
+                  value={input.religion_id}
+                  onChange={hdlChange}
+                  className="select select-bordered w-full max-w-xs text-violet-500"
+                >
+                  <option hidden>ศาสนา</option>
+                  {religion?.map((el, index) => (
+                    <option value={el.religion_id} key={index}>
+                      {el.religion_name === "buddhism"
+                        ? "พุทธ"
+                        : el.religion_name === "Christian"
+                        ? "คริสต์"
+                        : el.religion_name === "Islam"
+                        ? "อิสลาม"
+                        : el.religion_name === "OTHER"
+                        ? "อื่นๆ"
+                        : el.religion_name}
+                    </option>
+                  ))}
+                </select>
+                {
+                  <input
+                    type="text"
+                    name="religion_other"
+                    placeholder="โปรดระบุศาสนา"
+                    disabled={input.religion_id !== "3" ? "block" : "none"}
+                    className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
+                    value={input.religion_other}
                     onChange={hdlChange}
                   />
                 }
