@@ -15,6 +15,8 @@ import QRCODE from "../components/qrline"
 import Showstd from "../components/showstd"
 import Detail from "../components/showDetail"
 import UpDetail from "../components/updateDetail"
+import Major from "../components/Addmajor"
+
 const guestRouter = createBrowserRouter([
   {
     path: "/",
@@ -74,6 +76,7 @@ const adminRouter = createBrowserRouter([
     children: [
       { index: true, element: <AdminForm/> },
       { path: "/add", element: <Enroll/> },
+      { path: "/major", element: <Major/> },
       { path: "/", element: <AdminForm /> },
       { path: "/profile", element: <Profile /> },
     ],

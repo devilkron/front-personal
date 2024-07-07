@@ -37,6 +37,7 @@ export default function studentReg() {
     nation_other: "",
     eth_id: "",
     eth_other: "",
+    prov_id: "",
     user_id: user?.user_id,
   });
   const [idType, setIdType] = useState("citizen");
@@ -105,6 +106,19 @@ export default function studentReg() {
     getETH();
   }, []);
 
+  const [prov, setProv] = useState([]);
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    const getProv = async () => {
+      const rs = await axios.get("http://localhost:8000/student/provinces", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setProv(rs.data.getProv);
+    };
+    getProv();
+    // console.log(prov)
+  }, []);
+
   const [students, setStudents] = useState([]);
   useEffect(() => {
     const getStudent = async () => {
@@ -160,7 +174,7 @@ export default function studentReg() {
 
     // if (input.std_identity.length < 13) {
     //   return alert("กรอกรหัสบัตรประชาชนให้ครบ");
-    // }  
+    // }
 
     try {
       const file = fileinput.current?.files[0];
@@ -192,6 +206,7 @@ export default function studentReg() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+        
         if (rs.status === 200) {
           Swal.fire({
             icon: "success",
@@ -210,6 +225,7 @@ export default function studentReg() {
         title: "ผิดพลาด",
         text: err.message,
       });
+      console.log(input)
     }
   };
   // console.log(input.major_type)
@@ -238,6 +254,7 @@ export default function studentReg() {
       nation_id: "",
       eth_id: "",
       eth_other: "",
+      prov_id: "",
       user_id: user?.user_id,
     });
     if (fileinput.current) {
@@ -337,12 +354,26 @@ export default function studentReg() {
               />
             </div>
             <div className="w-2/3 mt-3">
-            <div>
-        <input type="radio" value="citizen" id="citizen" name="idType" onChange={handleIdTypeChange} checked={idType === "citizen"} />
-        <label htmlFor="citizen">รหัสบัตรประชาชน</label>
-        <input type="radio" value="passport" id="passport" name="idType" onChange={handleIdTypeChange} checked={idType === "passport"} />
-        <label htmlFor="passport">Passport</label>
-      </div>
+              <div className="flex gap-2">
+                <input
+                  type="radio"
+                  value="citizen"
+                  id="citizen"
+                  name="idType"
+                  onChange={handleIdTypeChange}
+                  checked={idType === "citizen"}
+                />
+                <label htmlFor="citizen">รหัสบัตรประชาชน</label>
+                <input
+                  type="radio"
+                  value="passport"
+                  id="passport"
+                  name="idType"
+                  onChange={handleIdTypeChange}
+                  checked={idType === "passport"}
+                />
+                <label htmlFor="passport">Passport</label>
+              </div>
 
               {idType === "citizen" ? (
                 <Inputmask
@@ -456,7 +487,7 @@ export default function studentReg() {
                   <input
                     type="text"
                     name="eth_other"
-                    placeholder="โปรดระบุสัญชาติ"
+                    placeholder="เชื้อชาติ"
                     disabled={input.eth_id !== "2"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.eth_other}
@@ -483,8 +514,8 @@ export default function studentReg() {
                   <input
                     type="text"
                     name="nation_other"
-                    placeholder="โปรดระบุสัญชาติ"
-                    disabled={input.nation_id !== "11"}
+                    placeholder="สัญชาติ"
+                    disabled={input.nation_id !== "2"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.nation_other}
                     onChange={hdlChange}
@@ -518,8 +549,8 @@ export default function studentReg() {
                   <input
                     type="text"
                     name="religion_other"
-                    placeholder="โปรดระบุศาสนา"
-                    disabled={input.religion_id !== "3" ? "block" : "none"}
+                    placeholder="ศาสนา"
+                    disabled={input.religion_id !== "4" }
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.religion_other}
                     onChange={hdlChange}
@@ -529,15 +560,38 @@ export default function studentReg() {
             </div>
 
             <div className="flex gap-2">
+              <select
+                name="prov_id"
+                value={input.prov_id}
+                onChange={hdlChange}
+                className="select select-bordered w-full max-w-xs text-violet-500"
+              >
+                <option hidden>จังหวัด</option>
+                {prov?.map((el, index) => (
+                  <option value={el.prov_id} key={index}>
+                    {el.prov_thainame}, {el.prov_name}
+                  </option>
+                ))}
+              </select>
+
               <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
                 type="text"
                 name="std_address"
                 value={input.std_address}
                 onChange={hdlChange}
-                placeholder="ที่อยู่ที่สามารถติดต่อได้"
+                placeholder="บ้านเลขที่ ตำบล อำเภอ รหัสไปรษณีย์"
               />
-              {/* <p className="mt-3">Phone</p> */}
+            </div>
+            <div className="flex gap-2">
+            <input
+                className=" rounded-md border-white border bg-white text-violet-500 w-2/3 mt-3 px-3 "
+                type="text"
+                name="std_email"
+                value={input.std_email}
+                onChange={hdlChange}
+                placeholder="Email"
+              />
               <PhoneInput
                 className=" rounded-md  text-violet-500 w-full mt-3 px-3 number"
                 country={"th"}
@@ -547,17 +601,9 @@ export default function studentReg() {
                   hdlChange({ target: { name: "std_phone" } }, value)
                 }
               />
+
             </div>
 
-            {/* <p className="mt-3">Email</p> */}
-            <input
-              className=" rounded-md border-white border bg-white text-violet-500 w-2/3 mt-3 px-3 "
-              type="text"
-              name="std_email"
-              value={input.std_email}
-              onChange={hdlChange}
-              placeholder="Email"
-            />
             <div className="flex gap-2 ">
               <p className="mt-3 text-xl">รูปถ่ายขนาด 2 นิ้ว</p>
               <input
