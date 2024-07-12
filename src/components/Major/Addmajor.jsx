@@ -70,7 +70,7 @@ function Addmajor() {
         <div className="flex justify-center text-2xl text-gray-400">
           เพิ่มสาขาวิชา
         </div>
-        <div className="mx-auto w-1/2">
+        <div className="mx-auto w-10/12">
           <div className="mt-3">
             <input
               type="text"

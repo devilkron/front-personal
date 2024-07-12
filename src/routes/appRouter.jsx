@@ -15,8 +15,8 @@ import QRCODE from "../components/qrline"
 import Showstd from "../components/showstd"
 import Detail from "../components/showDetail"
 import UpDetail from "../components/updateDetail"
-import Major from "../components/Addmajor"
-import Majortb from "../components/Majortb";
+import Major from "../components/Major/Addmajor"
+import Majortb from "../components/Major/Majortb";
 
 const guestRouter = createBrowserRouter([
   {
