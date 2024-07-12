@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Inputmask from "react-input-mask";
 import PhoneInput from "react-phone-input-2";
@@ -11,8 +11,8 @@ export default function updateDetail() {
   const [majors, setMajors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [gender, setGender] = useState([]);
-  const [nationality, setNationality] =useState([])
-  const navigate = useNavigate()
+  const [nationality, setNationality] = useState([]);
+  const navigate = useNavigate();
   const [update, setUpdate] = useState({
     std_name: "",
     std_bd: "",
@@ -44,10 +44,10 @@ export default function updateDetail() {
       const rs = await axios.get("http://localhost:8000/student/class");
       setClasses(rs.data.getC);
     };
-    const getNation = async() => {
-      const rs = await axios.get("http://localhost:8000/student/nation")
-      setNationality(rs.data.getNation)
-    }
+    const getNation = async () => {
+      const rs = await axios.get("http://localhost:8000/student/nation");
+      setNationality(rs.data.getNation);
+    };
     getNation();
     getGender();
     getClass();
@@ -58,11 +58,9 @@ export default function updateDetail() {
 
   const hdlChange = (e, value) => {
     if (e.target.name === "std_phone") {
-      setPhone(value)
+      setPhone(value);
       setStudents((prev) => ({ ...prev, [e.target.name]: value }));
-    }
-    else{
-      
+    } else {
       setStudents((prv) => ({ ...prv, [e.target.name]: e.target.value }));
     }
     // console.log(students)
@@ -82,7 +80,7 @@ export default function updateDetail() {
         showConfirmButton: false,
         width: "500px",
       }).then(() => {
-        navigate('/')
+        navigate("/");
       });
     }
   };
@@ -94,25 +92,43 @@ export default function updateDetail() {
         onSubmit={hdlSubmit}
       >
         <div className="mb-4">
-        <label className="block text-sm font-medium text-white">ปีการศึกษา</label>
-         <select name="std_yearIn" value={students.std_yearIn} onChange={hdlChange} className="select select-bordered w-1/4 max-w-xs  ">
-                <option hidden>ปีการศึกษา</option>
-                <option value="2567" >2567</option>
-                <option value="2568" >2568</option>
-              </select>
+          <label className="block text-sm font-medium text-white">
+            ปีการศึกษา
+          </label>
+          <select
+            name="std_yearIn"
+            value={students.std_yearIn}
+            onChange={hdlChange}
+            className="select select-bordered w-1/4 max-w-xs  "
+          >
+            <option hidden>ปีการศึกษา</option>
+            <option value="2567">2567</option>
+            <option value="2568">2568</option>
+          </select>
         </div>
-        
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-white">
-            รหัสบัตรประชาชน
+            รหัสบัตรประชาชน / Passport
           </label>
-          <Inputmask
-            mask="9-9999-99999-99-9"
-            name="std_identity"
-            value={students.std_identity || ""}
-            onChange={hdlChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          />
+          {students.std_identity?.length >= 13 ? (
+            <Inputmask
+              mask="9-9999-99999-99-9"
+              name="std_identity"
+              value={students.std_identity || ""}
+              onChange={hdlChange}
+              className="mt-1 p-2 w-full border rounded-md"
+            />
+          ) : (
+            <input
+              type="text"
+              name="std_identity"
+              value={students.std_identity || ""}
+              onChange={hdlChange}
+              className="mt-1 p-2 w-full border rounded-md"
+            />
+          )}
+         
         </div>
         <div className="w-full flex flex-row text-white">
           <p className="w-1/2">คำนำหน้า</p>
@@ -127,12 +143,22 @@ export default function updateDetail() {
           >
             {gender.map((el, index) => (
               <option value={el.gender_id} key={index}>
-                {el.gender_type ==="MISS" ? "นางสาว" : el.gender_type === "GIRL" ?"ด.ญ." : el.gender_type === "MRS" ? "นาง" : el.gender_type === "BOY" ? "ด.ช." : el.gender_type === "MR" ? "นาย" : el.gender_type}
+                {el.gender_type === "MISS"
+                  ? "นางสาว"
+                  : el.gender_type === "GIRL"
+                  ? "ด.ญ."
+                  : el.gender_type === "MRS"
+                  ? "นาง"
+                  : el.gender_type === "BOY"
+                  ? "ด.ช."
+                  : el.gender_type === "MR"
+                  ? "นาย"
+                  : el.gender_type}
               </option>
             ))}
           </select>
         </div>
-        
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-white">ชื่อ</label>
           <input
@@ -157,7 +183,9 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-white">ชื่อ(อังกฤษ)</label>
+          <label className="block text-sm font-medium text-white">
+            ชื่อ(อังกฤษ)
+          </label>
           <input
             type="text"
             name="std_nameEN"
@@ -167,7 +195,9 @@ export default function updateDetail() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-white">นามสกุล(อังกฤษ)</label>
+          <label className="block text-sm font-medium text-white">
+            นามสกุล(อังกฤษ)
+          </label>
           <input
             type="text"
             name="std_lastnameEN"
@@ -215,8 +245,10 @@ export default function updateDetail() {
             // name="std_phone"
             ref={phoneInputRef}
             value={students.std_phone || ""}
-            onChange={(value) =>{setPhone(value) 
-              hdlChange({target: {name: "std_phone"}},value)}}
+            onChange={(value) => {
+              setPhone(value);
+              hdlChange({ target: { name: "std_phone" } }, value);
+            }}
             className="w-full number"
           />
         </div>

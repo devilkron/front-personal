@@ -16,6 +16,7 @@ import Showstd from "../components/showstd"
 import Detail from "../components/showDetail"
 import UpDetail from "../components/updateDetail"
 import Major from "../components/Addmajor"
+import Majortb from "../components/Majortb";
 
 const guestRouter = createBrowserRouter([
   {
@@ -79,6 +80,7 @@ const adminRouter = createBrowserRouter([
       { path: "/major", element: <Major/> },
       { path: "/", element: <AdminForm /> },
       { path: "/profile", element: <Profile /> },
+      {path: "/getMajor", element: <Majortb/>},
     ],
   },
 ]);

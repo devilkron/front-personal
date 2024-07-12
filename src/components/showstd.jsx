@@ -28,6 +28,10 @@ export default function showstd() {
               <th>ชื่อ</th>
               <th>นามสกุล</th>
               <th>โรงเรียน</th>
+              <th>ปีการศึกษา</th>
+              <th>ระดับชั้น</th>
+              <th>สาขา</th>
+              <th>เชื้อชาติ</th>
               <th>สัญชาติ</th>
               <th>สถานะ</th>
               <th></th>
@@ -66,7 +70,19 @@ export default function showstd() {
                     <div className="font-bold">{std.std_school}</div>
                   </td>
                   <td>
-                    <div className="font-bold">{std.nationality?.nation_name}</div>
+                    <div className="font-bold">{std.std_yearIn}</div>
+                  </td>
+                  <td>
+                    <div className="font-bold">{std.class.class_type}</div>
+                  </td>
+                  <td>
+                    <div className="font-bold">{std.major.major_type}</div>
+                  </td>
+                  <td>
+                    <div className="font-bold">{std.ethicity?.eth_name === "OTHER" ? std.eth_other : std.ethicity.eth_name}</div>
+                  </td>
+                  <td>
+                    <div className="font-bold">{std.nationality?.nation_name === "OTHER" ? std.nation_other : std.nationality.nation_name}</div>
                   </td>
                   <td className="font-bold">
                     {std.status === "W8"
