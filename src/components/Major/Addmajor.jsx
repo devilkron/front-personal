@@ -9,6 +9,8 @@ function Addmajor() {
     major_type: "",
   });
   const [reload, setReload] = useState(false);
+  const [edit, setEdit] = useState(null);
+
   const hdlSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,9 +30,9 @@ function Addmajor() {
         }
 
         const token = localStorage.getItem("token");
-        const rs = await axios.post(
-          "http://localhost:8000/student/addmajor",
-          input,
+        const url = edit ? `http://localhost:8000/student/updatemajor/${edit.major_id} ` : "http://localhost:8000/student/addmajor"
+        const method = edit ? "patch" : "post"
+        const rs = await axios[method](url, input,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -39,10 +41,10 @@ function Addmajor() {
         );
 
         if (rs.status === 200) {
-          toast.success("เพิ่มสาขาเรียบร้อย");
+          toast.success(edit ? "แก้ไขสาขาเรียบร้อย" :"เพิ่มสาขาเรียบร้อย");
           setInput({ major_type: "" });
           setReload(!reload);
-          
+          setEdit(null)
         }
       }
     } catch (err) {
@@ -60,6 +62,10 @@ function Addmajor() {
       [e.target.name]: e.target.value,
     });
   };
+  const hdlEdit =(major) => {
+    setInput({major_type: major.major_type})
+    setEdit(major)
+  }
 
   return (
     <div>
@@ -68,7 +74,7 @@ function Addmajor() {
         onSubmit={hdlSubmit}
       >
         <div className="flex justify-center text-2xl text-gray-400">
-          เพิ่มสาขาวิชา
+          {edit ? "แก้ไขสาขาวิชา" : "เพิ่มสาขาวิชา"}
         </div>
         <div className="mx-auto w-10/12">
           <div className="mt-3">
@@ -83,24 +89,19 @@ function Addmajor() {
           </div>
         </div>
         <div>
-         
           <button
             type="submit"
             className="mx-auto flex items-center justify-center p-0.5 mt-2 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
-            
           >
-            <span  className=" px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0" >
-              เพิ่มสาขาวิชา
+            <span className=" px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+            {edit ? "แก้ไขสาขาวิชา" : "เพิ่มสาขาวิชา"}
             </span>
           </button>
         </div>
       </form>
       <div>
-        <div className="text-center mt-5 text-4xl">
-
-        รายชื่อสาขา
-        </div>
-        <Majortb reload={reload}/>
+        <div className="text-center mt-5 text-4xl">รายชื่อสาขา</div>
+        <Majortb reload={reload} onEdit={hdlEdit}/>
       </div>
     </div>
   );

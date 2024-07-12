@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-function Majortb({reload}) {
+function Majortb({reload, onEdit}) {
   const [getmajor, setGetmajor] = useState([]);
 
   const getMajor = async () => {
@@ -63,7 +63,7 @@ function Majortb({reload}) {
                 </td>
 
                 <th>
-                  <a className="btn btn-ghost btn-sm text-yellow-400">
+                  <a onClick={() => onEdit(mj)} className="btn btn-ghost btn-sm text-yellow-400" >
                     แก้ไข
                   </a>
                   <a onClick={() => {hdlDelete(mj.major_id)}} className="btn btn-ghost btn-sm text-red-500">ลบ</a>
