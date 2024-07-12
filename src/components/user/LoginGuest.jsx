@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import userAuth from "../hooks/adminAuth";
+import userAuth from "../../hooks/adminAuth";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 

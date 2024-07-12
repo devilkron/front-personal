@@ -1,10 +1,10 @@
 import React from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
-import imgspon1 from "../assets/LEGO.png"
-import imgspon2 from "../assets/React.png"
-import imgspon3 from "../assets/imgspon3.jpg"
-import imgspon4 from "../assets/Apple.png"
+import imgspon1 from "../../assets/LEGO.png"
+import imgspon2 from "../../assets/React.png"
+import imgspon3 from "../../assets/imgspon3.jpg"
+import imgspon4 from "../../assets/Apple.png"
 
 const indicators = (index) => (<div className="indicator">{index + 1}</div>);
 

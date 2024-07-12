@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom"
-import adminAuth from "../hooks/adminAuth"
+import adminAuth from "../../hooks/adminAuth"
 
 const guestNav = [
   { to: '/login', text: 'Login' },

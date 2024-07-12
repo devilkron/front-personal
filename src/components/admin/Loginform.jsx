@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import adminAuth from "../hooks/adminAuth";
+import adminAuth from "../../hooks/adminAuth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -50,7 +50,7 @@ export default function loginform() {
     }
   };
   return (
-    <div className="relative">
+    <div className="relative h-screen">
       <form
         className=" md:scale-100 scale-90 max-w-[800px] max-h-[600px] mx-auto mt-5 p-5 bg-sky-200 rounded-lg shadow-lg"
         onSubmit={hdlSubmit}

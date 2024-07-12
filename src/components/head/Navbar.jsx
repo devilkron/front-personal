@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/adminAuth";
+import useAuth from "../../hooks/adminAuth";
 import { useEffect, useRef, useState } from "react";
 
 const adminNav = [

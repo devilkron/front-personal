@@ -12,16 +12,7 @@ export default function showDetail() {
       const rs = await axios.get(`http://localhost:8000/user/detail/${std_id}`);
       setStudents(rs.data.showDt);
     };
-    // const getMajor = async()=>{
-    //   const rs = await axios.get("http://localhost:8000/student/major")
-    //   setMajors(rs.data.getM)
-    // }
-    // const getClass = async() => {
-    //   const rs = await axios.get("http://localhost:8000/student/class")
-    //   setClasses(rs.data.getC)
-    // }
-    // getClass()
-    // getMajor()
+    
     showDT();
   }, []);
 
@@ -31,30 +22,8 @@ export default function showDetail() {
     documentTitle: `บัตรเข้าห้องสอบ_${students.std_name}_${students.std_lastname}`
   });
   
-  // console.log(students.major?.major_type
-  //   );
-  // console.log(majors)
-  let thaiTranslation = '';
-switch (students.major?.major_type) {
-  case 'MATHSCI':
-    thaiTranslation = 'วิทย์คณิต';
-    break;
-  case 'ARTMATH':
-    thaiTranslation = 'ศิลป์คำนวณ';
-    break;
-  case 'ARTSOC':
-    thaiTranslation = 'ศิลป์สังคม';
-    break;
-  case 'ARTENG':
-    thaiTranslation = 'ศิลป์ภาษา';
-    break;
-  case 'ARTFREE':
-    thaiTranslation = 'ศิลป์ทั่วไป';
-    break;
-  default:
-    thaiTranslation = 'ไม่ระบุ';
-    break;
-}
+ 
+ 
   
   return (
     <div className="mt-5 mx-auto w-1/2 select-none" >
@@ -79,7 +48,7 @@ switch (students.major?.major_type) {
           <h2 className="card-title"><label className="text-gray-600 font-normal">ชื่อ</label>{students.gender?.gender_type === "MISS" ? "นางสาว" : students.gender?.gender_type === "GIRL" ? "ด.ญ." :students.gender?.gender_type === "MRS" ? "นาง" : students.gender?.gender_type === "BOY" ? "ด.ช." : students.gender?.gender_type === "MR" ? "นาย" : students.gender?.gender_id} {students.std_name} {students.std_lastname}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">ที่อยู่</label> {students.std_address}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">เบอร์โทร</label> +{students.std_phone}</h2>
-          <h2 className="card-title"><label className="text-gray-600 font-normal">สาขา</label> {thaiTranslation}</h2>
+          <h2 className="card-title"><label className="text-gray-600 font-normal">สาขา</label> {students.major.major_type}</h2>
           <div className="flex gap-2">
           <h2 className="card-title"><label className="text-gray-600 font-normal">ระดับการศึกษา</label> {students.class?.class_type === "SECONDARY1" ? "ม.1" :"ม.4"}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">ปีการศึกษา</label> {students.std_yearIn }</h2>

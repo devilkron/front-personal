@@ -1,10 +1,10 @@
 import React from "react";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import image1 from "../assets/ik.jpg";
-import image2 from "../assets/school.jpg";
-import image3 from "../assets/Schedule.png";
-import image4 from "../assets/ss.png";
+import image1 from "../../assets/ik.jpg";
+import image2 from "../../assets/school.jpg";
+import image3 from "../../assets/Schedule.png";
+import image4 from "../../assets/ss.png";
 import Sponsor from "./Sponsor";
 import Dashboard from "./Dashboard";
 const indicators = (index) => <div className="indicator">{index + 1}</div>;
