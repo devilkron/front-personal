@@ -106,7 +106,7 @@ export default function Search() {
         }
       } catch (err) {
         // console.error(err.response.data.message);
-        toast.warning(err.response.data.Error)
+        toast.warning(err.response.data.Error);
       }
     };
     searchUser();
@@ -156,7 +156,7 @@ export default function Search() {
             onChange={hdlSearch}
           >
             <option hidden>ปีการศึกษา</option>
-            <option value=''>ดูทั้งหมด</option>
+            <option value="">ดูทั้งหมด</option>
             <option value="2567">2567</option>
             <option value="2568">2568</option>
           </select>
@@ -166,7 +166,7 @@ export default function Search() {
             onChange={handleClassChange}
           >
             <option hidden>ระดับชั้น</option>
-            <option value=''>ดูทั้งหมด</option>
+            <option value="">ดูทั้งหมด</option>
             {classes.map((el) => (
               <option key={el.class_id} value={el.class_id}>
                 {el.class_type === "SECONDARY1"
@@ -361,7 +361,7 @@ export default function Search() {
   }
 }
 
-const Modal = ({ student, majors, classes, gender, nation, reload }) => {
+const Modal = ({ student, majors, classes, reload }) => {
   // console.log(student);
 
   const modalId = `my_modal_${student.std_id}`;
@@ -427,14 +427,15 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
             },
           }
         );
-        console.log(rs);
+        // console.log(rs);
         if (rs.status === 200) {
           // location.reload();
-          alert("ลบข้อมูลเรียบร้อย");
-          setLoad((prev) => !prev);
+          toast.success("ลบข้อมูลเรียบร้อย");
+          reload((prv) => !prv);
         }
+        document.getElementById(modalId).close();
       } catch (err) {
-        alert(err);
+        toast.error(err.response?.data?.message || "เกิดข้อผิดพลาดในการลบข้อมูล");
       }
     }
   };
@@ -454,9 +455,11 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
             },
           }
         );
-        console.log(rs);
+        // console.log(rs);
         if (rs.status === 200) {
-          location.reload();
+          toast.success("ยืนยันสถานะเรียบร้อย")
+          document.getElementById(modalId).close();
+          reload((prv) => !prv);
         }
       } catch (err) {
         console.log(err);
@@ -481,7 +484,9 @@ const Modal = ({ student, majors, classes, gender, nation, reload }) => {
         );
         console.log(rs);
         if (rs.status === 200) {
-          location.reload();
+          toast.success("ปฏิเสธสถานะเรียบร้อย")
+          document.getElementById(modalId).close();
+          reload((prv) => !prv);
         }
       } catch (err) {
         console.log(err);

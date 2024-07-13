@@ -38,7 +38,7 @@ function Majortb({reload, onEdit}) {
       <table className="table mt-5 text-center">
         <thead className="text-[18px]">
           <tr>
-            <th>ลำดับ</th>
+            <th>เลขที่</th>
             <th>รายชื่อสาขา</th>
             <th>ชื่อผู้เพิ่ม</th>
             <th></th>

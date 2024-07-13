@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import Majortb from "./Majortb";
@@ -10,6 +10,7 @@ function Addmajor() {
   });
   const [reload, setReload] = useState(false);
   const [edit, setEdit] = useState(null);
+  const majorRef = useRef(null);
 
   const hdlSubmit = async (e) => {
     e.preventDefault();
@@ -30,21 +31,21 @@ function Addmajor() {
         }
 
         const token = localStorage.getItem("token");
-        const url = edit ? `http://localhost:8000/student/updatemajor/${edit.major_id} ` : "http://localhost:8000/student/addmajor"
-        const method = edit ? "patch" : "post"
-        const rs = await axios[method](url, input,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const url = edit
+          ? `http://localhost:8000/student/updatemajor/${edit.major_id} `
+          : "http://localhost:8000/student/addmajor";
+        const method = edit ? "patch" : "post";
+        const rs = await axios[method](url, input, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (rs.status === 200) {
-          toast.success(edit ? "แก้ไขสาขาเรียบร้อย" :"เพิ่มสาขาเรียบร้อย");
+          toast.success(edit ? "แก้ไขสาขาเรียบร้อย" : "เพิ่มสาขาเรียบร้อย");
           setInput({ major_type: "" });
           setReload(!reload);
-          setEdit(null)
+          setEdit(null);
         }
       }
     } catch (err) {
@@ -53,6 +54,11 @@ function Addmajor() {
         title: "ผิดพลาด",
         text: err.response.data.message,
       });
+      // if (err.response.data.message === "มีสาขานี้อยู่แล้ว") {
+      //   if (majorRef.current) {
+      //     majorRef.current.focus();
+      //   }
+      // }
     }
   };
 
@@ -62,10 +68,15 @@ function Addmajor() {
       [e.target.name]: e.target.value,
     });
   };
-  const hdlEdit =(major) => {
-    setInput({major_type: major.major_type})
-    setEdit(major)
-  }
+  const hdlEdit = (major) => {
+    setInput({ major_type: major.major_type });
+    setEdit(major);
+  };
+
+  const hdlReset = () => {
+    setInput({ major_type: "" });
+    setEdit(null);
+  };
 
   return (
     <div>
@@ -88,20 +99,29 @@ function Addmajor() {
             />
           </div>
         </div>
-        <div>
+        <div className="flex justify-between">
           <button
             type="submit"
-            className="mx-auto flex items-center justify-center p-0.5 mt-2 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
+            className="mx-auto flex items-center justify-center p-0.5 mt-2 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 "
           >
             <span className=" px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            {edit ? "แก้ไขสาขาวิชา" : "เพิ่มสาขาวิชา"}
+              {edit ? "แก้ไขสาขาวิชา" : "เพิ่มสาขาวิชา"}
+            </span>
+          </button>
+          <button
+            type="button"
+            className="mx-auto flex items-center justify-center p-0.5 mt-2 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-blue-200 via-blue-300 to-green-200 group-hover:from-blue-200 group-hover:via-blue-300 group-hover:to-green-200 dark:text-white dark:hover:text-gray-900 "
+            onClick={hdlReset}
+          >
+            <span className="px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              รีเซ็ต
             </span>
           </button>
         </div>
       </form>
       <div>
         <div className="text-center mt-5 text-4xl">รายชื่อสาขา</div>
-        <Majortb reload={reload} onEdit={hdlEdit}/>
+        <Majortb reload={reload} onEdit={hdlEdit} />
       </div>
     </div>
   );
