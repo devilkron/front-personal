@@ -62,7 +62,7 @@ export default function Header() {
             >
               <figure><img src="https://img.freepik.com/free-vector/hand-drawn-high-school-logo-template_23-2149689290.jpg" className="h-[100px]" alt="logo" /></figure>
               <div tabIndex={0} className="card-body text-black">
-                <h2 className="card-title ">หากยังไม่มีโปรดติดต่อฝ่ายทะเบียน</h2>
+                <h2 className="card-title ">หากยังไม่มีรหัสโปรดติดต่อฝ่ายทะเบียน</h2>
                 
               </div>
               <div dir="ltr">

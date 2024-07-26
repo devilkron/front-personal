@@ -40,7 +40,7 @@ export default function loginform() {
       if (error.response && error.response.data && error.response.data.Error) {
         Swal.fire({
           icon: 'error',
-          title: "huhh...",
+          title: "เกิดข้อผิดพลาด",
           text: `${error.response.data.Error}`
         })
       } else {
@@ -49,7 +49,7 @@ export default function loginform() {
     }
   };
   return (
-    <div>
+    <div className="relative h-screen">
       <form
         className=" max-w-[800px] max-h-[600px] mx-auto mt-5 p-5 bg-fuchsia-200 rounded-lg shadow-lg"
         onSubmit={hdlSubmit}

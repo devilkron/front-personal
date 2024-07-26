@@ -73,7 +73,7 @@ export default function showstd() {
                     <div className="font-bold">{std.std_yearIn}</div>
                   </td>
                   <td>
-                    <div className="font-bold">{std.class.class_type}</div>
+                    <div className="font-bold">{std.class.class_type === "SECONDARY1" ? "ม.1" : "ม.4"}</div>
                   </td>
                   <td>
                     <div className="font-bold">{std.major.major_type}</div>

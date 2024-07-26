@@ -57,7 +57,7 @@ export default function Dashboard() {
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
-            <div>
+            {/* <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
               >
@@ -67,7 +67,8 @@ export default function Dashboard() {
                 {students.countARTMATH === 0 ? "0" : students.countARTMATH}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
-            </div>
+            </div> */}
+
             <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
@@ -79,7 +80,8 @@ export default function Dashboard() {
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>
-            <div>
+            
+            {/* <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
               >
@@ -89,15 +91,16 @@ export default function Dashboard() {
                 {students.countARTSOC === 0 ? "0" : students.countARTSOC}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
-            </div>
+            </div> */}
+
             <div>
               <h1
                 className="text-1xl font-bold text-sky-500 tooltip"
               >
-                สาขาศิลป์ทั่วไป
+                อื่นๆ
               </h1>
               <h2 className="text-2xl font-bold text-amber-400">
-                {students.countARTFREE === 0 ? "0" : students.countARTFREE}
+                {students.countOthers === 0 ? "0" : students.countOthers}
               </h2>
               <label className="text-2xl font-bold text-amber-400">คน</label>
             </div>

@@ -206,7 +206,7 @@ export default function studentReg() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        
+
         if (rs.status === 200) {
           Swal.fire({
             icon: "success",
@@ -225,7 +225,7 @@ export default function studentReg() {
         title: "ผิดพลาด",
         text: err.message,
       });
-      console.log(input)
+      console.log(input);
     }
   };
   // console.log(input.major_type)
@@ -550,7 +550,7 @@ export default function studentReg() {
                     type="text"
                     name="religion_other"
                     placeholder="ศาสนา"
-                    disabled={input.religion_id !== "4" }
+                    disabled={input.religion_id !== "4"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.religion_other}
                     onChange={hdlChange}
@@ -584,7 +584,7 @@ export default function studentReg() {
               />
             </div>
             <div className="flex gap-2">
-            <input
+              <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-2/3 mt-3 px-3 "
                 type="text"
                 name="std_email"
@@ -601,7 +601,6 @@ export default function studentReg() {
                   hdlChange({ target: { name: "std_phone" } }, value)
                 }
               />
-
             </div>
 
             <div className="flex gap-2 ">
@@ -622,6 +621,25 @@ export default function studentReg() {
               value="SEND"
               className="btn btn-success btn-outline w-[150px] mr-10 "
             />
+            {/* <button  className="py-3 mr-10 justify-center items-center gap-2 w-[150px] h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
+              <svg className="w-5 fill-white" viewBox="0 0 15 15">
+                <svg
+                  className="w-6 h-6"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </svg>
+            </button> */}
+
             <input
               type="button"
               value="RESET"

@@ -13,7 +13,7 @@ export default function contact() {
       <div className="flex flex-row">
         <div className="flex justify-end">
           <img
-            src="https://sakolraj.ac.th/wp-content/uploads/2023/06/Gold-Elegant-Wedding-Circular-Logo-3.png"
+            src="https://cdn-icons-png.flaticon.com/512/3082/3082383.png"
             className="w-[300px] max-h-[300px]"
           />
         </div>
@@ -47,7 +47,7 @@ export default function contact() {
       <div className="flex flex-row">
         <div className="flex justify-end">
           <img
-            src="https://sakolraj.ac.th/wp-content/uploads/2023/06/Gold-Elegant-Wedding-Circular-Logo-5.png"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXBI4OyBdatLrVutR2Ku7CXGTVb5MOq5BBQA&s"
             className="w-[300px] max-h-[300px]"
           />
         </div>

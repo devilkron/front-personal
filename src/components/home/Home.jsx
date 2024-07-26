@@ -26,9 +26,9 @@ const Home = () => {
 
   return (
     <div className=" relative">
-      <div className="text-3xl text-sky-400 flex justify-center mb-5 mt-5 bg-yellow-200 w-[450px] py-2  mx-auto rounded-lg">
+      <div className="text-3xl text-sky-400 flex justify-center mb-5 mt-5 bg-yellow-200 w-1/2 py-2  mx-auto rounded-lg">
         <marquee scrollamount={10}>
-          โรงเรียนรังษีวิทยาแบ่งปัน ยินดีต้อนรับครับ/ค่ะ
+          โรงเรียนสกลนครพัฒนศึกษา ยินดีต้อนรับครับ/ค่ะ
         </marquee>
       </div>
       <div className="mb-5">
