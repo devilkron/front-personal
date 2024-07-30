@@ -4,8 +4,8 @@ import adminAuth from "../../hooks/adminAuth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-export default function loginform() {
-  const navigate = useNavigate()
+export default function LoginForm() {
+  const navigate = useNavigate();
   const { setUser } = adminAuth();
   const [input, setInput] = useState({
     email: "",
@@ -21,66 +21,63 @@ export default function loginform() {
       e.preventDefault();
 
       const rs = await axios.post("http://localhost:8000/auth/adminlogin", input);
-      // console.log(rs.data.token);
       localStorage.setItem("token", rs.data.token);
       const rs1 = await axios.get("http://localhost:8000/auth/me", {
         headers: { Authorization: `Bearer ${rs.data.token}` },
       });
-      if(rs1.data !== ""){
+      if (rs1.data !== "") {
         Swal.fire({
           title: "Login SUCCESS",
           text: "Login web site",
           icon: "success",
           preConfirm: () => {
-            setUser(rs1.data)
+            setUser(rs1.data);
           }
-        })
+        });
       }
-      navigate('/')
+      navigate('/');
     } catch (error) {
       if (error.response && error.response.data && error.response.data.Error) {
         Swal.fire({
           icon: 'error',
           title: "huhh...",
           text: `${error.response.data.Error}`
-        })
+        });
       } else {
         alert(error.Error);
       }
     }
   };
+
   return (
-    <div className="relative h-screen">
+    <div className="relative min-h-screen flex items-center justify-center bg-gray-100">
       <form
-        className=" md:scale-100 scale-90 max-w-[800px] max-h-[600px] mx-auto mt-5 p-5 bg-sky-200 rounded-lg shadow-lg"
+        className="max-w-md w-full p-5 bg-sky-200 rounded-lg shadow-lg"
         onSubmit={hdlSubmit}
       >
-        
-        <div>
+        <div className="flex justify-center mb-5">
           <img
-            className="rounded-full mx-auto h-auto max-w-[120px]"
+            className="rounded-full h-24"
             src="https://img.freepik.com/free-vector/hand-drawn-high-school-logo-template_23-2149689290.jpg"
-            alt=""
+            alt="School Logo"
           />
         </div>
         <div>
-          <p className="text-center w-[70%] mx-auto my-5 text-xl  rounded-md">
+          <p className="text-center w-full text-xl mb-5 rounded-md">
             เข้าสู่ระบบไม่ได้ติดต่อ ฝ่ายทะเบียน โรงเรียน
           </p>
         </div>
-        <div className=" mx-auto w-1/2">
-          
+        <div className="space-y-3">
           <input
-            className="rounded-md border-white border bg-white text-violet-500 w-full mt-1 px-2 h-10"
+            className="w-full rounded-md border-white border bg-white text-violet-500 px-3 py-2"
             type="email"
             name="email"
             value={input.email}
             onChange={hdlChange}
             placeholder="กรอกอีเมล"
           />
-          
           <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-2 h-10"
+            className="w-full rounded-md border-white border bg-white text-violet-500 px-3 py-2"
             type="password"
             name="password"
             value={input.password}
@@ -89,16 +86,16 @@ export default function loginform() {
           />
         </div>
 
-        <div className="mx-auto mt-5 w-1/2 ">
+        <div className="flex justify-center space-x-2 mt-5">
           <input
             type="submit"
-            value="login"
-            className="btn btn-success btn-outline w-[90px] bt:w-[150px] mr-10 "
+            value="Login"
+            className="btn btn-success btn-outline w-24"
           />
           <input
             type="reset"
             value="BACK"
-            className="btn btn-error btn-outline w-[90px] bt:w-[150px] ml-9 "
+            className="btn btn-error btn-outline w-24"
             onClick={() => window.location.href = '/'}
           />
         </div>

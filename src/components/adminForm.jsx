@@ -116,7 +116,7 @@ export default function Search() {
   // console.log(skipstudent)
   if (students !== 0) {
     return (
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto h-screen">
         <div className=" flex flex-row gap-2">
           <select
             className="mt-3 select select-bordered max-w-xs text-violet-500"
@@ -180,7 +180,7 @@ export default function Search() {
         </div>
 
         {students && (
-          <table className="table mt-5 text-center ">
+          <table className="table mt-5 text-center  ">
             <thead className="text-xl ">
               <tr>
                 <th>ลำดับ</th>

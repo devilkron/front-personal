@@ -19,10 +19,7 @@ export default function Header() {
 
     const navigate = useNavigate()
 
-    const hdlLogout = () => {
-        logout()
-        navigate('/');
-    }
+  
     return(
       
         <div>

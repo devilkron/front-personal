@@ -4,8 +4,8 @@ import userAuth from "../../hooks/adminAuth";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-export default function loginform() {
-  const navigate = useNavigate()
+export default function LoginForm() {
+  const navigate = useNavigate();
   const { setUser } = userAuth();
   const [input, setInput] = useState({
     email: "",
@@ -25,61 +25,61 @@ export default function loginform() {
       const rs1 = await axios.get("http://localhost:8000/auth/me", {
         headers: { Authorization: `Bearer ${rs.data.token}` },
       });
-      if(rs1.data !== ""){
+      if (rs1.data !== "") {
         Swal.fire({
           title: "Login SUCCESS",
           text: "Login web site",
           icon: "success",
           preConfirm: () => {
-            setUser(rs1.data)
+            setUser(rs1.data);
           }
-        })
+        });
       }
-      navigate('/')
+      navigate('/');
     } catch (error) {
       if (error.response && error.response.data && error.response.data.Error) {
         Swal.fire({
           icon: 'error',
           title: "เกิดข้อผิดพลาด",
           text: `${error.response.data.Error}`
-        })
+        });
       } else {
         alert(error.Error);
       }
     }
   };
+
   return (
-    <div className="relative h-screen">
+    <div className="relative min-h-screen flex items-center justify-center bg-gray-100">
       <form
-        className=" max-w-[800px] max-h-[600px] mx-auto mt-5 p-5 bg-fuchsia-200 rounded-lg shadow-lg"
+        className="max-w-md w-full p-5 bg-fuchsia-200 rounded-lg shadow-lg"
         onSubmit={hdlSubmit}
       >
-        
-        <div>
+        <div className="flex justify-center mb-5">
           <img
-            className="rounded-full mx-auto h-auto max-w-[120px]"
+            className="rounded-full h-24"
             src="https://img.freepik.com/free-vector/hand-drawn-high-school-logo-template_23-2149689290.jpg"
-            alt=""
+            alt="School Logo"
           />
         </div>
         <div>
-          <p className="text-center w-[70%] mx-auto my-5 bg-red-300 text-red-600 rounded-md">
+          <p className="text-center text-xl mb-5 bg-red-300 text-red-600 rounded-md p-3">
             สมัครสมาชิกเพื่อเข้าใช้ระบบ ลงทะเบียนเรียน
           </p>
         </div>
-        <div className=" mx-auto w-1/2">
-          <p className="mt-3">Email</p>
+        <div className="space-y-3">
+          <label className="block text-gray-700">Email</label>
           <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-2"
+            className="w-full rounded-md border border-gray-300 bg-white text-violet-500 px-3 py-2"
             type="email"
             name="email"
             value={input.email}
             onChange={hdlChange}
             placeholder="Enter your Email"
           />
-          <p className="mt-3">Password</p>
+          <label className="block text-gray-700">Password</label>
           <input
-            className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-2"
+            className="w-full rounded-md border border-gray-300 bg-white text-violet-500 px-3 py-2"
             type="password"
             name="password"
             value={input.password}
@@ -88,22 +88,25 @@ export default function loginform() {
           />
         </div>
 
-        <div className="mx-auto mt-5 w-1/2">
+        <div className="flex justify-center space-x-4 mt-5">
           <input
             type="submit"
-            value="login"
-            className="btn btn-success btn-outline w-[150px] mr-10 "
+            value="Login"
+            className="btn btn-success btn-outline w-32"
           />
-         <Link to='/account'><input
-            type="reset"
-            value="Register"
-            className="btn btn-warning btn-outline w-[150px] ml-9 "
-          /></Link> 
-          
+          <Link to='/account'>
+            <input
+              type="reset"
+              value="Register"
+              className="btn btn-warning btn-outline w-32"
+            />
+          </Link>
         </div>
-        <div className="flex justify-end my-1">
 
-        <Link to="/แบบฟอร์มสมัครสอบ.pdf" target="_blank" download className="underline text-blue-600 underline-offset-2">Download แบบฟอร์ม</Link>
+        <div className="flex justify-end mt-3">
+          <Link to="/แบบฟอร์มสมัครสอบ.pdf" target="_blank" download className="underline text-blue-600">
+            Download แบบฟอร์ม
+          </Link>
         </div>
       </form>
     </div>
