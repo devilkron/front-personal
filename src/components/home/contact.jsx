@@ -19,7 +19,7 @@ export default function contact() {
         </div>
 
         <div className="mt-5 text-2xl">
-          ที่อยู่
+          ที่อยู่ Walk in
           <p className="mt-3">680 ถ. นิตโย Muang สกลนคร 47000</p>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30491.604331132574!2d104.08988610069623!3d17.196919318533816!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313c8cc952ff3a5d%3A0x65f081b8161df448!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lij4Liy4LiK4Lig4Lix4LiP4Liq4LiB4Lil4LiZ4LiE4Lij!5e0!3m2!1sth!2sth!4v1709003478248!5m2!1sth!2sth"
