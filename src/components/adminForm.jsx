@@ -324,8 +324,7 @@ export default function Search() {
           </table>
         )}
         <div className="gap-2 flex flex-row float-right">
-          {" "}
-          {(search === false && skipstudent <= 9) || search.length >= 1 ? (
+          {page === 1 ? (
             <button disabled className="btn btn-outline btn-error">
               back
             </button>
@@ -334,12 +333,12 @@ export default function Search() {
               back
             </button>
           )}
-          {search === false && skipstudent + 10 <= students.length ? (
-            <button onClick={nextPage} className="btn btn-outline btn-success ">
+          {students.length < limit ? (
+            <button disabled className="btn btn-outline btn-success">
               next
             </button>
           ) : (
-            <button disabled className="btn btn-outline btn-success ">
+            <button onClick={nextPage} className="btn btn-outline btn-success">
               next
             </button>
           )}
@@ -435,7 +434,9 @@ const Modal = ({ student, majors, classes, reload }) => {
         }
         document.getElementById(modalId).close();
       } catch (err) {
-        toast.error(err.response?.data?.message || "เกิดข้อผิดพลาดในการลบข้อมูล");
+        toast.error(
+          err.response?.data?.message || "เกิดข้อผิดพลาดในการลบข้อมูล"
+        );
       }
     }
   };
@@ -457,7 +458,7 @@ const Modal = ({ student, majors, classes, reload }) => {
         );
         // console.log(rs);
         if (rs.status === 200) {
-          toast.success("ยืนยันสถานะเรียบร้อย")
+          toast.success("ยืนยันสถานะเรียบร้อย");
           document.getElementById(modalId).close();
           reload((prv) => !prv);
         }
@@ -484,7 +485,7 @@ const Modal = ({ student, majors, classes, reload }) => {
         );
         console.log(rs);
         if (rs.status === 200) {
-          toast.success("ปฏิเสธสถานะเรียบร้อย")
+          toast.success("ปฏิเสธสถานะเรียบร้อย");
           document.getElementById(modalId).close();
           reload((prv) => !prv);
         }
@@ -494,27 +495,6 @@ const Modal = ({ student, majors, classes, reload }) => {
     }
   };
 
-  let thaiTranslation = "";
-  switch (student.major?.major_type) {
-    case "MATHSCI":
-      thaiTranslation = "วิทย์คณิต";
-      break;
-    case "ARTMATH":
-      thaiTranslation = "ศิลป์คำนวณ";
-      break;
-    case "ARTSOC":
-      thaiTranslation = "ศิลป์สังคม";
-      break;
-    case "ARTENG":
-      thaiTranslation = "ศิลป์ภาษา";
-      break;
-    case "ARTFREE":
-      thaiTranslation = "ศิลป์ทั่วไป";
-      break;
-    default:
-      thaiTranslation = student.major?.major_type;
-      break;
-  }
   return (
     <dialog id={modalId} className="modal select-none">
       <div className="modal-box">
@@ -603,7 +583,7 @@ const Modal = ({ student, majors, classes, reload }) => {
               ))}
             </select>
           ) : (
-            thaiTranslation
+            <div>ไม่มีสาขา</div>
           )}
         </h3>
         <h3 className="font-bold text-lg">

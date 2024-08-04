@@ -17,6 +17,8 @@ import Detail from "../components/user/showDetail"
 import UpDetail from "../components/user/updateDetail"
 import Major from "../components/Major/Addmajor"
 import Majortb from "../components/Major/Majortb";
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../il8n';
 
 const guestRouter = createBrowserRouter([
   {
@@ -57,7 +59,7 @@ const accountRouter = createBrowserRouter([
       { index: true, element: <Showstd /> },
       {path: "/", element: <Showstd/>},
       {path: "/profile", element: <Profile/>},
-      {path: "/add", element: <Enroll/>},
+      {path: "/add", element: <I18nextProvider i18n={i18n}><Enroll/></I18nextProvider>},
       {path: "/detail/*", element: <Detail/>},
       {path: "/update/*", element: <UpDetail/>}
     ]
@@ -76,7 +78,7 @@ const adminRouter = createBrowserRouter([
     ),
     children: [
       { index: true, element: <AdminForm/> },
-      { path: "/add", element: <Enroll/> },
+      { path: "/add", element:<I18nextProvider i18n={i18n}><Enroll/></I18nextProvider> },
       { path: "/major", element: <Major/> },
       { path: "/", element: <AdminForm /> },
       { path: "/profile", element: <Profile /> },

@@ -74,7 +74,7 @@ export default function LoginForm() {
             name="email"
             value={input.email}
             onChange={hdlChange}
-            placeholder="กรอกอีเมล"
+            placeholder="อีเมล"
           />
           <input
             className="w-full rounded-md border-white border bg-white text-violet-500 px-3 py-2"

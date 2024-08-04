@@ -7,9 +7,13 @@ import "react-phone-input-2/lib/style.css";
 import AuthContext from "../contexts/AuthContext";
 import Inputmask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./switchLang";
 
 export default function studentReg() {
   // console.log(fileinput.current.files[0])
+  const { t } = useTranslation();
+
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -271,6 +275,8 @@ export default function studentReg() {
     }
   };
   return (
+    <div>
+      <LanguageSwitcher />
     <div className="bg-base-100 h-screen ">
       <div className="backdrop-blur-sm h-screen py-20">
         <form
@@ -278,10 +284,10 @@ export default function studentReg() {
           onSubmit={hdlSubmit}
         >
           {/* bg-[url(https://img.freepik.com/free-vector/back-school-background-flat-design_23-2148596550.jpg)] */}
-          <div className="flex justify-center text-2xl">แบบฟอร์มสมัครสอบ</div>
+          <div className="flex justify-center text-2xl">{t('form_title')}</div>
           <div className=" mx-auto  w-full">
             <div className="flex gap-2 mt-3 w-3/4 mx-auto">
-              <p className="mt-3 text-xl">วิชา:</p>
+              <p className="mt-3 text-xl">{t('major')}:</p>
               <select
                 name="majorId"
                 className="select select-bordered w-full max-w-xs text-violet-500"
@@ -306,7 +312,7 @@ export default function studentReg() {
                 })}
               </select>
 
-              <p className="mt-3 text-xl">ระดับ:</p>
+              <p className="mt-3 text-xl">{t('level')}:</p>
               <select
                 name="classId"
                 className="select select-bordered w-full max-w-xs text-violet-500"
@@ -332,7 +338,7 @@ export default function studentReg() {
                 onChange={hdlChange}
                 className="select select-bordered w-1/4 max-w-xs text-violet-500"
               >
-                <option hidden>ปีการศึกษา</option>
+                <option hidden>{t('academic_year')}</option>
                 <option value="2567">2567</option>
                 <option value="2568">2568</option>
               </select>
@@ -342,7 +348,7 @@ export default function studentReg() {
                 name="std_school"
                 value={input.std_school}
                 onChange={hdlChange}
-                placeholder="จบจากโรงเรียน"
+                placeholder={t('graduated_from_school')}
               />
               <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-1/2 mt-3 px-3"
@@ -350,7 +356,7 @@ export default function studentReg() {
                 name="std_grade"
                 value={input.std_grade}
                 onChange={hdlChange}
-                placeholder="เกรดเฉลี่ย"
+                placeholder={t('average_grade')}
               />
             </div>
             <div className="w-2/3 mt-3">
@@ -363,7 +369,7 @@ export default function studentReg() {
                   onChange={handleIdTypeChange}
                   checked={idType === "citizen"}
                 />
-                <label htmlFor="citizen">รหัสบัตรประชาชน</label>
+                <label htmlFor="citizen">{t('id_card')}</label>
                 <input
                   type="radio"
                   value="passport"
@@ -372,7 +378,7 @@ export default function studentReg() {
                   onChange={handleIdTypeChange}
                   checked={idType === "passport"}
                 />
-                <label htmlFor="passport">Passport</label>
+                <label htmlFor="passport">{t('passport')}</label>
               </div>
 
               {idType === "citizen" ? (
@@ -382,7 +388,7 @@ export default function studentReg() {
                   name="std_identity"
                   value={input.std_identity}
                   onChange={hdlChange}
-                  placeholder="รหัสบัตรประชาชน"
+                  placeholder={t('id_card')}
                 />
               ) : (
                 <input
@@ -391,7 +397,7 @@ export default function studentReg() {
                   name="std_identity"
                   value={input.std_identity}
                   onChange={hdlChange}
-                  placeholder="Passport Number"
+                  placeholder={t('passport')}
                 />
               )}
             </div>
@@ -402,7 +408,7 @@ export default function studentReg() {
                 onChange={hdlChange}
                 className="select select-bordered w-full max-w-xs text-violet-500"
               >
-                <option hidden>คำนำหน้า</option>
+                <option hidden>{t('prefix')}</option>
                 {gender.map((el, index) => (
                   <option value={el.gender_id} key={index}>
                     {el.gender_type === "MR"
@@ -428,7 +434,7 @@ export default function studentReg() {
                 name="std_name"
                 value={input.std_name}
                 onChange={hdlChange}
-                placeholder="ชื่อ (TH)"
+                placeholder={t('first_name_th')}
               />
               <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
@@ -436,12 +442,12 @@ export default function studentReg() {
                 name="std_lastname"
                 value={input.std_lastname}
                 onChange={hdlChange}
-                placeholder="นามสกุล (TH)"
+                placeholder={t('last_name_th')}
               />
               <input
                 className=" rounded-md border-white border bg-white  w-full mt-3 px-3"
                 type={type}
-                placeholder="วันเดือนปีเกิด (BD)"
+                placeholder={t('birth_date')}
                 name="std_bd"
                 value={input.std_bd}
                 onChange={hdlChange}
@@ -457,7 +463,7 @@ export default function studentReg() {
                 name="std_nameEN"
                 value={input.std_nameEN}
                 onChange={hdlChange}
-                placeholder="ชื่อ (EN)"
+                placeholder={t('first_name_en')}
               />
               <input
                 className=" rounded-md border-white border bg-white text-violet-500 w-full mt-3 px-3"
@@ -465,7 +471,7 @@ export default function studentReg() {
                 name="std_lastnameEN"
                 value={input.std_lastnameEN}
                 onChange={hdlChange}
-                placeholder="นามสกุล (EN)"
+                placeholder={t('last_name_en')}
               />
             </div>
             <div className="flex flex-row gap-2">
@@ -476,7 +482,7 @@ export default function studentReg() {
                   onChange={hdlChange}
                   className="select select-bordered w-full max-w-xs text-violet-500"
                 >
-                  <option hidden>เชื้อชาติ</option>
+                  <option hidden>{t('ethnicity')}</option>
                   {eth?.map((el, index) => (
                     <option value={el.eth_id} key={index}>
                       {el.eth_name === "THAI" ? "ไทย" : "อื่นๆ"}
@@ -487,7 +493,7 @@ export default function studentReg() {
                   <input
                     type="text"
                     name="eth_other"
-                    placeholder="เชื้อชาติ"
+                    placeholder={t('ethnicity')}
                     disabled={input.eth_id !== "2"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.eth_other}
@@ -503,7 +509,7 @@ export default function studentReg() {
                   onChange={hdlChange}
                   className="select select-bordered w-full max-w-xs text-violet-500"
                 >
-                  <option hidden>สัญชาติ</option>
+                  <option hidden>{t('nationality')}</option>
                   {nation?.map((el, index) => (
                     <option value={el.nation_id} key={index}>
                       {el.nation_name === "THAI" ? "ไทย" : "อื่นๆ"}
@@ -514,7 +520,7 @@ export default function studentReg() {
                   <input
                     type="text"
                     name="nation_other"
-                    placeholder="สัญชาติ"
+                    placeholder={t('nationality')}
                     disabled={input.nation_id !== "2"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.nation_other}
@@ -530,7 +536,7 @@ export default function studentReg() {
                   onChange={hdlChange}
                   className="select select-bordered w-full max-w-xs text-violet-500"
                 >
-                  <option hidden>ศาสนา</option>
+                  <option hidden>{t('religion')}</option>
                   {religion?.map((el, index) => (
                     <option value={el.religion_id} key={index}>
                       {el.religion_name === "buddhism"
@@ -549,7 +555,7 @@ export default function studentReg() {
                   <input
                     type="text"
                     name="religion_other"
-                    placeholder="ศาสนา"
+                    placeholder={t('religion')}
                     disabled={input.religion_id !== "4"}
                     className="input input-bordered w-full max-w-xs text-violet-500 mt-2"
                     value={input.religion_other}
@@ -566,7 +572,7 @@ export default function studentReg() {
                 onChange={hdlChange}
                 className="select select-bordered w-full max-w-xs text-violet-500"
               >
-                <option hidden>จังหวัด</option>
+                <option hidden>{t('province')}</option>
                 {prov?.map((el, index) => (
                   <option value={el.prov_id} key={index}>
                     {el.prov_thainame}, {el.prov_name}
@@ -580,7 +586,7 @@ export default function studentReg() {
                 name="std_address"
                 value={input.std_address}
                 onChange={hdlChange}
-                placeholder="บ้านเลขที่ ตำบล อำเภอ รหัสไปรษณีย์"
+                placeholder={t('address')}
               />
             </div>
             <div className="flex gap-2">
@@ -590,7 +596,7 @@ export default function studentReg() {
                 name="std_email"
                 value={input.std_email}
                 onChange={hdlChange}
-                placeholder="Email"
+                placeholder={t('email')}
               />
               <PhoneInput
                 className=" rounded-md  text-violet-500 w-full mt-3 px-3 number"
@@ -604,7 +610,7 @@ export default function studentReg() {
             </div>
 
             <div className="flex gap-2 ">
-              <p className="mt-3 text-xl">รูปถ่ายขนาด 2 นิ้ว</p>
+              <p className="mt-3 text-xl">{t('photo')}</p>
               <input
                 className=" rounded-md  file:py-2 file:px-2 file:border-0 file:rounded-md file:hover:cursor-pointer hover:bg-violet-500 hover:text-white file:hover:text-white file:bg-transparent  bg-white mt-3 px-2 w-60"
                 type="file"
@@ -618,37 +624,20 @@ export default function studentReg() {
           <div className="mx-auto mt-5 w-1/2">
             <input
               type="submit"
-              value="SEND"
+              value={t('submit')}
               className="btn btn-success btn-outline w-[150px] mr-10 "
             />
-            {/* <button  className="py-3 mr-10 justify-center items-center gap-2 w-[150px] h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
-              <svg className="w-5 fill-white" viewBox="0 0 15 15">
-                <svg
-                  className="w-6 h-6"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </svg>
-            </button> */}
-
+    
             <input
               type="button"
-              value="RESET"
+              value={t('reset')}
               className="btn btn-warning btn-outline w-[150px] ml-9"
               onClick={HdlReset}
             />
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

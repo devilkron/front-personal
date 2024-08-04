@@ -68,23 +68,23 @@ export default function LoginForm() {
           </p>
         </div>
         <div className="space-y-3">
-          <label className="block text-gray-700">Email</label>
+          <label className="block text-gray-700">อีเมล</label>
           <input
             className="w-full rounded-md border border-gray-300 bg-white text-violet-500 px-3 py-2"
             type="email"
             name="email"
             value={input.email}
             onChange={hdlChange}
-            placeholder="Enter your Email"
+            placeholder="Umail@mail.com"
           />
-          <label className="block text-gray-700">Password</label>
+          <label className="block text-gray-700">รหัสผ่าน</label>
           <input
             className="w-full rounded-md border border-gray-300 bg-white text-violet-500 px-3 py-2"
             type="password"
             name="password"
             value={input.password}
             onChange={hdlChange}
-            placeholder="Enter Your Password"
+            placeholder="***************"
           />
         </div>
 
@@ -107,6 +107,7 @@ export default function LoginForm() {
           <Link to="/แบบฟอร์มสมัครสอบ.pdf" target="_blank" download className="underline text-blue-600">
             Download แบบฟอร์ม
           </Link>
+        
         </div>
       </form>
     </div>
