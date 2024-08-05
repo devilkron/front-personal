@@ -46,7 +46,7 @@ export default function showDetail() {
         <div className="card-body p-0 ">
           <h2 className="card-title"><label className="text-gray-600 font-normal">เลขประชาชน</label> {students.std_identity}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">ชื่อ</label>{students.gender?.gender_type === "MISS" ? "นางสาว" : students.gender?.gender_type === "GIRL" ? "ด.ญ." :students.gender?.gender_type === "MRS" ? "นาง" : students.gender?.gender_type === "BOY" ? "ด.ช." : students.gender?.gender_type === "MR" ? "นาย" : students.gender?.gender_id} {students.std_name} {students.std_lastname}</h2>
-          <h2 className="card-title"><label className="text-gray-600 font-normal">ที่อยู่</label> {students.std_address}</h2>
+          <h2 className="card-title w-11/12"><label className="text-gray-600 font-normal ">ที่อยู่</label> {students.std_address}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">เบอร์โทร</label> +{students.std_phone}</h2>
           <h2 className="card-title"><label className="text-gray-600 font-normal">สาขา</label> {students.major.major_type}</h2>
           <div className="flex gap-2">
@@ -60,7 +60,7 @@ export default function showDetail() {
         <div className="card-body p-0 ">
         <h2 className="card-title"><label className="text-gray-600 font-normal">Identity ID</label> {students.std_identity}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Name</label>{students.gender?.gender_type === "GIRL" ? "MISS" : students.gender?.gender_type ==="BOY" ? "MRST" : students.gender?.gender_type} {students.std_nameEN} {students.std_lastnameEN}</h2>
-        <h2 className="card-title"><label className="text-gray-600 font-normal">Address</label> {students.std_address}</h2>
+        <h2 className="card-title w-11/12"><label className="text-gray-600 font-normal">Address</label> {students.std_address}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Phone</label> +{students.std_phone}</h2>
         <h2 className="card-title"><label className="text-gray-600 font-normal">Major</label> {students.major?.major_type}</h2>
         <div className="flex gap-2">

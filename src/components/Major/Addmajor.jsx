@@ -104,7 +104,7 @@ function Addmajor() {
     <Container maxWidth="sm" sx={{ mt: 5 }}>
       <Paper elevation={3} sx={{ padding: 3 }}>
         <Typography variant="h5" component="h2" gutterBottom>
-          {edit ? "แก้ไขสาขาวิชา" : "เพิ่มสาขาวิชา"}
+          {edit ? "แก้ไขแผนการเรียน" : "เพิ่มแผนการเรียน"}
         </Typography>
         <form onSubmit={hdlSubmit}>
           <TextField
@@ -124,7 +124,7 @@ function Addmajor() {
             fullWidth
             sx={{ mt: 2 }}
           >
-            {edit ? "แก้ไขสาขาวิชา" : "เพิ่มสาขาวิชา"}
+            {edit ? "แก้ไขแผนการเรียน" : "เพิ่มแผนการเรียน"}
           </Button>
           <Button
             type="button"
@@ -139,7 +139,7 @@ function Addmajor() {
         </form>
       </Paper>
       <Typography variant="h4" component="h3" align="center" sx={{ mt: 5 }}>
-        รายชื่อสาขา
+        รายชื่อแผนการเรียน
       </Typography>
       <Majortb reload={reload} onEdit={hdlEdit} />
     </Container>

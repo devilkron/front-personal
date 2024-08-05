@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/adminAuth";
 import { useEffect, useRef, useState } from "react";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 const adminNav = [
-  { to: "/", text: "home" },
+  { to: "/", text: "หน้าหลัก" },
+  {to:"/data", text: "ข้อมูล"},
   { to: "/add", text: "กรอกข้อมูลผู้สมัคร" },
-  { to: "/major", text: "เพิ่มสาขา" },
+  { to: "/major", text: "เพิ่มแผนการเรียน" },
 
 ];
 const guestNav = [
@@ -60,7 +62,7 @@ export default function Header() {
           {user?.user_id && (
             <li >
               <Link className="text-[16px] border-2 border-[rgb(239_76_83)] text-red-500 py-3 hover:bg-red-500 hover:text-black active:scale-95 transform ease-in-out active:text-black" to="#" onClick={hdlLogout}>
-                Logout
+                ออกจากระบบ
               </Link>
             </li>
           )}

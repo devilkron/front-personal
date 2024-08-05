@@ -41,7 +41,7 @@ function Majortb({ reload, onEdit }) {
         <TableHead>
           <TableRow>
             <TableCell align="center">เลขที่</TableCell>
-            <TableCell align="center">รายชื่อสาขา</TableCell>
+            <TableCell align="center">รายชื่อแผนการเรียน</TableCell>
             <TableCell align="center">ชื่อผู้เพิ่ม</TableCell>
             <TableCell align="center" colSpan={2}></TableCell>
           </TableRow>

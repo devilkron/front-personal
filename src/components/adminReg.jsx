@@ -219,7 +219,7 @@ export default function studentReg() {
             showConfirmButton: false,
             width: "500px",
           }).then(() => {
-            navigate("/");
+            navigate("/data");
           });
         }
       }

@@ -187,7 +187,7 @@ export default function Search() {
                 <th>ชื่อ - สกุล</th>
                 <th>โรงเรียน</th>
                 <th>ระดับ</th>
-                <th>สาขาวิชา</th>
+                <th>แผนการเรียน</th>
                 <th>ปีการศึกษา</th>
                 <th>สถานะ</th>
               </tr>
@@ -375,6 +375,7 @@ const Modal = ({ student, majors, classes, reload }) => {
     class_type: student.class.class_type,
   });
   // console.log(editData.majorId)
+  // console.log(student.major)
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
@@ -495,6 +496,8 @@ const Modal = ({ student, majors, classes, reload }) => {
     }
   };
 
+  // console.log(editData.majorId)
+
   return (
     <dialog id={modalId} className="modal select-none">
       <div className="modal-box">
@@ -556,8 +559,8 @@ const Modal = ({ student, majors, classes, reload }) => {
           )}
         </h3>
         <h3 className="font-bold text-lg">
-          สาขาวิชา :{" "}
-          {isEditing ? (
+          แผนการเรียน :{" "}
+          {isEditing ? 
             <select
               name="majorId"
               value={editData.majorId}
@@ -582,8 +585,8 @@ const Modal = ({ student, majors, classes, reload }) => {
                 </option>
               ))}
             </select>
-          ) : (
-            <div>ไม่มีสาขา</div>
+          : (
+            student.major.major_type
           )}
         </h3>
         <h3 className="font-bold text-lg">
@@ -617,11 +620,11 @@ const Modal = ({ student, majors, classes, reload }) => {
             : student.status}
         </h3>
 
-        <div className="flex justify-end gap-3">
-          <button className="btn btn-outline btn-success" onClick={hdlAGREE}>
+        <div  className="flex justify-end gap-3">
+          <button className="btn btn-outline btn-success" disabled={student.status === "AGREE"}  onClick={hdlAGREE}>
             ยืนยันสถานะ
           </button>
-          <button className="btn btn-outline btn-error" onClick={hdlREJECT}>
+          <button className="btn btn-outline btn-error" disabled={student.status === "AGREE"} onClick={hdlREJECT}>
             ปฏิเสธ
           </button>
           {isEditing ? (
@@ -629,7 +632,7 @@ const Modal = ({ student, majors, classes, reload }) => {
               บันทึก
             </button>
           ) : (
-            <button className="btn btn-warning" onClick={handleEditClick}>
+            <button className="btn btn-warning" disabled={student.status === "AGREE"} onClick={handleEditClick}>
               แก้ไข
             </button>
           )}

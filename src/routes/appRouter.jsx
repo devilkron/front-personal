@@ -77,10 +77,10 @@ const adminRouter = createBrowserRouter([
       </>
     ),
     children: [
-      { index: true, element: <AdminForm/> },
+      { index: true, element: <Home/> },
       { path: "/add", element:<I18nextProvider i18n={i18n}><Enroll/></I18nextProvider> },
       { path: "/major", element: <Major/> },
-      { path: "/", element: <AdminForm /> },
+      { path: "/data", element: <AdminForm /> },
       { path: "/profile", element: <Profile /> },
       {path: "/getMajor", element: <Majortb/>},
     ],
