@@ -18,7 +18,7 @@ export default function Dashboard() {
         <div className="bg-[#41729F] p-3 rounded-2xl max-w-[53rem] mx-auto">
           <div className="mt-3 flex gap-5 justify-around text-white text-center">
             <div>
-              <h1 className="text-1xl font-bold text-sky-500">จำนวนผู้สมัคร</h1>
+              <h1 className="text-1xl font-bold text-sky-500">จำนวนผู้สมัคร++++</h1>
               <h2 className="text-2xl font-bold text-amber-400">
                 <CountUp end={students.count === 0 ? "0" : students.count} duration={5} />
               </h2>
